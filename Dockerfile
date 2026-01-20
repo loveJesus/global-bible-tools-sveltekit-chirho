@@ -20,7 +20,7 @@ RUN bun install --frozen-lockfile || bun install
 COPY . .
 
 EXPOSE 5173
-CMD ["bun", "run", "dev", "--host"]
+CMD ["bun", "run", "dev-chirho", "--host"]
 
 # ============================================================================
 # Build stage
@@ -30,7 +30,7 @@ COPY package.json bun.lockb* ./
 RUN bun install --frozen-lockfile || bun install
 
 COPY . .
-RUN bun run build
+RUN bun run build-chirho
 
 # ============================================================================
 # Production stage

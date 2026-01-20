@@ -3,6 +3,20 @@
 # — John 3:16
 
 services:
+  # Caddy reverse proxy with automatic self-signed SSL
+  caddy-chirho:
+    image: caddy:2-alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data-chirho:/data
+      - caddy-config-chirho:/config
+    depends_on:
+      - server-chirho
+
   server-chirho:
     build:
       context: .
@@ -28,14 +42,14 @@ services:
     volumes:
       - ./:/app
       - sveltekit-node-modules-chirho:/app/node_modules
-    ports:
-      - 5173:5173
+    expose:
+      - 5173
     depends_on:
       db-chirho:
         condition: service_healthy
       minio-chirho:
         condition: service_healthy
-    command: bun run dev --host
+    command: bun run dev-chirho --host
 
   db-chirho:
     image: postgres:16
@@ -113,3 +127,5 @@ volumes:
   db-data-chirho:
   minio-data-chirho:
   sveltekit-node-modules-chirho:
+  caddy-data-chirho:
+  caddy-config-chirho:
