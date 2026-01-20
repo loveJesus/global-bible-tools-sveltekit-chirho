@@ -3,11 +3,11 @@
 # — John 3:16
 
 # Global Bible Tools - Caddy Reverse Proxy
-# Uses self-signed certificate (Cloudflare Full Strict works with this)
+# Uses self-signed certificate (Cloudflare Full mode compatible)
 
 :443 {
-    # Use internal (self-signed) certificate
-    tls internal
+    # Use self-signed certificate
+    tls /certs/cert.pem /certs/key.pem
 
     # Reverse proxy to SvelteKit server
     reverse_proxy server-chirho:5173

@@ -3,7 +3,7 @@
 # — John 3:16
 
 services:
-  # Caddy reverse proxy with automatic self-signed SSL
+  # Caddy reverse proxy with self-signed SSL
   caddy-chirho:
     image: caddy:2-alpine
     restart: always
@@ -12,6 +12,7 @@ services:
       - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./certs:/certs:ro
       - caddy-data-chirho:/data
       - caddy-config-chirho:/config
     depends_on:
