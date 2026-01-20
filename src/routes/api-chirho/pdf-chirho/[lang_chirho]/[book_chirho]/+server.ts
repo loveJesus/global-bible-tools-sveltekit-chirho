@@ -7,31 +7,22 @@
  * GET /api-chirho/pdf-chirho/:lang/:book?chapter=N
  *
  * Generates interlinear PDF for a book/chapter in the specified language.
+ * Uses shared pdf-generator-chirho library for DRY rendering with RTL Hebrew support.
  */
 
 import { error as errorChirho } from '@sveltejs/kit';
 import type { RequestHandler as RequestHandlerChirho } from './$types';
 import { dbChirho, queryRawChirho, eqChirho } from '$lib/server/db-chirho';
 import { bookTableChirho, languageTableChirho } from '$lib/server/schema-chirho';
-import PDFDocument from 'pdfkit';
-
-interface WordRowChirho {
-	wordIdChirho: string;
-	textChirho: string;
-	lemmaIdChirho: string | null;
-	glossChirho: string | null;
-	verseIdChirho: string;
-}
-
-const BOOK_NAME_TO_ID_CHIRHO: Record<string, number> = {
-	genesis: 1,
-	exodus: 2,
-	matthew: 40,
-	jude: 65,
-	psalms: 19,
-	john: 43,
-	revelation: 66
-};
+import {
+	createPdfDocumentChirho,
+	getMainFontChirho,
+	getBoldFontChirho,
+	renderInterlinearVerseChirho,
+	finalizePdfChirho,
+	BOOK_NAME_TO_ID_CHIRHO,
+	type WordRowChirho
+} from '$lib/server/pdf-generator-chirho';
 
 export const GET: RequestHandlerChirho = async ({ params: paramsChirho, url: urlChirho }) => {
 	const langCodeChirho = paramsChirho.lang_chirho;
@@ -73,20 +64,27 @@ export const GET: RequestHandlerChirho = async ({ params: paramsChirho, url: url
 		}
 	}
 
-	// Get words with glosses
+	// Get words with glosses using LATERAL join to avoid duplicates
 	const wordsChirho = await queryRawChirho<WordRowChirho>(
 		`SELECT
 			w.id AS "wordIdChirho",
 			w.text AS "textChirho",
 			lf.lemma_id AS "lemmaIdChirho",
-			g.gloss AS "glossChirho",
+			ph.gloss AS "glossChirho",
 			w.verse_id AS "verseIdChirho"
 		FROM word w
 		JOIN verse v ON v.id = w.verse_id
 		LEFT JOIN lemma_form lf ON lf.id = w.form_id
-		LEFT JOIN phrase_word pw ON pw.word_id = w.id
-		LEFT JOIN phrase p ON p.id = pw.phrase_id AND p.language_id = $1 AND p.deleted_at IS NULL
-		LEFT JOIN gloss g ON g.phrase_id = p.id
+		LEFT JOIN LATERAL (
+			SELECT g.gloss
+			FROM phrase_word pw
+			JOIN phrase p ON p.id = pw.phrase_id
+			LEFT JOIN gloss g ON g.phrase_id = p.id
+			WHERE pw.word_id = w.id
+				AND p.language_id = $1
+				AND p.deleted_at IS NULL
+			LIMIT 1
+		) AS ph ON true
 		WHERE v.book_id = $2 ${chapterFilterChirho}
 		ORDER BY w.id`,
 		[langResultChirho[0].idChirho, bookIdChirho]
@@ -96,94 +94,43 @@ export const GET: RequestHandlerChirho = async ({ params: paramsChirho, url: url
 		throw errorChirho(404, 'No data found for this chapter');
 	}
 
-	// Create PDF
-	const docChirho = new PDFDocument({
-		size: 'A4',
-		margins: { top: 50, bottom: 50, left: 50, right: 50 }
-	});
+	// Create PDF using shared library
+	const docChirho = createPdfDocumentChirho();
 
 	const chunksChirho: Buffer[] = [];
 	docChirho.on('data', (chunkChirho: Buffer) => chunksChirho.push(chunkChirho));
 
+	const mainFontChirho = getMainFontChirho();
+	const boldFontChirho = getBoldFontChirho();
+
 	// Title
-	docChirho.fontSize(20).text(`${bookChirho?.nameChirho ?? bookNameChirho}`, { align: 'center' });
+	docChirho.font(boldFontChirho).fontSize(20).fillColor('#1e293b').text(`${bookChirho?.nameChirho ?? bookNameChirho}`, { align: 'center' });
 	if (chapterParamChirho) {
-		docChirho.fontSize(14).text(`Chapter ${chapterParamChirho}`, { align: 'center' });
+		docChirho.font(mainFontChirho).fontSize(14).fillColor('#475569').text(`Chapter ${chapterParamChirho}`, { align: 'center' });
 	}
-	docChirho.fontSize(10).text(`${langResultChirho[0].nameChirho} Translation`, { align: 'center' });
+	docChirho.font(mainFontChirho).fontSize(10).fillColor('#64748b').text(`${langResultChirho[0].nameChirho} Translation`, { align: 'center' });
 	docChirho.moveDown(2);
 
 	// Group words by verse
-	const verseGroupsChirho = new Map<string, typeof wordsChirho>();
+	const verseGroupsChirho = new Map<string, WordRowChirho[]>();
 	for (const wordChirho of wordsChirho) {
 		const groupChirho = verseGroupsChirho.get(wordChirho.verseIdChirho) ?? [];
 		groupChirho.push(wordChirho);
 		verseGroupsChirho.set(wordChirho.verseIdChirho, groupChirho);
 	}
 
-	// Helper to generate BibleHub URL for Strong's number
-	const getStrongLinkChirho = (lemmaIdChirho: string | null): string | null => {
-		if (!lemmaIdChirho) return null;
-		// lemmaId format: H7225 (Hebrew) or G2588 (Greek)
-		const matchChirho = lemmaIdChirho.match(/^([HG])(\d+)$/);
-		if (!matchChirho) return null;
-		const [, prefixChirho, numberChirho] = matchChirho;
-		const langChirho = prefixChirho === 'H' ? 'hebrew' : 'greek';
-		return `https://biblehub.com/${langChirho}/strongs_${numberChirho}.htm`;
-	};
+	// Determine if this is a Hebrew (OT) book for RTL rendering
+	const isHebrewBookChirho = bookIdChirho <= 39;
 
-	// Render each verse with clickable Strong's numbers
+	// Render each verse using shared library
 	for (const [verseIdChirho, verseWordsChirho] of verseGroupsChirho) {
-		// Extract verse number from ID
 		const verseNumChirho = parseInt(verseIdChirho.slice(-3), 10);
-
-		// Check for page break BEFORE rendering verse
-		if (docChirho.y > 720) {
-			docChirho.addPage();
-		}
-
-		// Verse number
-		docChirho.fontSize(10).fillColor('#666').text(`${verseNumChirho} `, { continued: true });
-		docChirho.fillColor('#000');
-
-		// Render each word with clickable Strong's number
-		verseWordsChirho.forEach((wChirho, idxChirho) => {
-			const isLastChirho = idxChirho === verseWordsChirho.length - 1;
-			const strongLinkChirho = getStrongLinkChirho(wChirho.lemmaIdChirho);
-
-			// Original text
-			docChirho.fontSize(9).fillColor('#333').text(wChirho.textChirho, { continued: true });
-
-			// Opening bracket
-			docChirho.fillColor('#999').text('[', { continued: true });
-
-			// Gloss
-			docChirho.fillColor('#000').text(wChirho.glossChirho ?? '—', { continued: true });
-
-			// Strong's number (clickable if available)
-			if (wChirho.lemmaIdChirho && strongLinkChirho) {
-				docChirho.fillColor('#999').text(' ', { continued: true });
-				docChirho.fillColor('#0066cc').text(wChirho.lemmaIdChirho, {
-					continued: true,
-					link: strongLinkChirho,
-					underline: true
-				});
-			}
-
-			// Closing bracket and space
-			docChirho.fillColor('#999').text(']', { continued: !isLastChirho });
-			if (!isLastChirho) {
-				docChirho.fillColor('#000').text(' ', { continued: true });
-			}
-		});
-
-		docChirho.moveDown(0.5);
+		// RTL rendering handles right-to-left placement internally, no array reversal needed
+		renderInterlinearVerseChirho(docChirho, verseNumChirho, verseWordsChirho, true, isHebrewBookChirho);
 	}
 
 	// Finalize PDF
 	docChirho.end();
-
-	// Wait for PDF to complete
 	await new Promise<void>((resolveChirho) => docChirho.on('end', resolveChirho));
 
 	const pdfBufferChirho = Buffer.concat(chunksChirho);

@@ -50,6 +50,8 @@ docker compose logs -f server-chirho
 
 The app will be available at http://localhost:5173
 
+**Note:** On first startup, PostgreSQL automatically runs all SQL files in `migrations-chirho/` via the `docker-entrypoint-initdb.d` mount. This seeds the database with the schema and reference Bible versions (KJV, WEB, RV1909, Hindi IRV).
+
 ### Development without Docker
 
 ```bash
@@ -66,6 +68,171 @@ bun run db:push
 # Start dev server
 bun run dev
 ```
+
+### Developing on the VPS
+
+You can develop directly on the Hetzner VPS using VS Code Remote SSH or by editing files via SSH:
+
+```bash
+# Connect with VS Code Remote SSH
+# 1. Install "Remote - SSH" extension
+# 2. Connect to: root@46.224.100.134
+# 3. Open folder: /root/global-bible-tools-platform-chirho/sveltekit2-platform-chirho
+
+# Or use terminal + your preferred editor
+ssh root@46.224.100.134
+cd /root/global-bible-tools-platform-chirho/sveltekit2-platform-chirho
+
+# Make changes, then rebuild
+docker compose up -d --build
+
+# Watch logs
+docker compose logs -f server-chirho
+```
+
+### Running Database Migrations
+
+**Fresh database:** Migrations run automatically on first `docker compose up` via the `docker-entrypoint-initdb.d` mount.
+
+**Existing database:** Run migrations manually:
+
+```bash
+# Run all migrations in order
+for f in migrations-chirho/*.sql; do
+  echo "Running $f..."
+  cat "$f" | docker exec -i sveltekit2-platform-chirho-db-chirho-1 psql -U postgres
+done
+
+# Or run individual migration
+cat migrations-chirho/0001_add_reference_versions_chirho.sql | \
+  docker exec -i sveltekit2-platform-chirho-db-chirho-1 psql -U postgres
+```
+
+**Via Drizzle (schema sync):**
+
+```bash
+# Via Docker
+docker compose exec server-chirho bun run db:push
+
+# Or connect to PostgreSQL directly
+docker compose exec db-chirho psql -U postgres
+```
+
+### Hot Reload
+
+The Docker Compose setup mounts the source code as a volume, so changes to `.svelte` and `.ts` files trigger hot reload automatically.
+
+### Database Seeding
+
+The platform requires Bible data to function. There are two options:
+
+**Option 1: Copy from existing database**
+
+If you have access to the original Global Bible Tools platform database:
+
+```bash
+# Export from source database
+pg_dump -h original-host -U postgres --data-only --table=book > seed-book.sql
+pg_dump -h original-host -U postgres --data-only --table=verse > seed-verse.sql
+pg_dump -h original-host -U postgres --data-only --table=word > seed-word.sql
+pg_dump -h original-host -U postgres --data-only --table=lemma > seed-lemma.sql
+pg_dump -h original-host -U postgres --data-only --table=lemma_form > seed-lemma-form.sql
+pg_dump -h original-host -U postgres --data-only --table=lemma_resource > seed-lemma-resource.sql
+
+# Import to your database
+cat seed-*.sql | docker compose exec -T db-chirho psql -U postgres
+```
+
+**Option 2: Use the nextjs-platform-chirho submodule**
+
+The original platform has seeding scripts:
+
+```bash
+cd ../nextjs-platform-chirho
+docker compose up -d
+# The original platform will seed on first run
+```
+
+**Option 3: Import translations**
+
+Apply translation SQL files from the translations-chirho submodule:
+
+```bash
+# Get the translations submodule
+git submodule update --init translations-chirho
+
+# Apply Spanish translations
+cat translations-chirho/matthew-spa-chirho/all-verses-chirho.sql | \
+  docker compose exec -T db-chirho psql -U postgres
+```
+
+### Adding a Language
+
+```bash
+# Connect to the database
+docker compose exec db-chirho psql -U postgres
+
+-- Add a new language
+INSERT INTO language (code, name) VALUES ('spa', 'Spanish');
+```
+
+## Translation Tools
+
+Tools are located in the parent directory (`../tools-chirho/`). Run from the project root.
+
+### Import Translations
+
+Import all translation SQL files from `translations-chirho/`:
+
+```bash
+# From project root (platform-chirho/)
+bun run tools-chirho/import-translations-chirho.ts
+
+# Dry run first
+bun run tools-chirho/import-translations-chirho.ts --dry-run
+```
+
+### Import Reference Bibles
+
+Import SWORD reference versions (KJV, WEB, RV1909, etc.):
+
+```bash
+# Install SWORD tools (macOS)
+brew install sword
+
+# List available SWORD modules
+diatheke -b system -k modulelist
+
+# Import a reference version
+bun run tools-chirho/import-reference-chirho.ts kjv ./data-chirho/kjv.txt
+```
+
+### Generate PDFs
+
+Generate interlinear PDFs with Greek/Hebrew text, Strong's numbers, and translations:
+
+```bash
+# Generate PDF for a book
+bun run tools-chirho/generate-pdf-chirho.ts spa jude
+
+# Specify chapter range
+bun run tools-chirho/generate-pdf-chirho.ts hin genesis --chapter 1-10
+
+# Custom page size (a4, a5, letter)
+bun run tools-chirho/generate-pdf-chirho.ts spa psalms --size a5
+```
+
+Output: `output-chirho/pdfs-chirho/<book>-<lang>-chirho.pdf`
+
+### MCP Server
+
+The Bible translation MCP server provides tools for Claude Code:
+
+```bash
+bun run mcp-chirho
+```
+
+Tools: `list_books_chirho`, `get_verse_chirho`, `get_chapter_chirho`, `query_lemma_chirho`, `expand_glosses_chirho`
 
 ## Project Structure
 
@@ -117,6 +284,65 @@ Because God loved the world so much that He gave His only begotten Son, that who
 Jesus said: *"I am the way, the truth, and the life. No one comes to the Father except through Me."* — John 14:6
 
 If you don't know Jesus, I pray you would turn to Him today. He loves you and died for you. Repent and believe the gospel!
+
+## Production Deployment (Hetzner VPS)
+
+The platform is deployed to a Hetzner VPS at **https://global-tools.bible.systems**
+
+### Infrastructure
+
+- **VPS:** Hetzner Cloud (CPX11 - 2 vCPU, 2GB RAM)
+- **Reverse Proxy:** Caddy 2 with self-signed SSL (Cloudflare handles public SSL)
+- **DNS:** Cloudflare (Full SSL mode, proxied)
+- **Email:** 2SMTP relay service
+
+### Deploying to VPS
+
+```bash
+# SSH into server
+ssh root@46.224.100.134
+
+# Clone the repo
+git clone https://github.com/loveJesus/global-bible-tools-platform-chirho.git
+cd global-bible-tools-platform-chirho/sveltekit2-platform-chirho
+
+# Generate self-signed certificates for Caddy
+mkdir -p certs
+openssl req -x509 -newkey rsa:4096 -keyout certs/key.pem -out certs/cert.pem \
+  -sha256 -days 3650 -nodes \
+  -subj "/C=US/ST=Heaven/L=NewJerusalem/O=Chirho/CN=global-tools.bible.systems"
+
+# Start all services
+docker compose up -d
+
+# View logs
+docker compose logs -f
+```
+
+### Services
+
+| Service | Internal Port | Description |
+|---------|---------------|-------------|
+| `caddy-chirho` | 80, 443 | Reverse proxy with SSL |
+| `server-chirho` | 5173 | SvelteKit dev server |
+| `db-chirho` | 5432 | PostgreSQL 16 |
+| `minio-chirho` | 9000, 9001 | S3-compatible storage |
+
+### Cloudflare Configuration
+
+1. Add A record: `global-tools.bible.systems` → VPS IP
+2. Set SSL mode to **Full** (not Strict, since we use self-signed certs)
+3. Enable proxy (orange cloud) for DDoS protection
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and configure:
+
+```bash
+DATABASE_URL_CHIRHO=postgresql://postgres:password@db-chirho:5432/postgres
+R2_ENDPOINT_CHIRHO=http://minio-chirho:9000
+SESSION_SECRET_CHIRHO=your-secret-here
+```
 
 ## Contributing
 
