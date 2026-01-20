@@ -7,14 +7,16 @@
  * Generate Full Interlinear Bible PDF
  *
  * Creates a complete Bible PDF with Greek/Hebrew text and word-by-word glosses
- * for a specified language translation.
+ * for a specified language translation. Optionally includes reference Bible text.
  *
  * Usage:
- *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path]
+ *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path] [reference_version]
  *
  * Examples:
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts spa
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Interlinear-Bible.pdf
+ *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./KJV-Interlinear.pdf kjv
+ *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./WEB-Interlinear.pdf web
  */
 
 import PdfDocumentChirho from 'pdfkit';
@@ -195,6 +197,41 @@ async function getLanguageChirho(codeChirho: string): Promise<{ idChirho: number
 		[codeChirho]
 	);
 	return resultChirho.rows[0] ?? null;
+}
+
+/**
+ * Get reference version info
+ */
+async function getReferenceVersionChirho(codeChirho: string): Promise<{ idChirho: number; nameChirho: string } | null> {
+	const resultChirho = await poolChirho.query<{ idChirho: number; nameChirho: string }>(
+		`SELECT id_chirho AS "idChirho", name_chirho AS "nameChirho" FROM reference_version_chirho WHERE code_chirho = $1`,
+		[codeChirho]
+	);
+	return resultChirho.rows[0] ?? null;
+}
+
+/**
+ * Get reference verses for a chapter
+ */
+async function getChapterReferenceVersesChirho(
+	versionIdChirho: number,
+	bookIdChirho: number,
+	chapterChirho: number
+): Promise<Map<string, string>> {
+	const prefixChirho = `${bookIdChirho.toString().padStart(2, '0')}${chapterChirho.toString().padStart(3, '0')}`;
+	const resultChirho = await poolChirho.query<{ verseIdChirho: string; textChirho: string }>(
+		`SELECT verse_id_chirho AS "verseIdChirho", text_chirho AS "textChirho"
+		 FROM reference_verse_chirho
+		 WHERE version_id_chirho = $1 AND verse_id_chirho LIKE $2
+		 ORDER BY verse_id_chirho`,
+		[versionIdChirho, `${prefixChirho}%`]
+	);
+
+	const mapChirho = new Map<string, string>();
+	for (const rowChirho of resultChirho.rows) {
+		mapChirho.set(rowChirho.verseIdChirho, rowChirho.textChirho);
+	}
+	return mapChirho;
 }
 
 /**
@@ -465,23 +502,53 @@ function renderInterlinearVerseChirho(
 }
 
 /**
+ * Render reference verse text below interlinear
+ */
+function renderReferenceVerseChirho(
+	docChirho: PdfDocumentInstanceChirho,
+	verseNumChirho: number,
+	textChirho: string
+): void {
+	const mainFontChirho = notoFontChirho ? 'NotoSans' : 'Helvetica';
+
+	// Check if we need a new page
+	if (docChirho.y > 700) {
+		docChirho.addPage();
+	}
+
+	// Render reference text in italic, indented
+	docChirho.font(mainFontChirho).fontSize(9).fillColor('#475569');
+	docChirho.text(`  ${textChirho}`, {
+		indent: 20,
+		width: 495,
+		align: 'left'
+	});
+	docChirho.moveDown(0.4);
+}
+
+/**
  * Main function
  */
 async function mainChirho(): Promise<void> {
 	const argsChirho = process.argv.slice(2);
 
 	if (argsChirho.length === 0) {
-		console.log('Usage: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path]');
+		console.log('Usage: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path] [reference_version]');
 		console.log('Example: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts spa');
 		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Bible.pdf');
+		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./KJV-Interlinear.pdf kjv');
 		process.exit(1);
 	}
 
 	const langCodeChirho = argsChirho[0];
 	// Default: save to static/bibles-chirho/ so it's served as a static file
 	const outputPathChirho = argsChirho[1] ?? joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${langCodeChirho}.pdf`);
+	const refVersionCodeChirho = argsChirho[2] ?? null;
 
 	console.log(`Generating interlinear Bible PDF for language: ${langCodeChirho}`);
+	if (refVersionCodeChirho) {
+		console.log(`Including reference version: ${refVersionCodeChirho}`);
+	}
 
 	// Get language
 	const languageChirho = await getLanguageChirho(langCodeChirho);
@@ -491,6 +558,17 @@ async function mainChirho(): Promise<void> {
 	}
 
 	console.log(`Found language: ${languageChirho.nameChirho} (ID: ${languageChirho.idChirho})`);
+
+	// Get reference version if specified
+	let refVersionChirho: { idChirho: number; nameChirho: string } | null = null;
+	if (refVersionCodeChirho) {
+		refVersionChirho = await getReferenceVersionChirho(refVersionCodeChirho);
+		if (!refVersionChirho) {
+			console.error(`Reference version '${refVersionCodeChirho}' not found in database`);
+			process.exit(1);
+		}
+		console.log(`Found reference version: ${refVersionChirho.nameChirho}`);
+	}
 
 	// Create PDF
 	const docChirho = new PdfDocumentChirho({
@@ -515,7 +593,10 @@ async function mainChirho(): Promise<void> {
 	docChirho.on('data', (chunkChirho: Buffer) => chunksChirho.push(chunkChirho));
 
 	// Add cover page and TOC
-	addCoverPageChirho(docChirho, languageChirho.nameChirho);
+	const titleChirho = refVersionChirho
+		? `${refVersionChirho.nameChirho} - Interlinear`
+		: languageChirho.nameChirho;
+	addCoverPageChirho(docChirho, titleChirho);
 	addTableOfContentsChirho(docChirho);
 
 	let totalVersesChirho = 0;
@@ -540,6 +621,16 @@ async function mainChirho(): Promise<void> {
 			// Add chapter header
 			addChapterHeaderChirho(docChirho, chapterChirho);
 
+			// Fetch reference verses for this chapter if a reference version is specified
+			let refVersesMapChirho: Map<string, string> | null = null;
+			if (refVersionChirho) {
+				refVersesMapChirho = await getChapterReferenceVersesChirho(
+					refVersionChirho.idChirho,
+					bookChirho.idChirho,
+					chapterChirho
+				);
+			}
+
 			// Group words by verse
 			const verseGroupsChirho = new Map<string, WordRowChirho[]>();
 			for (const wordChirho of wordsChirho) {
@@ -556,6 +647,15 @@ async function mainChirho(): Promise<void> {
 				const verseNumChirho = parseInt(verseIdChirho.slice(-3), 10);
 				// RTL rendering handles right-to-left placement internally, no array reversal needed
 				renderInterlinearVerseChirho(docChirho, verseNumChirho, verseWordsChirho, true, isHebrewBookChirho);
+
+				// Render reference verse text below the interlinear if available
+				if (refVersesMapChirho) {
+					const refTextChirho = refVersesMapChirho.get(verseIdChirho);
+					if (refTextChirho) {
+						renderReferenceVerseChirho(docChirho, verseNumChirho, refTextChirho);
+					}
+				}
+
 				totalVersesChirho++;
 				totalWordsChirho += verseWordsChirho.length;
 			}
@@ -580,6 +680,9 @@ async function mainChirho(): Promise<void> {
 	console.log('='.repeat(50));
 	console.log(`Interlinear Bible PDF generated successfully!`);
 	console.log(`  Language: ${languageChirho.nameChirho}`);
+	if (refVersionChirho) {
+		console.log(`  Reference: ${refVersionChirho.nameChirho}`);
+	}
 	console.log(`  Verses: ${totalVersesChirho.toLocaleString()}`);
 	console.log(`  Words: ${totalWordsChirho.toLocaleString()}`);
 	console.log(`  File size: ${(pdfBufferChirho.length / 1024 / 1024).toFixed(2)} MB`);
