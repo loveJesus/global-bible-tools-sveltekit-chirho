@@ -32,9 +32,10 @@ interface WordWithGlossRowChirho {
 	state: string | null;
 }
 
-export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
+export const load: PageServerLoadChirho = async ({ params: paramsChirho, locals: localsChirho }) => {
 	const codeChirho = paramsChirho.code_chirho;
 	const verseIdChirho = paramsChirho.verse_id_chirho;
+	const userChirho = localsChirho.userChirho;
 
 	// Parse verse ID
 	const { bookIdChirho, chapterChirho, verseNumberChirho } = parseVerseIdChirho(verseIdChirho);
@@ -145,11 +146,17 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
 		.limit(1);
 
 	return {
+		userChirho: userChirho ? {
+			idChirho: userChirho.idChirho,
+			nameChirho: userChirho.nameChirho,
+			emailChirho: userChirho.emailChirho
+		} : null,
 		codeChirho,
 		languageChirho,
 		bookChirho,
 		chapterChirho,
 		verseNumberChirho,
+		verseIdChirho,
 		wordsChirho,
 		prevVerseIdChirho: prevVerseChirho[0]?.idChirho ?? null,
 		nextVerseIdChirho: nextVerseChirho[0]?.idChirho ?? null
@@ -158,6 +165,12 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
 
 export const actions: ActionsChirho = {
 	updateGlossChirho: async ({ request: requestChirho, params: paramsChirho, locals: localsChirho }) => {
+		// Check authentication
+		const sessionChirho = localsChirho.sessionChirho;
+		if (!sessionChirho?.userIdChirho) {
+			return failChirho(401, { errorChirho: 'Unauthorized. Please log in to update translations.' });
+		}
+
 		const formDataChirho = await requestChirho.formData();
 		const wordIdChirho = formDataChirho.get('wordIdChirho') as string;
 		const glossChirho = formDataChirho.get('glossChirho') as string;
@@ -205,7 +218,7 @@ export const actions: ActionsChirho = {
 				.values({
 					languageIdChirho: languageChirho.idChirho,
 					createdAtChirho: new Date(),
-					createdByChirho: localsChirho.userChirho?.idChirho ?? null
+					createdByChirho: sessionChirho.userIdChirho
 				})
 				.returning({ idChirho: phraseTableChirho.idChirho });
 
@@ -227,18 +240,18 @@ export const actions: ActionsChirho = {
 				phraseIdChirho: phraseIdChirho,
 				glossChirho: glossChirho || null,
 				stateChirho: stateChirho,
-				sourceChirho: 'USER',
+				sourceChirho: 'USER' as const,
 				updatedAtChirho: new Date(),
-				updatedByChirho: localsChirho.userChirho?.idChirho ?? null
+				updatedByChirho: sessionChirho.userIdChirho
 			})
 			.onConflictDoUpdate({
 				target: glossTableChirho.phraseIdChirho,
 				set: {
 					glossChirho: glossChirho || null,
 					stateChirho: stateChirho,
-					sourceChirho: 'USER',
+					sourceChirho: 'USER' as const,
 					updatedAtChirho: new Date(),
-					updatedByChirho: localsChirho.userChirho?.idChirho ?? null
+					updatedByChirho: sessionChirho.userIdChirho
 				}
 			});
 
@@ -246,7 +259,7 @@ export const actions: ActionsChirho = {
 		await dbChirho.insert(glossHistoryTableChirho).values({
 			phraseIdChirho: phraseIdChirho,
 			updatedAtChirho: new Date(),
-			updatedByChirho: localsChirho.userChirho?.idChirho ?? null,
+			updatedByChirho: sessionChirho.userIdChirho,
 			glossChirho: glossChirho || null,
 			stateChirho: stateChirho,
 			sourceChirho: 'USER'
