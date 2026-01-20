@@ -541,9 +541,12 @@ async function mainChirho(): Promise<void> {
 	}
 
 	const langCodeChirho = argsChirho[0];
-	// Default: save to static/bibles-chirho/ so it's served as a static file
-	const outputPathChirho = argsChirho[1] ?? joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${langCodeChirho}.pdf`);
 	const refVersionCodeChirho = argsChirho[2] ?? null;
+	// Default: save to static/bibles-chirho/ with -chirho suffix
+	const defaultFilenameChirho = refVersionCodeChirho
+		? `interlinear-${refVersionCodeChirho}-chirho.pdf`
+		: `interlinear-${langCodeChirho}-chirho.pdf`;
+	const outputPathChirho = argsChirho[1] ?? joinChirho(process.cwd(), `static/bibles-chirho/${defaultFilenameChirho}`);
 
 	console.log(`Generating interlinear Bible PDF for language: ${langCodeChirho}`);
 	if (refVersionCodeChirho) {
