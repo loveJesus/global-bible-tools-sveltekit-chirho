@@ -187,6 +187,18 @@
 									>
 										View
 									</a>
+									<a
+										href="/admin-chirho/languages-chirho/{langChirho.codeChirho}/settings-chirho"
+										class="text-emerald-600 hover:text-emerald-800 text-sm"
+									>
+										Settings
+									</a>
+									<a
+										href="/admin-chirho/languages-chirho/{langChirho.codeChirho}/snapshots-chirho"
+										class="text-purple-600 hover:text-purple-800 text-sm"
+									>
+										Snapshots
+									</a>
 									<button
 										type="button"
 										onclick={() => (editingLanguageChirho = langChirho)}

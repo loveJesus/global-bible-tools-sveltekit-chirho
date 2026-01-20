@@ -24,11 +24,24 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
 		throw errorChirho(404, `Language '${codeChirho}' not found`);
 	}
 
-	// Get all books
-	const booksChirho = await dbChirho
-		.select()
-		.from(bookTableChirho)
-		.orderBy(bookTableChirho.idChirho);
+	// Get only books that have translations for this language
+	const booksChirho = await queryRawChirho<{
+		idChirho: number;
+		nameChirho: string;
+	}>(`
+		SELECT DISTINCT b.id AS "idChirho", b.name AS "nameChirho"
+		FROM book b
+		WHERE EXISTS (
+			SELECT 1 FROM phrase p
+			JOIN phrase_word pw ON pw.phrase_id = p.id
+			JOIN word w ON w.id = pw.word_id
+			JOIN gloss g ON g.phrase_id = p.id AND g.gloss IS NOT NULL
+			WHERE p.language_id = $1
+				AND p.deleted_at IS NULL
+				AND SUBSTRING(w.verse_id, 1, 2) = LPAD(b.id::text, 2, '0')
+		)
+		ORDER BY b.id
+	`, [languageChirho.idChirho]);
 
 	// Get reference versions for THIS language only (with verse counts)
 	const referenceVersionsChirho = await queryRawChirho<{
@@ -52,15 +65,29 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
 		ORDER BY rv.name_chirho
 	`, [codeChirho]);
 
-	// Check if interlinear PDF exists for this language
+	// Check if interlinear PDF exists for this language (our translation)
 	const interlinearPdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${codeChirho}.pdf`);
 	const hasInterlinearPdfChirho = existsSyncChirho(interlinearPdfPathChirho);
+
+	// Check which reference version interlinear PDFs exist
+	const interlinearVersionsChirho = referenceVersionsChirho
+		.map((vChirho) => {
+			const pdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`);
+			return {
+				codeChirho: vChirho.codeChirho,
+				nameChirho: vChirho.nameChirho,
+				hasPdfChirho: existsSyncChirho(pdfPathChirho),
+				pdfPathChirho: `/bibles-chirho/interlinear-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`
+			};
+		})
+		.filter((vChirho) => vChirho.hasPdfChirho);
 
 	return {
 		codeChirho,
 		languageChirho,
 		booksChirho,
 		referenceVersionsChirho,
-		hasInterlinearPdfChirho
+		hasInterlinearPdfChirho,
+		interlinearVersionsChirho
 	};
 };
