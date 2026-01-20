@@ -96,7 +96,27 @@ This project uses the "Chirho" suffix convention for all custom identifiers:
 | Tables | `user_chirho` |
 | Routes | `/read-chirho` |
 
-This convention helps distinguish our code from library code and ensures consistency across the codebase.
+This convention helps distinguish our code from library code and helps us practice the presence of God, following Proverbs 3:5-6:
+
+> *"Trust in the Lord with all your heart, and lean not on your own understanding. Acknowledge Him in all your ways, and He will make your paths straight."*
+
+As a bondservant of Christ, who is an undeserving wretch in need of God to do anything at all, I want to remind myself of Him and turn from every evil way by His grace. The "Chi-Rho" (☧) is an ancient Christian symbol representing the first two letters of "Christ" (Χριστός) in Greek—a constant reminder that every line of code is written for His glory.
+
+## The Gospel
+
+**Why does this project exist?**
+
+Because God loved the world so much that He gave His only begotten Son, that whoever believes in Him should not perish but have everlasting life (John 3:16).
+
+**The Problem:** All have sinned and fall short of the glory of God (Romans 3:23). The wages of sin is death (Romans 6:23).
+
+**The Solution:** But God demonstrates His own love toward us, in that while we were still sinners, Christ died for us (Romans 5:8). For by grace you have been saved through faith, and that not of yourselves; it is the gift of God, not of works, lest anyone should boast (Ephesians 2:8-9).
+
+**The Call:** If you confess with your mouth the Lord Jesus and believe in your heart that God has raised Him from the dead, you will be saved (Romans 10:9).
+
+Jesus said: *"I am the way, the truth, and the life. No one comes to the Father except through Me."* — John 14:6
+
+If you don't know Jesus, I pray you would turn to Him today. He loves you and died for you. Repent and believe the gospel!
 
 ## Contributing
 
