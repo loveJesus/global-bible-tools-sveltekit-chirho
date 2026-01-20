@@ -4,7 +4,7 @@
 
 import { drizzle, type NodePgDatabase } from 'drizzle-orm/node-postgres';
 import pg from 'pg';
-import { DATABASE_URL } from '$env/static/private';
+import { DATABASE_URL_CHIRHO_CHIRHO } from '$env/static/private';
 import * as schemaChirho from './schema-chirho';
 
 // Type alias for Chirho naming compliance
@@ -18,12 +18,12 @@ let dbInstanceChirho: DbChirho | undefined;
 
 export function getPoolChirho(): PoolChirho {
 	if (!poolChirho) {
-		if (!DATABASE_URL) {
-			throw new Error('DATABASE_URL environment variable is not set');
+		if (!DATABASE_URL_CHIRHO) {
+			throw new Error('DATABASE_URL_CHIRHO environment variable is not set');
 		}
 
 		poolChirho = new PoolConstructorChirho({
-			connectionString: DATABASE_URL,
+			connectionString: DATABASE_URL_CHIRHO,
 			max: 20
 		});
 
