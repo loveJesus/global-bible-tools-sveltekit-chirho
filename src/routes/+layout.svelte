@@ -7,6 +7,7 @@
 	import { page as pageChirho } from '$app/state';
 	import type { LayoutData as LayoutDataChirho } from './$types';
 	import LocaleSwitcherChirho from '$lib/components-chirho/LocaleSwitcherChirho.svelte';
+	import FeedbackBubbleChirho from '$lib/components-chirho/FeedbackBubbleChirho.svelte';
 	import { tChirho, localeChirho } from '$lib/i18n-chirho';
 
 	// Initialize locale from server data
@@ -142,4 +143,7 @@
 		</div>
 	</footer>
 	{/if}
+
+	<!-- Feedback bubble - appears on all pages -->
+	<FeedbackBubbleChirho />
 </div>
