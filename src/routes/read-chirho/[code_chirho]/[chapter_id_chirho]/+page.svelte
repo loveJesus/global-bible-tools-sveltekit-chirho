@@ -130,6 +130,25 @@
 		const bookNameChirho = dataChirho.bookChirho?.nameChirho?.toLowerCase() ?? 'unknown';
 		return `/api-chirho/pdf-chirho/${dataChirho.codeChirho}/${bookNameChirho}?chapter=${dataChirho.chapterChirho}`;
 	}
+
+	// Get BibleHub URL for a Strong's number (lemma ID like H1234 or G5678)
+	function getBibleHubUrlChirho(lemmaIdChirho: string | null): string | null {
+		if (!lemmaIdChirho) return null;
+		const matchChirho = lemmaIdChirho.match(/^([HG])(\d+)/);
+		if (!matchChirho) return null;
+		const [, prefixChirho, numberStrChirho] = matchChirho;
+		const langChirho = prefixChirho === 'H' ? 'hebrew' : 'greek';
+		const numberChirho = parseInt(numberStrChirho, 10);
+		return `https://biblehub.com/${langChirho}/${numberChirho}.htm`;
+	}
+
+	// Handle word click - open BibleHub in new tab
+	function onWordClickChirho(lemmaIdChirho: string | null): void {
+		const urlChirho = getBibleHubUrlChirho(lemmaIdChirho);
+		if (urlChirho) {
+			window.open(urlChirho, '_blank', 'noopener,noreferrer');
+		}
+	}
 </script>
 
 <svelte:head>
@@ -355,10 +374,12 @@
 						</span>
 						<div class="flex flex-wrap gap-x-1 gap-y-3">
 							{#each verseChirho.wordsChirho as wordChirho}
-								<span
-									class="inline-flex flex-col items-center hover:bg-yellow-50 cursor-pointer rounded px-1 py-0.5 transition-colors"
+								<button
+									type="button"
+									class="inline-flex flex-col items-center hover:bg-yellow-50 cursor-pointer rounded px-1 py-0.5 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
 									dir="ltr"
-									title="{wordChirho.lemmaIdChirho ?? ''} | {wordChirho.grammarChirho ?? ''}"
+									title="{wordChirho.lemmaIdChirho ?? ''} | {wordChirho.grammarChirho ?? ''} — Click for BibleHub"
+									onclick={() => onWordClickChirho(wordChirho.lemmaIdChirho)}
 								>
 									<span class="text-slate-800 text-sm">{wordChirho.textChirho}</span>
 									<span
@@ -367,7 +388,7 @@
 									>
 										{formatGlossChirho(wordChirho.glossChirho)}
 									</span>
-								</span>
+								</button>
 							{/each}
 						</div>
 					</div>
