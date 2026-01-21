@@ -11,8 +11,18 @@ export interface TranslationProgressChirho {
 	bookCountChirho: number;
 }
 
-// In-memory cache for translation progress stats
+export interface LanguageWithStatsChirho {
+	idChirho: string;
+	codeChirho: string;
+	nameChirho: string;
+	glossCountChirho: number;
+	bookCountChirho: number;
+}
+
+// In-memory cache for translation progress stats (top 12 for landing page)
 let cachedProgressChirho: TranslationProgressChirho[] | null = null;
+// In-memory cache for all languages with stats (for /read-chirho page)
+let cachedAllLanguagesChirho: LanguageWithStatsChirho[] | null = null;
 let cacheTimestampChirho: number = 0;
 let lastGlossCountChirho: number = 0;
 
@@ -61,16 +71,18 @@ async function getTotalGlossCountChirho(): Promise<number> {
  */
 export async function refreshTranslationStatsCacheChirho(forceChirho: boolean = false): Promise<{
 	progressChirho: TranslationProgressChirho[];
+	allLanguagesChirho: LanguageWithStatsChirho[];
 	skippedChirho: boolean;
 	glossCountChirho: number;
 }> {
 	// Check if gloss count changed (fast query)
 	const currentGlossCountChirho = await getTotalGlossCountChirho();
 
-	if (!forceChirho && cachedProgressChirho && currentGlossCountChirho === lastGlossCountChirho) {
+	if (!forceChirho && cachedProgressChirho && cachedAllLanguagesChirho && currentGlossCountChirho === lastGlossCountChirho) {
 		console.log(`[stats-cache] Skipping refresh - gloss count unchanged (${currentGlossCountChirho})`);
 		return {
 			progressChirho: cachedProgressChirho,
+			allLanguagesChirho: cachedAllLanguagesChirho,
 			skippedChirho: true,
 			glossCountChirho: currentGlossCountChirho
 		};
@@ -79,8 +91,10 @@ export async function refreshTranslationStatsCacheChirho(forceChirho: boolean = 
 	console.log(`[stats-cache] Refreshing cache (glosses: ${lastGlossCountChirho} -> ${currentGlossCountChirho})...`);
 	const startChirho = Date.now();
 
-	const progressChirho = await queryRawChirho<TranslationProgressChirho>(`
+	// Get ALL languages with stats in one query (used for both caches)
+	const allLanguagesChirho = await queryRawChirho<LanguageWithStatsChirho>(`
 		SELECT
+			l.id AS "idChirho",
 			l.code AS "codeChirho",
 			l.name AS "nameChirho",
 			COALESCE(stats_chirho.gloss_count_chirho, 0)::int AS "glossCountChirho",
@@ -97,21 +111,33 @@ export async function refreshTranslationStatsCacheChirho(forceChirho: boolean = 
 			WHERE p.language_id = l.id
 				AND p.deleted_at IS NULL
 		) stats_chirho ON true
-		WHERE COALESCE(stats_chirho.gloss_count_chirho, 0) > 0
-		ORDER BY stats_chirho.gloss_count_chirho DESC
-		LIMIT 12
+		ORDER BY l.name
 	`, []);
 
-	// Update cache
+	// Extract top 12 with translations for landing page
+	const progressChirho: TranslationProgressChirho[] = allLanguagesChirho
+		.filter(langChirho => langChirho.glossCountChirho > 0)
+		.sort((aChirho, bChirho) => bChirho.glossCountChirho - aChirho.glossCountChirho)
+		.slice(0, 12)
+		.map(langChirho => ({
+			codeChirho: langChirho.codeChirho,
+			nameChirho: langChirho.nameChirho,
+			glossCountChirho: langChirho.glossCountChirho,
+			bookCountChirho: langChirho.bookCountChirho
+		}));
+
+	// Update both caches
 	cachedProgressChirho = progressChirho;
+	cachedAllLanguagesChirho = allLanguagesChirho;
 	cacheTimestampChirho = Date.now();
 	lastGlossCountChirho = currentGlossCountChirho;
 
 	const durationChirho = Date.now() - startChirho;
-	console.log(`[stats-cache] Cache refreshed in ${durationChirho}ms, ${progressChirho.length} languages`);
+	console.log(`[stats-cache] Cache refreshed in ${durationChirho}ms, ${allLanguagesChirho.length} languages (${progressChirho.length} with translations)`);
 
 	return {
 		progressChirho,
+		allLanguagesChirho,
 		skippedChirho: false,
 		glossCountChirho: currentGlossCountChirho
 	};
@@ -129,4 +155,18 @@ export async function getOrRefreshStatsChirho(): Promise<TranslationProgressChir
 	console.log('[stats-cache] Cache stale or empty, refreshing from page load...');
 	const resultChirho = await refreshTranslationStatsCacheChirho(true);
 	return resultChirho.progressChirho;
+}
+
+/**
+ * Get all languages with stats, refreshing if cache is stale (>2 hours) or empty.
+ * Used by /read-chirho page as fallback when cron hasn't run.
+ */
+export async function getOrRefreshAllLanguagesChirho(): Promise<LanguageWithStatsChirho[]> {
+	if (cachedAllLanguagesChirho && !isCacheStaleChirho()) {
+		return cachedAllLanguagesChirho;
+	}
+
+	console.log('[stats-cache] All languages cache stale or empty, refreshing from page load...');
+	const resultChirho = await refreshTranslationStatsCacheChirho(true);
+	return resultChirho.allLanguagesChirho;
 }
