@@ -6,27 +6,26 @@
 	import '../../app.css';
 	import type { LayoutData as LayoutDataChirho } from './$types';
 	import FeedbackBubbleChirho from '$lib/components-chirho/FeedbackBubbleChirho.svelte';
-	import { localeChirho, loadingChirho } from '$lib/i18n-chirho';
+	import { localeChirho, loadTranslationsChirho } from '$lib/i18n-chirho';
+	import { browser as browserChirho } from '$app/environment';
 
-	let { children, data }: { children: any; data: LayoutDataChirho } = $props();
+	let { children: childrenChirho, data: dataChirho }: { children: any; data: LayoutDataChirho } = $props();
 
-	// Initialize locale from server data (critical for hydration)
+	// Initialize locale on client only, after hydration
+	// This prevents the flash of empty content during SSR->client transition
 	$effect(() => {
-		if (data.localeChirho) {
-			localeChirho.set(data.localeChirho);
+		if (browserChirho && dataChirho.localeChirho) {
+			// Load translations for this locale before setting it
+			loadTranslationsChirho(dataChirho.localeChirho, '/').then(() => {
+				localeChirho.set(dataChirho.localeChirho);
+			});
 		}
 	});
 </script>
 
-<!-- Wait for translations to load to avoid flash of empty text -->
-{#if $loadingChirho}
-	<div class="min-h-screen bg-amber-50 flex items-center justify-center">
-		<div class="animate-pulse text-slate-500">Loading...</div>
-	</div>
-{:else}
-	<!-- Landing pages have their own navigation/footer, no wrapper needed -->
-	{@render children()}
-{/if}
+<!-- Landing pages have their own navigation/footer, no wrapper needed -->
+<!-- Always render content - server has already rendered with translations -->
+{@render childrenChirho()}
 
 <!-- Feedback bubble - appears on all pages -->
 <FeedbackBubbleChirho />
