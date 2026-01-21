@@ -5,6 +5,8 @@
 <script lang="ts">
 	import type { PageData as PageDataChirho } from './$types';
 	import { goto as gotoChirho } from '$app/navigation';
+	import { browser as browserChirho } from '$app/environment';
+	import { onMount as onMountChirho } from 'svelte';
 	import AudioDialogChirho from '$lib/components-chirho/AudioDialogChirho.svelte';
 	import { tChirho } from '$lib/i18n-chirho';
 
@@ -14,8 +16,8 @@
 	let showAudioChirho = $state(false);
 	let highlightedVerseChirho = $state<string | undefined>(undefined);
 
-	// Reference display mode state
-	let referenceDisplayModeChirho = $state<'below' | 'side' | 'hidden'>('hidden');
+	// Reference display mode state - default to 'below', but load from localStorage
+	let referenceDisplayModeChirho = $state<'below' | 'side' | 'hidden'>('below');
 
 	// RTL state - auto-detect for Hebrew (OT books 1-39)
 	const isHebrewBookChirho = $derived((dataChirho.bookChirho?.idChirho ?? 40) <= 39);
@@ -24,6 +26,30 @@
 
 	// N-dash toggle - hide n-dashes (–) when true
 	let hideNdashChirho = $state(false);
+
+	// Load user preferences from localStorage on mount
+	onMountChirho(() => {
+		if (browserChirho) {
+			// Reference display mode
+			const savedModeChirho = localStorage.getItem('referenceDisplayModeChirho');
+			if (savedModeChirho && ['below', 'side', 'hidden'].includes(savedModeChirho)) {
+				referenceDisplayModeChirho = savedModeChirho as 'below' | 'side' | 'hidden';
+			}
+			// N-dash preference
+			const savedHideNdashChirho = localStorage.getItem('hideNdashChirho');
+			if (savedHideNdashChirho !== null) {
+				hideNdashChirho = savedHideNdashChirho === 'true';
+			}
+		}
+	});
+
+	// Save preferences when they change
+	$effect(() => {
+		if (browserChirho) {
+			localStorage.setItem('referenceDisplayModeChirho', referenceDisplayModeChirho);
+			localStorage.setItem('hideNdashChirho', String(hideNdashChirho));
+		}
+	});
 
 	// Format gloss text - optionally remove n-dashes
 	function formatGlossChirho(glossChirho: string | null): string {
