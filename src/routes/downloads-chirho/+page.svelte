@@ -31,7 +31,7 @@
 		{
 			nameChirho: 'Hindi ERV Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Hindi word-by-word translation and Hindi Easy-to-Read Version text',
-			pathChirho: '/bibles-chirho/interlinear-hin-erv-chirho.pdf',
+			pathChirho: '/bibles-chirho/interlinear-hin-hinerv-chirho.pdf',
 			sizeChirho: '139 MB',
 			versesChirho: '31,102'
 		}
