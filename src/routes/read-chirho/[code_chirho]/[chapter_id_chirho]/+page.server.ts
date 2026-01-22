@@ -201,16 +201,25 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		.from(referenceVersionTableChirho)
 		.orderBy(referenceVersionTableChirho.nameChirho);
 
-	// Find the best reference version: URL param > language default > KJV
-	const langToVersionMapChirho: Record<string, number> = {
-		eng: 1, // KJV
-		spa: 3, // RV1909
-		hin: 4, // HinERV
-		tur: 5 // TurHADI
-	};
-	const preferredVersionIdChirho = refVersionParamChirho
-		? parseInt(refVersionParamChirho, 10)
-		: (langToVersionMapChirho[codeChirho] ?? 1);
+	// Find the best reference version: URL param > language match > English fallback
+	let preferredVersionIdChirho: number;
+	if (refVersionParamChirho) {
+		// User explicitly selected a reference version - use it
+		preferredVersionIdChirho = parseInt(refVersionParamChirho, 10);
+	} else {
+		// Auto-select based on current translation language
+		// First, try to find a reference Bible in the same language
+		const matchingVersionChirho = referenceVersionsChirho.find(
+			(vChirho) => vChirho.languageCodeChirho === codeChirho
+		);
+		if (matchingVersionChirho) {
+			preferredVersionIdChirho = matchingVersionChirho.idChirho;
+		} else {
+			// Fall back to English KJV (id=1) or first available version
+			const kjvChirho = referenceVersionsChirho.find((vChirho) => vChirho.codeChirho === 'KJV');
+			preferredVersionIdChirho = kjvChirho?.idChirho ?? referenceVersionsChirho[0]?.idChirho ?? 1;
+		}
+	}
 
 	// Get reference verses for the chapter using the preferred version
 	// Chapter verses match pattern: bookId (2 digits) + chapter (3 digits) + verse (3 digits)
@@ -229,10 +238,16 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		referenceVersesMapChirho[rvChirho.verseIdChirho] = rvChirho.textChirho;
 	}
 
-	// Get the selected reference version name
+	// Get the selected reference version info
 	const selectedRefVersionChirho = referenceVersionsChirho.find(
 		(vChirho) => vChirho.idChirho === preferredVersionIdChirho
 	);
+
+	// RTL languages for reference Bibles (Hebrew, Arabic, etc.)
+	const rtlLanguagesChirho = ['hbo', 'heb', 'arc', 'arb', 'ara', 'fas', 'urd'];
+	const isRefRtlChirho = selectedRefVersionChirho
+		? rtlLanguagesChirho.includes(selectedRefVersionChirho.languageCodeChirho)
+		: false;
 
 	return {
 		codeChirho,
@@ -248,6 +263,8 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		referenceVersionsChirho,
 		referenceVersesMapChirho,
 		selectedRefVersionIdChirho: preferredVersionIdChirho,
+		selectedRefLangCodeChirho: selectedRefVersionChirho?.languageCodeChirho ?? 'eng',
+		isRefRtlChirho,
 		selectedRefVersionNameChirho: selectedRefVersionChirho?.nameChirho ?? 'Reference'
 	};
 };

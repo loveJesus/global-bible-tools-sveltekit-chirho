@@ -19,22 +19,46 @@ import {
 	createPdfDocumentChirho,
 	getMainFontChirho,
 	getBoldFontChirho,
+	getFontForTextChirho,
+	isRtlTextChirho,
 	renderInterlinearVerseChirho,
 	finalizePdfChirho,
 	BOOK_NAME_TO_ID_CHIRHO,
 	type WordRowChirho
 } from '$lib/server/pdf-generator-chirho';
 
-// Map language codes to default reference version codes
-const LANG_TO_REF_VERSION_CHIRHO: Record<string, string> = {
-	eng: 'kjv',
-	spa: 'rv1909',
-	hin: 'hinerv',
-	tur: 'TurHADI',
-	ben: 'ben2006eb',
-	swa: 'Swahili',
-	rus: 'russynodal'
-};
+// Helper to find a reference version matching the language
+async function findReferenceVersionChirho(langCodeChirho: string, refParamChirho: string | null) {
+	// Get all reference versions
+	const allVersionsChirho = await dbChirho
+		.select()
+		.from(referenceVersionTableChirho)
+		.orderBy(referenceVersionTableChirho.nameChirho);
+
+	// If user specified a version by ID, use that
+	if (refParamChirho) {
+		const refIdChirho = parseInt(refParamChirho, 10);
+		if (!isNaN(refIdChirho)) {
+			const byIdChirho = allVersionsChirho.find((vChirho) => vChirho.idChirho === refIdChirho);
+			if (byIdChirho) return byIdChirho;
+		}
+		// Try by code
+		const byCodeChirho = allVersionsChirho.find(
+			(vChirho) => vChirho.codeChirho.toLowerCase() === refParamChirho.toLowerCase()
+		);
+		if (byCodeChirho) return byCodeChirho;
+	}
+
+	// Auto-select: find a reference version in the same language
+	const matchingLangChirho = allVersionsChirho.find(
+		(vChirho) => vChirho.languageCodeChirho === langCodeChirho
+	);
+	if (matchingLangChirho) return matchingLangChirho;
+
+	// Fallback to KJV or first available
+	const kjvChirho = allVersionsChirho.find((vChirho) => vChirho.codeChirho === 'KJV');
+	return kjvChirho ?? allVersionsChirho[0] ?? null;
+}
 
 export const GET: RequestHandlerChirho = async ({ params: paramsChirho, url: urlChirho }) => {
 	const langCodeChirho = paramsChirho.lang_chirho;
@@ -68,15 +92,8 @@ export const GET: RequestHandlerChirho = async ({ params: paramsChirho, url: url
 
 	const bookChirho = bookResultChirho[0];
 
-	// Get reference version (from URL param or default for language)
-	const refVersionCodeChirho = refParamChirho ?? LANG_TO_REF_VERSION_CHIRHO[langCodeChirho] ?? 'kjv';
-	const refVersionResultChirho = await dbChirho
-		.select()
-		.from(referenceVersionTableChirho)
-		.where(eqChirho(referenceVersionTableChirho.codeChirho, refVersionCodeChirho))
-		.limit(1);
-
-	const refVersionChirho = refVersionResultChirho[0];
+	// Get reference version (from URL param or auto-select by language)
+	const refVersionChirho = await findReferenceVersionChirho(langCodeChirho, refParamChirho);
 
 	// Build chapter filter
 	let chapterFilterChirho = '';
@@ -185,11 +202,23 @@ export const GET: RequestHandlerChirho = async ({ params: paramsChirho, url: url
 			if (docChirho.y > 750) {
 				docChirho.addPage();
 			}
-			// Render reference text in a subtle style with left border
+
+			// Detect RTL reference text (Arabic, Hebrew)
+			const isRefRtlChirho = isRtlTextChirho(refTextChirho);
+			const refFontChirho = getFontForTextChirho(refTextChirho);
 			const refYChirho = docChirho.y;
-			docChirho.moveTo(55, refYChirho).lineTo(55, refYChirho + 12).stroke('#cbd5e1');
-			docChirho.font(mainFontChirho).fontSize(9).fillColor('#64748b')
-				.text(refTextChirho, 65, refYChirho, { width: 480 });
+
+			if (isRefRtlChirho) {
+				// RTL: border on right, text right-aligned
+				docChirho.moveTo(540, refYChirho).lineTo(540, refYChirho + 12).stroke('#cbd5e1');
+				docChirho.font(refFontChirho).fontSize(9).fillColor('#64748b')
+					.text(refTextChirho, 55, refYChirho, { width: 480, align: 'right' });
+			} else {
+				// LTR: border on left
+				docChirho.moveTo(55, refYChirho).lineTo(55, refYChirho + 12).stroke('#cbd5e1');
+				docChirho.font(refFontChirho).fontSize(9).fillColor('#64748b')
+					.text(refTextChirho, 65, refYChirho, { width: 480 });
+			}
 			docChirho.moveDown(0.5);
 		}
 	}

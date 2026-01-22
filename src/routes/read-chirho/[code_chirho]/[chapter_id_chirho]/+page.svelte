@@ -91,6 +91,7 @@
 		const selectChirho = eventChirho.target as HTMLSelectElement;
 		const langCodeChirho = selectChirho.value;
 		const chapterIdChirho = `${(dataChirho.bookChirho?.idChirho ?? 1).toString().padStart(2, '0')}${(dataChirho.chapterChirho ?? 1).toString().padStart(3, '0')}`;
+		// Navigate WITHOUT ref param so server auto-selects a reference Bible in the new language
 		gotoChirho(`/read-chirho/${langCodeChirho}/${chapterIdChirho}`);
 	}
 
@@ -425,7 +426,10 @@
 					{#if referenceDisplayModeChirho === 'below'}
 						{@const refTextChirho = getReferenceTextChirho(verseChirho.verseIdChirho)}
 						{#if refTextChirho}
-							<div class="ml-6 sm:ml-8 mt-1.5 sm:mt-2 text-xs sm:text-sm text-slate-600 border-l-2 border-slate-200 pl-2 sm:pl-3">
+							<div
+								class="mt-1.5 sm:mt-2 text-xs sm:text-sm text-slate-600 {dataChirho.isRefRtlChirho ? 'mr-6 sm:mr-8 border-r-2 pr-2 sm:pr-3 text-right' : 'ml-6 sm:ml-8 border-l-2 pl-2 sm:pl-3'} border-slate-200"
+								dir={dataChirho.isRefRtlChirho ? 'rtl' : 'ltr'}
+							>
 								{@html refTextChirho}
 							</div>
 						{/if}
@@ -450,11 +454,11 @@
 						</svg>
 					</button>
 				</div>
-				<div class="p-4 space-y-4">
+				<div class="p-4 space-y-4" dir={dataChirho.isRefRtlChirho ? 'rtl' : 'ltr'}>
 					{#each dataChirho.versesChirho as verseChirho}
 						{@const refTextChirho = getReferenceTextChirho(verseChirho.verseIdChirho)}
 						{#if refTextChirho}
-							<p class="text-sm">
+							<p class="text-sm {dataChirho.isRefRtlChirho ? 'text-right' : ''}">
 								<strong class="text-slate-500">{verseChirho.verseNumberChirho}</strong>
 								<span class="text-slate-700">{@html refTextChirho}</span>
 							</p>

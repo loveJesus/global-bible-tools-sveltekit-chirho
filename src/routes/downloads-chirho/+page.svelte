@@ -29,6 +29,13 @@
 			versesChirho: '31,102'
 		},
 		{
+			nameChirho: 'Spanish RV1909 Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Spanish word-by-word translation and Reina-Valera 1909 text',
+			pathChirho: '/bibles-chirho/interlinear-spa-rv1909-chirho.pdf',
+			sizeChirho: '134 MB',
+			versesChirho: '31,102'
+		},
+		{
 			nameChirho: 'Hindi ERV Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Hindi word-by-word translation and Hindi Easy-to-Read Version text',
 			pathChirho: '/bibles-chirho/interlinear-hin-hinerv-chirho.pdf',
