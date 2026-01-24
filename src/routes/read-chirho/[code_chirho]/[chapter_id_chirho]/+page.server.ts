@@ -3,19 +3,32 @@
 // — John 3:16
 
 import type { PageServerLoad as PageServerLoadChirho } from './$types';
-import { dbChirho, eqChirho, andChirho, likeChirho, queryRawChirho } from '$lib/server/db-chirho';
+import {
+	dbChirho,
+	eqChirho,
+	andChirho,
+	likeChirho,
+	maxChirho,
+	isNullChirho,
+	queryRawChirho
+} from '$lib/server/db-chirho';
 import {
 	languageTableChirho,
 	bookTableChirho,
 	verseTableChirho,
+	wordTableChirho,
+	lemmaFormTableChirho,
+	phraseTableChirho,
+	phraseWordTableChirho,
 	referenceVersionTableChirho,
 	referenceVerseTableChirho
 } from '$lib/server/schema-chirho';
 import { error as errorChirho } from '@sveltejs/kit';
 import { parseChapterIdChirho } from '$lib/modules-chirho/bible-core-chirho/queries-chirho';
 
-// NOTE: Raw SQL queries reference upstream database tables (word, phrase, gloss, etc.)
-// which don't have Chirho suffix - they're from the nextjs-platform-chirho schema.
+// NOTE: The words-with-glosses query uses raw SQL with LATERAL join for performance.
+// This is a PostgreSQL-specific optimization that avoids duplicates when a word has
+// phrases in multiple languages. Simpler queries have been converted to Drizzle.
 
 interface WordWithGlossRowChirho {
 	wordId: string;
@@ -25,22 +38,6 @@ interface WordWithGlossRowChirho {
 	gloss: string | null;
 	state: string | null;
 	source: string | null;
-}
-
-interface BookWithChaptersRowChirho {
-	idChirho: number;
-	nameChirho: string;
-	maxChapterChirho: number;
-}
-
-interface LanguageWithTranslationsRowChirho {
-	codeChirho: string;
-	nameChirho: string;
-}
-
-interface ReferenceVerseRowChirho {
-	verseIdChirho: string;
-	textChirho: string;
 }
 
 export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: urlChirho }) => {
@@ -160,14 +157,17 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		? `${bookIdChirho.toString().padStart(2, '0')}${(chapterChirho + 1).toString().padStart(3, '0')}`
 		: null;
 
-	// Get all books with their chapter counts for navigation
-	const allBooksChirho = await queryRawChirho<BookWithChaptersRowChirho>(
-		`SELECT b.id AS "idChirho", b.name AS "nameChirho", MAX(v.chapter) as "maxChapterChirho"
-		 FROM book b
-		 JOIN verse v ON v.book_id = b.id
-		 GROUP BY b.id, b.name
-		 ORDER BY b.id`
-	);
+	// Get all books with their chapter counts for navigation (Drizzle typed query)
+	const allBooksChirho = await dbChirho
+		.select({
+			idChirho: bookTableChirho.idChirho,
+			nameChirho: bookTableChirho.nameChirho,
+			maxChapterChirho: maxChirho(verseTableChirho.chapterChirho)
+		})
+		.from(bookTableChirho)
+		.innerJoin(verseTableChirho, eqChirho(verseTableChirho.bookIdChirho, bookTableChirho.idChirho))
+		.groupBy(bookTableChirho.idChirho, bookTableChirho.nameChirho)
+		.orderBy(bookTableChirho.idChirho);
 
 	// Generate chapter list for current book using maxChapter from query
 	const currentBookInfoChirho = allBooksChirho.find((bChirho) => bChirho.idChirho === bookIdChirho);
@@ -177,18 +177,22 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		(_, iChirho) => iChirho + 1
 	);
 
-	// Get languages that have translations for current book
-	const languagesWithTranslationsChirho = await queryRawChirho<LanguageWithTranslationsRowChirho>(
-		`SELECT DISTINCT l.code AS "codeChirho", l.name AS "nameChirho"
-		 FROM language l
-		 JOIN phrase p ON p.language_id = l.id
-		 JOIN phrase_word pw ON pw.phrase_id = p.id
-		 JOIN word w ON w.id = pw.word_id
-		 JOIN verse v ON v.id = w.verse_id
-		 WHERE v.book_id = $1 AND p.deleted_at IS NULL
-		 ORDER BY l.name`,
-		[bookIdChirho]
-	);
+	// Get languages that have translations for current book (Drizzle typed query)
+	const languagesWithTranslationsChirho = await dbChirho
+		.selectDistinct({
+			codeChirho: languageTableChirho.codeChirho,
+			nameChirho: languageTableChirho.nameChirho
+		})
+		.from(languageTableChirho)
+		.innerJoin(phraseTableChirho, eqChirho(phraseTableChirho.languageIdChirho, languageTableChirho.idChirho))
+		.innerJoin(phraseWordTableChirho, eqChirho(phraseWordTableChirho.phraseIdChirho, phraseTableChirho.idChirho))
+		.innerJoin(wordTableChirho, eqChirho(wordTableChirho.idChirho, phraseWordTableChirho.wordIdChirho))
+		.innerJoin(verseTableChirho, eqChirho(verseTableChirho.idChirho, wordTableChirho.verseIdChirho))
+		.where(andChirho(
+			eqChirho(verseTableChirho.bookIdChirho, bookIdChirho),
+			isNullChirho(phraseTableChirho.deletedAtChirho)
+		))
+		.orderBy(languageTableChirho.nameChirho);
 
 	// Get all reference versions
 	const referenceVersionsChirho = await dbChirho
@@ -221,16 +225,20 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		}
 	}
 
-	// Get reference verses for the chapter using the preferred version
+	// Get reference verses for the chapter using the preferred version (Drizzle typed query)
 	// Chapter verses match pattern: bookId (2 digits) + chapter (3 digits) + verse (3 digits)
 	const chapterPrefixChirho = `${bookIdChirho.toString().padStart(2, '0')}${chapterChirho.toString().padStart(3, '0')}`;
-	const referenceVersesChirho = await queryRawChirho<ReferenceVerseRowChirho>(
-		`SELECT verse_id_chirho AS "verseIdChirho", text_chirho AS "textChirho"
-		 FROM reference_verse_chirho
-		 WHERE version_id_chirho = $1 AND verse_id_chirho LIKE $2
-		 ORDER BY verse_id_chirho`,
-		[preferredVersionIdChirho, `${chapterPrefixChirho}%`]
-	);
+	const referenceVersesChirho = await dbChirho
+		.select({
+			verseIdChirho: referenceVerseTableChirho.verseIdChirho,
+			textChirho: referenceVerseTableChirho.textChirho
+		})
+		.from(referenceVerseTableChirho)
+		.where(andChirho(
+			eqChirho(referenceVerseTableChirho.versionIdChirho, preferredVersionIdChirho),
+			likeChirho(referenceVerseTableChirho.verseIdChirho, `${chapterPrefixChirho}%`)
+		))
+		.orderBy(referenceVerseTableChirho.verseIdChirho);
 
 	// Convert reference verses to a map for easy lookup
 	const referenceVersesMapChirho: Record<string, string> = {};

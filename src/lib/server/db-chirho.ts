@@ -71,6 +71,11 @@ export async function closeDbChirho(): Promise<void> {
 // Re-export common Drizzle functions with Chirho suffix wrappers
 export {
 	count as countChirho,
+	countDistinct as countDistinctChirho,
+	max as maxChirho,
+	min as minChirho,
+	sum as sumChirho,
+	avg as avgChirho,
 	eq as eqChirho,
 	and as andChirho,
 	or as orChirho,
