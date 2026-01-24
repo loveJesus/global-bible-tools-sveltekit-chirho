@@ -5,6 +5,7 @@
 <script lang="ts">
 	import type { PageData as PageDataChirho, ActionData as ActionDataChirho } from './$types';
 	import { enhance as enhanceChirho } from '$app/forms';
+	import { tChirho } from '$lib/i18n-chirho';
 
 	let { data: dataChirho, form: formChirho }: { data: PageDataChirho; form: ActionDataChirho } =
 		$props();
@@ -34,19 +35,19 @@
 </script>
 
 <svelte:head>
-	<title>Language Management | Global Bible Tools</title>
+	<title>{$tChirho('admin.languagesChirho.titleChirho')} | {$tChirho('common.appNameChirho')}</title>
 </svelte:head>
 
 <div class="min-h-screen bg-slate-50 py-12 px-4">
 	<div class="max-w-6xl mx-auto">
 		<div class="flex items-center justify-between">
 			<div>
-				<h1 class="text-3xl font-bold text-slate-800">Language Management</h1>
+				<h1 class="text-3xl font-bold text-slate-800">{$tChirho('admin.languagesChirho.titleChirho')}</h1>
 				<p class="mt-2 text-slate-600">
-					Manage translation languages ({dataChirho.languagesChirho.length} languages)
+					{$tChirho('admin.languagesChirho.subtitleChirho')} ({dataChirho.languagesChirho.length})
 				</p>
 			</div>
-			<a href="/admin-chirho" class="text-blue-600 hover:underline text-sm">← Back to Admin</a>
+			<a href="/admin-chirho" class="text-blue-600 hover:underline text-sm">{$tChirho('admin.backToAdminChirho')}</a>
 		</div>
 
 		<!-- Success/Error Messages -->
@@ -68,7 +69,7 @@
 			<div class="flex-1 relative">
 				<input
 					type="text"
-					placeholder="Search languages..."
+					placeholder={$tChirho('admin.languagesChirho.searchPlaceholderChirho')}
 					bind:value={searchQueryChirho}
 					class="w-full px-4 py-2 pl-10 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 				/>
@@ -99,7 +100,7 @@
 						d="M12 4v16m8-8H4"
 					/>
 				</svg>
-				Add Language
+				{$tChirho('admin.languagesChirho.addLanguageChirho')}
 			</button>
 		</div>
 
@@ -109,22 +110,22 @@
 				<thead class="bg-slate-50 border-b border-slate-200">
 					<tr>
 						<th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-							>Language</th
+							>{$tChirho('admin.languagesChirho.tableHeadersChirho.languageChirho')}</th
 						>
 						<th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-							>Code</th
+							>{$tChirho('admin.languagesChirho.tableHeadersChirho.codeChirho')}</th
 						>
 						<th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-							>Members</th
+							>{$tChirho('admin.languagesChirho.tableHeadersChirho.membersChirho')}</th
 						>
 						<th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-							>Progress</th
+							>{$tChirho('admin.languagesChirho.tableHeadersChirho.progressChirho')}</th
 						>
 						<th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-							>Dir</th
+							>{$tChirho('admin.languagesChirho.tableHeadersChirho.dirChirho')}</th
 						>
 						<th class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"
-							>Actions</th
+							>{$tChirho('admin.languagesChirho.tableHeadersChirho.actionsChirho')}</th
 						>
 					</tr>
 				</thead>
@@ -156,7 +157,7 @@
 							<td class="px-6 py-4">
 								<div class="w-32">
 									<div class="flex justify-between text-xs text-slate-500 mb-1">
-										<span>{langChirho.wordCountChirho.toLocaleString()} words</span>
+										<span>{langChirho.wordCountChirho.toLocaleString()} {$tChirho('admin.languagesChirho.wordsChirho')}</span>
 										<span>{progressPercentChirho}%</span>
 									</div>
 									<div class="h-2 bg-slate-200 rounded-full overflow-hidden">
@@ -166,7 +167,7 @@
 										></div>
 									</div>
 									<div class="text-xs text-slate-400 mt-0.5">
-										{langChirho.approvedCountChirho.toLocaleString()} approved
+										{langChirho.approvedCountChirho.toLocaleString()} {$tChirho('admin.languagesChirho.approvedChirho')}
 									</div>
 								</div>
 							</td>
@@ -185,26 +186,26 @@
 										href="/read-chirho/{langChirho.codeChirho}"
 										class="text-blue-600 hover:text-blue-800 text-sm"
 									>
-										View
+										{$tChirho('admin.languagesChirho.viewChirho')}
 									</a>
 									<a
 										href="/admin-chirho/languages-chirho/{langChirho.codeChirho}/settings-chirho"
 										class="text-emerald-600 hover:text-emerald-800 text-sm"
 									>
-										Settings
+										{$tChirho('admin.languagesChirho.settingsChirho')}
 									</a>
 									<a
 										href="/admin-chirho/languages-chirho/{langChirho.codeChirho}/snapshots-chirho"
 										class="text-purple-600 hover:text-purple-800 text-sm"
 									>
-										Snapshots
+										{$tChirho('admin.languagesChirho.snapshotsChirho')}
 									</a>
 									<button
 										type="button"
 										onclick={() => (editingLanguageChirho = langChirho)}
 										class="text-slate-600 hover:text-slate-800 text-sm"
 									>
-										Edit
+										{$tChirho('admin.languagesChirho.editChirho')}
 									</button>
 								</div>
 							</td>
@@ -216,9 +217,9 @@
 			{#if filteredLanguagesChirho.length === 0}
 				<div class="px-6 py-12 text-center text-slate-500">
 					{#if searchQueryChirho}
-						No languages match "{searchQueryChirho}"
+						{$tChirho('admin.languagesChirho.noMatchChirho')} "{searchQueryChirho}"
 					{:else}
-						No languages found
+						{$tChirho('admin.languagesChirho.noLanguagesChirho')}
 					{/if}
 				</div>
 			{/if}
@@ -236,11 +237,11 @@
 			aria-label="Close modal"
 		></button>
 		<div class="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6">
-			<h2 class="text-xl font-semibold text-slate-800">Add New Language</h2>
+			<h2 class="text-xl font-semibold text-slate-800">{$tChirho('admin.languagesChirho.addModalChirho.titleChirho')}</h2>
 
 			<form method="POST" action="?/addLanguageChirho" use:enhanceChirho class="mt-4 space-y-4">
 				<div>
-					<label for="code" class="block text-sm font-medium text-slate-700">Language Code</label>
+					<label for="code" class="block text-sm font-medium text-slate-700">{$tChirho('admin.languagesChirho.addModalChirho.codeChirho')}</label>
 					<input
 						type="text"
 						id="code"
@@ -248,26 +249,26 @@
 						required
 						maxlength="3"
 						pattern="[a-z]{'{'}3{'}'}"
-						placeholder="e.g., fra, deu, jpn"
+						placeholder={$tChirho('admin.languagesChirho.addModalChirho.codePlaceholderChirho')}
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					/>
-					<p class="mt-1 text-xs text-slate-500">3-letter ISO 639-3 code</p>
+					<p class="mt-1 text-xs text-slate-500">{$tChirho('admin.languagesChirho.addModalChirho.codeHintChirho')}</p>
 				</div>
 
 				<div>
-					<label for="name" class="block text-sm font-medium text-slate-700">Language Name</label>
+					<label for="name" class="block text-sm font-medium text-slate-700">{$tChirho('admin.languagesChirho.addModalChirho.nameChirho')}</label>
 					<input
 						type="text"
 						id="name"
 						name="nameChirho"
 						required
-						placeholder="e.g., French, German, Japanese"
+						placeholder={$tChirho('admin.languagesChirho.addModalChirho.namePlaceholderChirho')}
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					/>
 				</div>
 
 				<div>
-					<label for="font" class="block text-sm font-medium text-slate-700">Font</label>
+					<label for="font" class="block text-sm font-medium text-slate-700">{$tChirho('admin.languagesChirho.addModalChirho.fontChirho')}</label>
 					<input
 						type="text"
 						id="font"
@@ -279,15 +280,15 @@
 
 				<div>
 					<label for="textDirection" class="block text-sm font-medium text-slate-700"
-						>Text Direction</label
+						>{$tChirho('admin.languagesChirho.addModalChirho.textDirectionChirho')}</label
 					>
 					<select
 						id="textDirection"
 						name="textDirectionChirho"
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					>
-						<option value="ltr">Left to Right (LTR)</option>
-						<option value="rtl">Right to Left (RTL)</option>
+						<option value="ltr">{$tChirho('admin.languagesChirho.addModalChirho.ltrChirho')}</option>
+						<option value="rtl">{$tChirho('admin.languagesChirho.addModalChirho.rtlChirho')}</option>
 					</select>
 				</div>
 
@@ -297,13 +298,13 @@
 						onclick={() => (showAddModalChirho = false)}
 						class="px-4 py-2 text-slate-600 hover:text-slate-800"
 					>
-						Cancel
+						{$tChirho('admin.languagesChirho.addModalChirho.cancelChirho')}
 					</button>
 					<button
 						type="submit"
 						class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
 					>
-						Add Language
+						{$tChirho('admin.languagesChirho.addModalChirho.addChirho')}
 					</button>
 				</div>
 			</form>
@@ -321,13 +322,13 @@
 			aria-label="Close modal"
 		></button>
 		<div class="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6">
-			<h2 class="text-xl font-semibold text-slate-800">Edit Language</h2>
+			<h2 class="text-xl font-semibold text-slate-800">{$tChirho('admin.languagesChirho.editModalChirho.titleChirho')}</h2>
 
 			<form method="POST" action="?/updateLanguageChirho" use:enhanceChirho class="mt-4 space-y-4">
 				<input type="hidden" name="idChirho" value={editingLanguageChirho.idChirho} />
 
 				<div>
-					<label for="edit-code" class="block text-sm font-medium text-slate-700">Language Code</label>
+					<label for="edit-code" class="block text-sm font-medium text-slate-700">{$tChirho('admin.languagesChirho.addModalChirho.codeChirho')}</label>
 					<input
 						type="text"
 						id="edit-code"
@@ -335,12 +336,12 @@
 						value={editingLanguageChirho.codeChirho}
 						class="mt-1 w-full px-3 py-2 bg-slate-100 border border-slate-300 rounded-lg text-slate-500"
 					/>
-					<p class="mt-1 text-xs text-slate-500">Code cannot be changed</p>
+					<p class="mt-1 text-xs text-slate-500">{$tChirho('admin.languagesChirho.editModalChirho.codeDisabledChirho')}</p>
 				</div>
 
 				<div>
 					<label for="edit-name" class="block text-sm font-medium text-slate-700"
-						>Language Name</label
+						>{$tChirho('admin.languagesChirho.addModalChirho.nameChirho')}</label
 					>
 					<input
 						type="text"
@@ -353,7 +354,7 @@
 				</div>
 
 				<div>
-					<label for="edit-font" class="block text-sm font-medium text-slate-700">Font</label>
+					<label for="edit-font" class="block text-sm font-medium text-slate-700">{$tChirho('admin.languagesChirho.addModalChirho.fontChirho')}</label>
 					<input
 						type="text"
 						id="edit-font"
@@ -365,7 +366,7 @@
 
 				<div>
 					<label for="edit-textDirection" class="block text-sm font-medium text-slate-700"
-						>Text Direction</label
+						>{$tChirho('admin.languagesChirho.addModalChirho.textDirectionChirho')}</label
 					>
 					<select
 						id="edit-textDirection"
@@ -373,10 +374,10 @@
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					>
 						<option value="ltr" selected={editingLanguageChirho.textDirectionChirho === 'ltr'}
-							>Left to Right (LTR)</option
+							>{$tChirho('admin.languagesChirho.addModalChirho.ltrChirho')}</option
 						>
 						<option value="rtl" selected={editingLanguageChirho.textDirectionChirho === 'rtl'}
-							>Right to Left (RTL)</option
+							>{$tChirho('admin.languagesChirho.addModalChirho.rtlChirho')}</option
 						>
 					</select>
 				</div>
@@ -387,13 +388,13 @@
 						onclick={() => (editingLanguageChirho = null)}
 						class="px-4 py-2 text-slate-600 hover:text-slate-800"
 					>
-						Cancel
+						{$tChirho('admin.languagesChirho.addModalChirho.cancelChirho')}
 					</button>
 					<button
 						type="submit"
 						class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
 					>
-						Save Changes
+						{$tChirho('admin.languagesChirho.editModalChirho.saveChirho')}
 					</button>
 				</div>
 			</form>

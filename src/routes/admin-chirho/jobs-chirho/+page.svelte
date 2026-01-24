@@ -4,6 +4,7 @@
 
 <script lang="ts">
 	import type { PageData as PageDataChirho } from './$types';
+	import { tChirho } from '$lib/i18n-chirho';
 
 	let { data: dataChirho }: { data: PageDataChirho } = $props();
 
@@ -46,32 +47,32 @@
 	function getStatusBadgeChirho(
 		succeededChirho: boolean | null,
 		endDateChirho: string | null
-	): { classChirho: string; textChirho: string } {
+	): { classChirho: string; keyChirho: string } {
 		if (succeededChirho === true) {
-			return { classChirho: 'bg-emerald-100 text-emerald-700', textChirho: 'Success' };
+			return { classChirho: 'bg-emerald-100 text-emerald-700', keyChirho: 'successChirho' };
 		}
 		if (succeededChirho === false) {
-			return { classChirho: 'bg-red-100 text-red-700', textChirho: 'Failed' };
+			return { classChirho: 'bg-red-100 text-red-700', keyChirho: 'failedChirho' };
 		}
 		if (endDateChirho === null) {
-			return { classChirho: 'bg-blue-100 text-blue-700', textChirho: 'Running' };
+			return { classChirho: 'bg-blue-100 text-blue-700', keyChirho: 'runningChirho' };
 		}
-		return { classChirho: 'bg-slate-100 text-slate-700', textChirho: 'Unknown' };
+		return { classChirho: 'bg-slate-100 text-slate-700', keyChirho: 'unknownChirho' };
 	}
 </script>
 
 <svelte:head>
-	<title>Background Jobs | Global Bible Tools</title>
+	<title>{$tChirho('admin.jobsChirho.titleChirho')} | {$tChirho('common.appNameChirho')}</title>
 </svelte:head>
 
 <div class="min-h-screen bg-slate-50 py-12 px-4">
 	<div class="max-w-6xl mx-auto">
 		<div class="flex items-center justify-between">
 			<div>
-				<h1 class="text-3xl font-bold text-slate-800">Background Jobs</h1>
-				<p class="mt-2 text-slate-600">View import job status and history</p>
+				<h1 class="text-3xl font-bold text-slate-800">{$tChirho('admin.jobsChirho.titleChirho')}</h1>
+				<p class="mt-2 text-slate-600">{$tChirho('admin.jobsChirho.subtitleChirho')}</p>
 			</div>
-			<a href="/admin-chirho" class="text-blue-600 hover:underline text-sm">← Back to Admin</a>
+			<a href="/admin-chirho" class="text-blue-600 hover:underline text-sm">{$tChirho('admin.backToAdminChirho')}</a>
 		</div>
 
 		<!-- Stats Cards -->
@@ -80,25 +81,25 @@
 				<div class="text-2xl font-bold text-slate-900">
 					{dataChirho.statsChirho.totalJobsChirho}
 				</div>
-				<div class="text-sm text-slate-500">Total Jobs</div>
+				<div class="text-sm text-slate-500">{$tChirho('admin.jobsChirho.statsChirho.totalChirho')}</div>
 			</div>
 			<div class="bg-white rounded-xl shadow-sm border border-emerald-200 p-4">
 				<div class="text-2xl font-bold text-emerald-600">
 					{dataChirho.statsChirho.successfulJobsChirho}
 				</div>
-				<div class="text-sm text-slate-500">Successful</div>
+				<div class="text-sm text-slate-500">{$tChirho('admin.jobsChirho.statsChirho.successfulChirho')}</div>
 			</div>
 			<div class="bg-white rounded-xl shadow-sm border border-red-200 p-4">
 				<div class="text-2xl font-bold text-red-600">
 					{dataChirho.statsChirho.failedJobsChirho}
 				</div>
-				<div class="text-sm text-slate-500">Failed</div>
+				<div class="text-sm text-slate-500">{$tChirho('admin.jobsChirho.statsChirho.failedChirho')}</div>
 			</div>
 			<div class="bg-white rounded-xl shadow-sm border border-blue-200 p-4">
 				<div class="text-2xl font-bold text-blue-600">
 					{dataChirho.statsChirho.pendingJobsChirho}
 				</div>
-				<div class="text-sm text-slate-500">Running</div>
+				<div class="text-sm text-slate-500">{$tChirho('admin.jobsChirho.statsChirho.runningChirho')}</div>
 			</div>
 		</div>
 
@@ -111,7 +112,7 @@
 					: 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-300'}"
 				onclick={() => (filterStatusChirho = 'all')}
 			>
-				All
+				{$tChirho('admin.jobsChirho.filterChirho.allChirho')}
 			</button>
 			<button
 				type="button"
@@ -120,7 +121,7 @@
 					: 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-300'}"
 				onclick={() => (filterStatusChirho = 'success')}
 			>
-				Success
+				{$tChirho('admin.jobsChirho.filterChirho.successChirho')}
 			</button>
 			<button
 				type="button"
@@ -129,7 +130,7 @@
 					: 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-300'}"
 				onclick={() => (filterStatusChirho = 'failed')}
 			>
-				Failed
+				{$tChirho('admin.jobsChirho.filterChirho.failedChirho')}
 			</button>
 			<button
 				type="button"
@@ -138,7 +139,7 @@
 					: 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-300'}"
 				onclick={() => (filterStatusChirho = 'pending')}
 			>
-				Running
+				{$tChirho('admin.jobsChirho.filterChirho.runningChirho')}
 			</button>
 		</div>
 
@@ -150,23 +151,23 @@
 						<tr>
 							<th
 								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-								>Language</th
+								>{$tChirho('admin.jobsChirho.tableHeadersChirho.languageChirho')}</th
 							>
 							<th
 								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-								>Started</th
+								>{$tChirho('admin.jobsChirho.tableHeadersChirho.startedChirho')}</th
 							>
 							<th
 								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-								>Duration</th
+								>{$tChirho('admin.jobsChirho.tableHeadersChirho.durationChirho')}</th
 							>
 							<th
 								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-								>User</th
+								>{$tChirho('admin.jobsChirho.tableHeadersChirho.userChirho')}</th
 							>
 							<th
 								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-								>Status</th
+								>{$tChirho('admin.jobsChirho.tableHeadersChirho.statusChirho')}</th
 							>
 						</tr>
 					</thead>
@@ -197,12 +198,12 @@
 											{jobChirho.userNameChirho ?? jobChirho.userEmailChirho}
 										</div>
 									{:else}
-										<span class="text-sm text-slate-400">System</span>
+										<span class="text-sm text-slate-400">{$tChirho('admin.jobsChirho.systemUserChirho')}</span>
 									{/if}
 								</td>
 								<td class="px-6 py-4">
 									<span class="px-2 py-0.5 text-xs rounded {statusChirho.classChirho}">
-										{statusChirho.textChirho}
+										{$tChirho(`admin.jobsChirho.statusChirho.${statusChirho.keyChirho}`)}
 									</span>
 								</td>
 							</tr>
@@ -212,9 +213,9 @@
 			{:else}
 				<div class="px-6 py-12 text-center text-slate-500">
 					{#if filterStatusChirho !== 'all'}
-						No {filterStatusChirho} jobs found
+						{$tChirho('admin.jobsChirho.noJobsFilteredChirho')} ({filterStatusChirho})
 					{:else}
-						No import jobs found
+						{$tChirho('admin.jobsChirho.noJobsChirho')}
 					{/if}
 				</div>
 			{/if}
@@ -223,8 +224,7 @@
 		<!-- Help Text -->
 		<div class="mt-4 text-sm text-slate-500">
 			<p>
-				Import jobs are created when translators import glosses from external sources. Jobs run
-				asynchronously and may take several minutes to complete.
+				{$tChirho('admin.jobsChirho.helpTextChirho')}
 			</p>
 		</div>
 	</div>

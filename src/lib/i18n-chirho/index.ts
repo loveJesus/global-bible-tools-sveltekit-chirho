@@ -19,6 +19,11 @@ const configChirho: ConfigChirho = {
 			key: 'landing',
 			loader: async () => (await import('./messages-chirho/en-chirho/landing-chirho.json')).default
 		},
+		{
+			locale: 'en',
+			key: 'admin',
+			loader: async () => (await import('./messages-chirho/en-chirho/admin-chirho.json')).default
+		},
 		// Spanish
 		{
 			locale: 'es',

@@ -4,6 +4,7 @@
 
 <script lang="ts">
 	import type { PageData as PageDataChirho } from './$types';
+	import { tChirho } from '$lib/i18n-chirho';
 
 	let { data: dataChirho }: { data: PageDataChirho } = $props();
 
@@ -48,7 +49,7 @@
 </script>
 
 <svelte:head>
-	<title>Analytics Dashboard | Global Bible Tools</title>
+	<title>{$tChirho('admin.analyticsChirho.titleChirho')} | {$tChirho('common.appNameChirho')}</title>
 </svelte:head>
 
 <div class="min-h-screen bg-slate-50 py-8 px-4">
@@ -56,14 +57,14 @@
 		<!-- Header -->
 		<div class="flex items-center justify-between mb-8">
 			<div>
-				<h1 class="text-3xl font-bold text-slate-800">Analytics Dashboard</h1>
-				<p class="text-slate-600 mt-1">Overview of translation progress and activity</p>
+				<h1 class="text-3xl font-bold text-slate-800">{$tChirho('admin.analyticsChirho.titleChirho')}</h1>
+				<p class="text-slate-600 mt-1">{$tChirho('admin.analyticsChirho.subtitleChirho')}</p>
 			</div>
 			<a
 				href="/admin-chirho"
 				class="text-sm text-blue-600 hover:text-blue-800 hover:underline"
 			>
-				← Back to Admin
+				{$tChirho('admin.backToAdminChirho')}
 			</a>
 		</div>
 
@@ -73,38 +74,38 @@
 				<div class="text-3xl font-bold text-slate-900">
 					{formatNumberChirho(dataChirho.overviewStatsChirho.totalLanguagesChirho)}
 				</div>
-				<div class="text-sm text-slate-600 mt-1">Languages</div>
+				<div class="text-sm text-slate-600 mt-1">{$tChirho('admin.analyticsChirho.overviewChirho.languagesChirho')}</div>
 			</div>
 			<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
 				<div class="text-3xl font-bold text-slate-900">
 					{formatNumberChirho(dataChirho.overviewStatsChirho.totalUsersChirho)}
 				</div>
-				<div class="text-sm text-slate-600 mt-1">Active Users</div>
+				<div class="text-sm text-slate-600 mt-1">{$tChirho('admin.analyticsChirho.overviewChirho.activeUsersChirho')}</div>
 			</div>
 			<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
 				<div class="text-3xl font-bold text-slate-900">
 					{formatNumberChirho(dataChirho.overviewStatsChirho.totalGlossesChirho)}
 				</div>
-				<div class="text-sm text-slate-600 mt-1">Total Glosses</div>
+				<div class="text-sm text-slate-600 mt-1">{$tChirho('admin.analyticsChirho.overviewChirho.totalGlossesChirho')}</div>
 			</div>
 			<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
 				<div class="text-3xl font-bold text-emerald-600">
 					{formatNumberChirho(dataChirho.overviewStatsChirho.approvedGlossesChirho)}
 				</div>
-				<div class="text-sm text-slate-600 mt-1">Approved ({approvalRateChirho}%)</div>
+				<div class="text-sm text-slate-600 mt-1">{$tChirho('admin.analyticsChirho.overviewChirho.approvedChirho')} ({approvalRateChirho}%)</div>
 			</div>
 			<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
 				<div class="text-3xl font-bold text-purple-600">
 					{formatNumberChirho(dataChirho.overviewStatsChirho.machineGlossesChirho)}
 				</div>
-				<div class="text-sm text-slate-600 mt-1">Machine Glosses</div>
+				<div class="text-sm text-slate-600 mt-1">{$tChirho('admin.analyticsChirho.overviewChirho.machineGlossesChirho')}</div>
 			</div>
 		</div>
 
 		<div class="grid md:grid-cols-2 gap-6">
 			<!-- Language Progress -->
 			<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-				<h2 class="text-lg font-semibold text-slate-800 mb-4">Language Progress</h2>
+				<h2 class="text-lg font-semibold text-slate-800 mb-4">{$tChirho('admin.analyticsChirho.languageProgressChirho.titleChirho')}</h2>
 				<div class="space-y-4 max-h-96 overflow-y-auto">
 					{#each dataChirho.languageProgressChirho as langChirho}
 						{@const progressChirho =
@@ -121,7 +122,7 @@
 									<span class="text-slate-400 font-normal">({langChirho.codeChirho})</span>
 								</a>
 								<span class="text-sm text-slate-500">
-									{langChirho.memberCountChirho} members
+									{langChirho.memberCountChirho} {$tChirho('admin.analyticsChirho.languageProgressChirho.membersChirho')}
 								</span>
 							</div>
 							<div class="flex items-center gap-3">
@@ -141,14 +142,14 @@
 					{/each}
 
 					{#if dataChirho.languageProgressChirho.length === 0}
-						<p class="text-slate-500 text-center py-8">No languages configured yet</p>
+						<p class="text-slate-500 text-center py-8">{$tChirho('admin.analyticsChirho.languageProgressChirho.noLanguagesChirho')}</p>
 					{/if}
 				</div>
 			</div>
 
 			<!-- Recent Activity -->
 			<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-				<h2 class="text-lg font-semibold text-slate-800 mb-4">Recent Activity (Last 7 Days)</h2>
+				<h2 class="text-lg font-semibold text-slate-800 mb-4">{$tChirho('admin.analyticsChirho.recentActivityChirho.titleChirho')}</h2>
 				<div class="space-y-4 max-h-96 overflow-y-auto">
 					{#each activityByDateChirho() as [dateChirho, activitiesChirho]}
 						<div class="border-b border-slate-100 pb-3 last:border-0">
@@ -163,10 +164,10 @@
 								<div class="flex justify-between items-center py-1">
 									<span class="text-slate-700">{activityChirho.languageNameChirho}</span>
 									<div class="text-sm">
-										<span class="text-slate-600">{activityChirho.glossCountChirho} glosses</span>
+										<span class="text-slate-600">{activityChirho.glossCountChirho} {$tChirho('admin.analyticsChirho.recentActivityChirho.glossesChirho')}</span>
 										{#if activityChirho.approvedCountChirho > 0}
 											<span class="text-emerald-600 ml-2">
-												({activityChirho.approvedCountChirho} approved)
+												({activityChirho.approvedCountChirho} {$tChirho('admin.analyticsChirho.recentActivityChirho.approvedChirho')})
 											</span>
 										{/if}
 									</div>
@@ -176,7 +177,7 @@
 					{/each}
 
 					{#if dataChirho.recentActivityChirho.length === 0}
-						<p class="text-slate-500 text-center py-8">No recent activity</p>
+						<p class="text-slate-500 text-center py-8">{$tChirho('admin.analyticsChirho.recentActivityChirho.noActivityChirho')}</p>
 					{/if}
 				</div>
 			</div>
@@ -186,7 +187,7 @@
 		{#if dataChirho.bookProgressChirho.length > 0}
 			<div class="mt-6 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
 				<h2 class="text-lg font-semibold text-slate-800 mb-4">
-					Book Progress (Top Languages)
+					{$tChirho('admin.analyticsChirho.bookProgressChirho.titleChirho')}
 				</h2>
 
 				<div class="overflow-x-auto">
@@ -202,7 +203,7 @@
 
 					<!-- Old Testament -->
 					<div class="mb-4">
-						<h3 class="text-sm font-medium text-slate-500 mb-2">Old Testament</h3>
+						<h3 class="text-sm font-medium text-slate-500 mb-2">{$tChirho('admin.analyticsChirho.bookProgressChirho.oldTestamentChirho')}</h3>
 						<div class="grid grid-cols-[repeat(auto-fill,minmax(2.5rem,1fr))] gap-1">
 							{#each Array.from(new Set(dataChirho.bookProgressChirho.filter((bChirho) => bChirho.bookIdChirho <= 39).map((bChirho) => bChirho.bookIdChirho))) as bookIdChirho}
 								{@const bookChirho = dataChirho.bookProgressChirho.find(
@@ -238,7 +239,7 @@
 
 					<!-- New Testament -->
 					<div>
-						<h3 class="text-sm font-medium text-slate-500 mb-2">New Testament</h3>
+						<h3 class="text-sm font-medium text-slate-500 mb-2">{$tChirho('admin.analyticsChirho.bookProgressChirho.newTestamentChirho')}</h3>
 						<div class="grid grid-cols-[repeat(auto-fill,minmax(2.5rem,1fr))] gap-1">
 							{#each Array.from(new Set(dataChirho.bookProgressChirho.filter((bChirho) => bChirho.bookIdChirho > 39).map((bChirho) => bChirho.bookIdChirho))) as bookIdChirho}
 								{@const bookChirho = dataChirho.bookProgressChirho.find(
