@@ -65,41 +65,41 @@
 	<title>{$tChirho('admin.jobsChirho.titleChirho')} | {$tChirho('common.appNameChirho')}</title>
 </svelte:head>
 
-<div class="min-h-screen bg-slate-50 py-12 px-4">
+<div class="min-h-screen bg-slate-50 dark:bg-slate-900 py-12 px-4">
 	<div class="max-w-6xl mx-auto">
 		<div class="flex items-center justify-between">
 			<div>
-				<h1 class="text-3xl font-bold text-slate-800">{$tChirho('admin.jobsChirho.titleChirho')}</h1>
-				<p class="mt-2 text-slate-600">{$tChirho('admin.jobsChirho.subtitleChirho')}</p>
+				<h1 class="text-3xl font-bold text-slate-800 dark:text-white">{$tChirho('admin.jobsChirho.titleChirho')}</h1>
+				<p class="mt-2 text-slate-600 dark:text-slate-400">{$tChirho('admin.jobsChirho.subtitleChirho')}</p>
 			</div>
-			<a href="/admin-chirho" class="text-blue-600 hover:underline text-sm">{$tChirho('admin.backToAdminChirho')}</a>
+			<a href="/admin-chirho" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">{$tChirho('admin.backToAdminChirho')}</a>
 		</div>
 
 		<!-- Stats Cards -->
 		<div class="mt-8 grid gap-4 md:grid-cols-4">
-			<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-				<div class="text-2xl font-bold text-slate-900">
+			<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-4">
+				<div class="text-2xl font-bold text-slate-900 dark:text-white">
 					{dataChirho.statsChirho.totalJobsChirho}
 				</div>
-				<div class="text-sm text-slate-500">{$tChirho('admin.jobsChirho.statsChirho.totalChirho')}</div>
+				<div class="text-sm text-slate-500 dark:text-slate-400">{$tChirho('admin.jobsChirho.statsChirho.totalChirho')}</div>
 			</div>
-			<div class="bg-white rounded-xl shadow-sm border border-emerald-200 p-4">
-				<div class="text-2xl font-bold text-emerald-600">
+			<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-emerald-200 dark:border-emerald-800 p-4">
+				<div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
 					{dataChirho.statsChirho.successfulJobsChirho}
 				</div>
-				<div class="text-sm text-slate-500">{$tChirho('admin.jobsChirho.statsChirho.successfulChirho')}</div>
+				<div class="text-sm text-slate-500 dark:text-slate-400">{$tChirho('admin.jobsChirho.statsChirho.successfulChirho')}</div>
 			</div>
-			<div class="bg-white rounded-xl shadow-sm border border-red-200 p-4">
-				<div class="text-2xl font-bold text-red-600">
+			<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-red-200 dark:border-red-800 p-4">
+				<div class="text-2xl font-bold text-red-600 dark:text-red-400">
 					{dataChirho.statsChirho.failedJobsChirho}
 				</div>
-				<div class="text-sm text-slate-500">{$tChirho('admin.jobsChirho.statsChirho.failedChirho')}</div>
+				<div class="text-sm text-slate-500 dark:text-slate-400">{$tChirho('admin.jobsChirho.statsChirho.failedChirho')}</div>
 			</div>
-			<div class="bg-white rounded-xl shadow-sm border border-blue-200 p-4">
-				<div class="text-2xl font-bold text-blue-600">
+			<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-blue-200 dark:border-blue-800 p-4">
+				<div class="text-2xl font-bold text-blue-600 dark:text-blue-400">
 					{dataChirho.statsChirho.pendingJobsChirho}
 				</div>
-				<div class="text-sm text-slate-500">{$tChirho('admin.jobsChirho.statsChirho.runningChirho')}</div>
+				<div class="text-sm text-slate-500 dark:text-slate-400">{$tChirho('admin.jobsChirho.statsChirho.runningChirho')}</div>
 			</div>
 		</div>
 
@@ -108,8 +108,8 @@
 			<button
 				type="button"
 				class="px-3 py-1.5 rounded text-sm {filterStatusChirho === 'all'
-					? 'bg-slate-800 text-white'
-					: 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-300'}"
+					? 'bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-900'
+					: 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600'}"
 				onclick={() => (filterStatusChirho = 'all')}
 			>
 				{$tChirho('admin.jobsChirho.filterChirho.allChirho')}
@@ -118,7 +118,7 @@
 				type="button"
 				class="px-3 py-1.5 rounded text-sm {filterStatusChirho === 'success'
 					? 'bg-emerald-600 text-white'
-					: 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-300'}"
+					: 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600'}"
 				onclick={() => (filterStatusChirho = 'success')}
 			>
 				{$tChirho('admin.jobsChirho.filterChirho.successChirho')}
@@ -127,7 +127,7 @@
 				type="button"
 				class="px-3 py-1.5 rounded text-sm {filterStatusChirho === 'failed'
 					? 'bg-red-600 text-white'
-					: 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-300'}"
+					: 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600'}"
 				onclick={() => (filterStatusChirho = 'failed')}
 			>
 				{$tChirho('admin.jobsChirho.filterChirho.failedChirho')}
@@ -136,7 +136,7 @@
 				type="button"
 				class="px-3 py-1.5 rounded text-sm {filterStatusChirho === 'pending'
 					? 'bg-blue-600 text-white'
-					: 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-300'}"
+					: 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600'}"
 				onclick={() => (filterStatusChirho = 'pending')}
 			>
 				{$tChirho('admin.jobsChirho.filterChirho.runningChirho')}
@@ -144,57 +144,57 @@
 		</div>
 
 		<!-- Jobs Table -->
-		<div class="mt-6 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+		<div class="mt-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
 			{#if filteredJobsChirho.length > 0}
 				<table class="w-full">
-					<thead class="bg-slate-50 border-b border-slate-200">
+					<thead class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
 						<tr>
 							<th
-								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+								class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
 								>{$tChirho('admin.jobsChirho.tableHeadersChirho.languageChirho')}</th
 							>
 							<th
-								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+								class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
 								>{$tChirho('admin.jobsChirho.tableHeadersChirho.startedChirho')}</th
 							>
 							<th
-								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+								class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
 								>{$tChirho('admin.jobsChirho.tableHeadersChirho.durationChirho')}</th
 							>
 							<th
-								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+								class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
 								>{$tChirho('admin.jobsChirho.tableHeadersChirho.userChirho')}</th
 							>
 							<th
-								class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+								class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
 								>{$tChirho('admin.jobsChirho.tableHeadersChirho.statusChirho')}</th
 							>
 						</tr>
 					</thead>
-					<tbody class="divide-y divide-slate-100">
+					<tbody class="divide-y divide-slate-100 dark:divide-slate-700">
 						{#each filteredJobsChirho as jobChirho}
 							{@const statusChirho = getStatusBadgeChirho(
 								jobChirho.succeededChirho,
 								jobChirho.endDateChirho
 							)}
-							<tr class="hover:bg-slate-50">
+							<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50">
 								<td class="px-6 py-4">
 									<div>
-										<div class="font-medium text-slate-900">{jobChirho.languageNameChirho}</div>
-										<div class="text-xs text-slate-500 font-mono">
+										<div class="font-medium text-slate-900 dark:text-white">{jobChirho.languageNameChirho}</div>
+										<div class="text-xs text-slate-500 dark:text-slate-400 font-mono">
 											{jobChirho.languageCodeChirho}
 										</div>
 									</div>
 								</td>
-								<td class="px-6 py-4 text-sm text-slate-600">
+								<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">
 									{formatDateChirho(jobChirho.startDateChirho)}
 								</td>
-								<td class="px-6 py-4 text-sm text-slate-600">
+								<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">
 									{formatDurationChirho(jobChirho.durationSecondsChirho)}
 								</td>
 								<td class="px-6 py-4">
 									{#if jobChirho.userNameChirho || jobChirho.userEmailChirho}
-										<div class="text-sm text-slate-600">
+										<div class="text-sm text-slate-600 dark:text-slate-300">
 											{jobChirho.userNameChirho ?? jobChirho.userEmailChirho}
 										</div>
 									{:else}
@@ -211,7 +211,7 @@
 					</tbody>
 				</table>
 			{:else}
-				<div class="px-6 py-12 text-center text-slate-500">
+				<div class="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
 					{#if filterStatusChirho !== 'all'}
 						{$tChirho('admin.jobsChirho.noJobsFilteredChirho')} ({filterStatusChirho})
 					{:else}
@@ -222,7 +222,7 @@
 		</div>
 
 		<!-- Help Text -->
-		<div class="mt-4 text-sm text-slate-500">
+		<div class="mt-4 text-sm text-slate-500 dark:text-slate-400">
 			<p>
 				{$tChirho('admin.jobsChirho.helpTextChirho')}
 			</p>
