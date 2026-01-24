@@ -16,13 +16,8 @@
 	let isOpenChirho = $state(false);
 	let currentCodeChirho = $state('en');
 
-	// Only show locales that have UI translations
-	const supportedLocaleCodesChirho = ['en', 'es', 'hi'];
-	const supportedLocalesChirho = $derived(
-		availableLocalesChirho.filter((localeItemChirho) =>
-			supportedLocaleCodesChirho.includes(localeItemChirho.codeChirho)
-		)
-	);
+	// All available locales from i18n config
+	const supportedLocalesChirho = availableLocalesChirho;
 
 	// Subscribe to locale store
 	$effect(() => {
@@ -40,7 +35,12 @@
 		const cookieMatchChirho = document.cookie.match(/locale=([^;]+)/);
 		const savedChirho = cookieMatchChirho?.[1] || localStorage.getItem('locale-chirho');
 
-		if (savedChirho && supportedLocaleCodesChirho.includes(savedChirho)) {
+		// Check if saved locale is in our supported list
+		const isValidLocaleChirho = savedChirho && supportedLocalesChirho.some(
+			(localeItemChirho) => localeItemChirho.codeChirho === savedChirho
+		);
+
+		if (isValidLocaleChirho) {
 			await loadTranslationsChirho(savedChirho, pageChirho.url.pathname);
 			localeChirho.set(savedChirho);
 			currentCodeChirho = savedChirho;
@@ -97,7 +97,7 @@
 
 	{#if isOpenChirho}
 		<div
-			class="absolute right-0 top-full mt-1 z-50 min-w-[140px] rounded-lg bg-white py-1 shadow-lg ring-1 ring-black/5"
+			class="absolute right-0 top-full mt-1 z-50 min-w-[160px] max-h-80 overflow-y-auto rounded-lg bg-white dark:bg-slate-800 py-1 shadow-lg ring-1 ring-black/5 dark:ring-white/10"
 			role="listbox"
 		>
 			{#each supportedLocalesChirho as localeItemChirho}
@@ -105,15 +105,15 @@
 					type="button"
 					role="option"
 					aria-selected={localeItemChirho.codeChirho === currentCodeChirho}
-					class="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-slate-100 transition-colors {localeItemChirho.codeChirho ===
+					class="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors {localeItemChirho.codeChirho ===
 					currentCodeChirho
-						? 'bg-blue-50 text-blue-700'
-						: 'text-slate-700'}"
+						? 'bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
+						: 'text-slate-700 dark:text-slate-300'}"
 					onclick={() => selectLocaleChirho(localeItemChirho.codeChirho)}
 				>
 					<span>{localeItemChirho.nativeNameChirho}</span>
 					{#if localeItemChirho.codeChirho === currentCodeChirho}
-						<svg class="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+						<svg class="h-4 w-4 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
 							<path
 								fill-rule="evenodd"
 								d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
