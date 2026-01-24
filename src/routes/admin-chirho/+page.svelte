@@ -24,6 +24,12 @@
 			iconChirho: '🌐'
 		},
 		{
+			titleChirho: 'Feedback',
+			descriptionChirho: 'View and respond to user feedback',
+			hrefChirho: '/admin-chirho/feedback-chirho',
+			iconChirho: '💬'
+		},
+		{
 			titleChirho: 'Jobs',
 			descriptionChirho: 'View background job status and history',
 			hrefChirho: '/admin-chirho/jobs-chirho',
