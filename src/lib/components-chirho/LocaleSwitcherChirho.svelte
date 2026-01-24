@@ -17,7 +17,14 @@
 	let currentCodeChirho = $state('en');
 
 	// All available locales from i18n config
-	const supportedLocalesChirho = availableLocalesChirho;
+	const supportedLocaleCodesChirho = [
+		'en', 'es', 'hi', 'fr', 'de', 'pt', 'ru', 'zh', 'ar', 'ja', 'ko', 'id', 'it', 'nl'
+	];
+	const supportedLocalesChirho = $derived(
+		availableLocalesChirho.filter((localeItemChirho) =>
+			supportedLocaleCodesChirho.includes(localeItemChirho.codeChirho)
+		)
+	);
 
 	// Subscribe to locale store
 	$effect(() => {
@@ -89,7 +96,7 @@
 				d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
 			/>
 		</svg>
-		<span>{currentLocaleChirho.nativeNameChirho}</span>
+		<span>{currentLocaleChirho?.nativeNameChirho ?? 'English'}</span>
 		<svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 		</svg>
