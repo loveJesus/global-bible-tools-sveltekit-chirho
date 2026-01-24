@@ -1,0 +1,108 @@
+{
+	"heroChirho": {
+		"missionChirho": "世界の教会は、費用や障壁なしに聖書言語学習の本格的なツールにアクセスする必要があります。",
+		"learnMoreChirho": "詳しく見る"
+	},
+	"navChirho": {
+		"visionChirho": "ビジョン",
+		"contributeChirho": "貢献",
+		"progressChirho": "進捗",
+		"aboutChirho": "私たちについて",
+		"readersBibleChirho": "リーダーズ聖書",
+		"dashboardChirho": "ダッシュボード"
+	},
+	"visionChirho": {
+		"titleChirho": "ビジョン",
+		"preferToReadChirho": "読むほうがお好みですか？",
+		"languageLearningChirho": "言語学習",
+		"biblicalStudyChirho": "聖書研究",
+		"languageLessonsChirho": {
+			"titleChirho": "言語レッスン",
+			"descriptionChirho": "YouTubeコースはすべての人に無料でギリシャ語とヘブライ語のトレーニングを提供しています。"
+		},
+		"readersBibleChirho": {
+			"titleChirho": "リーダーズ聖書",
+			"descriptionChirho": "デジタルリーダーズ聖書は、補助付きで聖書テキストを読むことで、言語学習者の理解を加速させます。"
+		},
+		"lexiconsChirho": {
+			"titleChirho": "辞書",
+			"descriptionChirho": "辞書は聖書研究においてギリシャ語とヘブライ語の意味の範囲を探るために必要です。"
+		},
+		"grammarsChirho": {
+			"titleChirho": "文法書",
+			"descriptionChirho": "文法書は聖書言語の構造を学ぶために聖書研究で使用されます。"
+		},
+		"textCriticalChirho": {
+			"titleChirho": "本文批評注釈",
+			"descriptionChirho": "本文批評注釈は聖書テキストの写本証拠における違いを説明します。"
+		}
+	},
+	"contributeChirho": {
+		"titleChirho": "貢献",
+		"giveChirho": {
+			"titleChirho": "寄付",
+			"descriptionChirho": "この活動を支援するためにBetheden Ministriesを通じてご寄付ください。"
+		},
+		"softwareChirho": {
+			"titleChirho": "ソフトウェア開発",
+			"descriptionChirho": "ソフトウェア開発やUIデザインでお手伝いいただける方は、GitHubリポジトリをご覧ください。"
+		},
+		"translateChirho": {
+			"titleChirho": "リーダーズ聖書",
+			"descriptionChirho": "ヘブライ語またはギリシャ語リーダーズ聖書の注釈翻訳にご協力いただける方は、このフォームにご記入ください。"
+		},
+		"resourcesChirho": {
+			"titleChirho": "リソース",
+			"descriptionChirho": "貢献またはデジタル化したい原語学習リソースをお持ちの方は、ご連絡ください。"
+		}
+	},
+	"progressChirho": {
+		"titleChirho": "進捗",
+		"translationProgressChirho": "リーダーズ聖書翻訳"
+	},
+	"aboutChirho": {
+		"titleChirho": "私たちについて",
+		"descriptionChirho": "アンドリューとベサニー・ケースはGlobal Bible Toolsの背後にある非営利団体Betheden Ministriesの創設者です。私たちの目的は、聖書全体をあらゆる言語で見届け、世界の教会を成長と成熟のために整えることです。西洋世界では「富の過剰」があります。私たちが最もよく理解する言語で、数千もの聖書リソースがワンクリックで手に入ります。一方、他の国々の何百万人もの人々は母国語の聖書すら持っていません。",
+		"statementOfFaithChirho": "信仰告白",
+		"constitutionChirho": "定款",
+		"coreValuesChirho": "コアバリュー",
+		"pursuitOfJoyChirho": {
+			"titleChirho": "喜びの追求",
+			"descriptionChirho": "人生全体は恐れからではなく、神における喜びの追求として生きるべきです。"
+		},
+		"partnershipChirho": {
+			"titleChirho": "パートナーシップ",
+			"descriptionChirho": "聖書は私たちがより大きな体の一部であると教えているので、私たちは他者と協力することを求めています。"
+		},
+		"eagernessToLearnChirho": {
+			"titleChirho": "学ぶ熱意",
+			"descriptionChirho": "私たちは卓越性をもって革新したいと考えており、それには継続的な好奇心と学習が必要です。"
+		},
+		"humilityChirho": {
+			"titleChirho": "謙遜",
+			"descriptionChirho": "私たちの希望は世界の教会に仕えることであり、それには彼らを第一に置く謙遜が必要です。"
+		},
+		"freelyGivingChirho": {
+			"titleChirho": "惜しみなく与える",
+			"descriptionChirho": "私たちはすべてを神からの贈り物として受け取ったので、すべてのコンテンツを無料でアクセス可能にすることを約束します。"
+		},
+		"empoweringChirho": {
+			"titleChirho": "リソース不足者を力づける",
+			"descriptionChirho": "多くの非西洋のクリスチャンが質の高い聖書リソースの不足に苦しんでいるため、彼らにアクセスを提供することに努めています。"
+		}
+	},
+	"quickAccessChirho": {
+		"readChirho": {
+			"titleChirho": "読む",
+			"descriptionChirho": "行間翻訳"
+		},
+		"translateChirho": {
+			"titleChirho": "翻訳",
+			"descriptionChirho": "翻訳を貢献"
+		},
+		"downloadsChirho": {
+			"titleChirho": "ダウンロード",
+			"descriptionChirho": "PDF聖書（KJV、WEB）"
+		}
+	}
+}

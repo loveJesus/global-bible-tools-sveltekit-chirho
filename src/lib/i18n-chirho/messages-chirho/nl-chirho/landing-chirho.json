@@ -1,0 +1,108 @@
+{
+	"heroChirho": {
+		"missionChirho": "De wereldwijde Kerk heeft toegang nodig tot serieuze hulpmiddelen voor Bijbelse taalstudies zonder kosten of belemmeringen.",
+		"learnMoreChirho": "Meer informatie"
+	},
+	"navChirho": {
+		"visionChirho": "Visie",
+		"contributeChirho": "Bijdragen",
+		"progressChirho": "Voortgang",
+		"aboutChirho": "Over ons",
+		"readersBibleChirho": "Lezersbijbel",
+		"dashboardChirho": "Dashboard"
+	},
+	"visionChirho": {
+		"titleChirho": "Visie",
+		"preferToReadChirho": "Liever lezen?",
+		"languageLearningChirho": "Talen leren",
+		"biblicalStudyChirho": "Bijbelstudie",
+		"languageLessonsChirho": {
+			"titleChirho": "Taallessen",
+			"descriptionChirho": "YouTube-cursussen bieden gratis Grieks en Hebreeuws training voor iedereen."
+		},
+		"readersBibleChirho": {
+			"titleChirho": "Lezersbijbel",
+			"descriptionChirho": "Een digitale lezersbijbel helpt taalstudenten hun begrip te versnellen door de Bijbeltekst met hulp te lezen."
+		},
+		"lexiconsChirho": {
+			"titleChirho": "Lexicons",
+			"descriptionChirho": "Lexicons zijn nodig in Bijbelstudie om het scala aan betekenissen van Griekse en Hebreeuwse woorden te verkennen."
+		},
+		"grammarsChirho": {
+			"titleChirho": "Grammatica's",
+			"descriptionChirho": "Grammatica's worden gebruikt in Bijbelstudie om de structuur van de Bijbelse talen te leren."
+		},
+		"textCriticalChirho": {
+			"titleChirho": "Tekstkritische aantekeningen",
+			"descriptionChirho": "Tekstkritische aantekeningen verklaren de verschillen in het manuscriptbewijs van de Bijbeltekst."
+		}
+	},
+	"contributeChirho": {
+		"titleChirho": "Bijdragen",
+		"giveChirho": {
+			"titleChirho": "Doneren",
+			"descriptionChirho": "Doneer alstublieft via Betheden Ministries om dit werk te financieren."
+		},
+		"softwareChirho": {
+			"titleChirho": "Softwareontwikkeling",
+			"descriptionChirho": "Als u kunt helpen met softwareontwikkeling of UI-ontwerp, bekijk dan onze GitHub-repository."
+		},
+		"translateChirho": {
+			"titleChirho": "Lezersbijbel",
+			"descriptionChirho": "Als u kunt helpen met het vertalen van glossen voor de Hebreeuwse of Griekse Lezersbijbel, vul dan dit formulier in."
+		},
+		"resourcesChirho": {
+			"titleChirho": "Bronnen",
+			"descriptionChirho": "Als u bronnen voor de studie van originele talen heeft die u wilt bijdragen of digitaliseren, neem dan contact met ons op."
+		}
+	},
+	"progressChirho": {
+		"titleChirho": "Voortgang",
+		"translationProgressChirho": "Lezersbijbel vertaling"
+	},
+	"aboutChirho": {
+		"titleChirho": "Over ons",
+		"descriptionChirho": "Andrew en Bethany Case zijn de oprichters van Betheden Ministries, de non-profitorganisatie achter Global Bible Tools. Ons doel is om de hele Bijbel in elke taal te zien en de wereldwijde Kerk uit te rusten voor groei en volwassenheid. In de westerse wereld hebben we een \"overvloed aan rijkdom\". We hebben duizenden Bijbelse hulpbronnen op een klik afstand, in de taal die we het beste begrijpen. Ondertussen hebben miljoenen mensen in andere landen niet eens een Bijbel in hun moedertaal.",
+		"statementOfFaithChirho": "Geloofsbelijdenis",
+		"constitutionChirho": "Statuten",
+		"coreValuesChirho": "Kernwaarden",
+		"pursuitOfJoyChirho": {
+			"titleChirho": "Streven naar vreugde",
+			"descriptionChirho": "Het hele leven moet geleefd worden niet uit angst, maar als een streven naar vreugde in God."
+		},
+		"partnershipChirho": {
+			"titleChirho": "Partnerschap",
+			"descriptionChirho": "Omdat de Schrift leert dat we deel uitmaken van een groter Lichaam, streven we ernaar om met anderen samen te werken."
+		},
+		"eagernessToLearnChirho": {
+			"titleChirho": "Leergierigheid",
+			"descriptionChirho": "We willen innoveren met excellentie, wat voortdurende nieuwsgierigheid en studie vereist."
+		},
+		"humilityChirho": {
+			"titleChirho": "Nederigheid",
+			"descriptionChirho": "Onze hoop is om de wereldwijde Kerk te dienen, wat de nederigheid vereist om hen op de eerste plaats te zetten."
+		},
+		"freelyGivingChirho": {
+			"titleChirho": "Vrijelijk geven",
+			"descriptionChirho": "Omdat we alles van God als een geschenk hebben ontvangen, verbinden we ons ertoe al onze content gratis en toegankelijk te maken."
+		},
+		"empoweringChirho": {
+			"titleChirho": "De minder bedeelden versterken",
+			"descriptionChirho": "Omdat veel niet-westerse christenen lijden onder een gebrek aan kwalitatieve Bijbelse hulpbronnen, streven we ernaar hen toegang te geven."
+		}
+	},
+	"quickAccessChirho": {
+		"readChirho": {
+			"titleChirho": "Lezen",
+			"descriptionChirho": "Interlineaire vertalingen"
+		},
+		"translateChirho": {
+			"titleChirho": "Vertalen",
+			"descriptionChirho": "Vertalingen bijdragen"
+		},
+		"downloadsChirho": {
+			"titleChirho": "Downloads",
+			"descriptionChirho": "PDF Bijbels (KJV, WEB)"
+		}
+	}
+}

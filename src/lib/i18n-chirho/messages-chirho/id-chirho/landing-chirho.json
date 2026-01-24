@@ -1,0 +1,108 @@
+{
+	"heroChirho": {
+		"missionChirho": "Gereja global membutuhkan akses ke alat studi bahasa Alkitab yang serius tanpa biaya atau hambatan.",
+		"learnMoreChirho": "Pelajari Lebih Lanjut"
+	},
+	"navChirho": {
+		"visionChirho": "Visi",
+		"contributeChirho": "Berkontribusi",
+		"progressChirho": "Kemajuan",
+		"aboutChirho": "Tentang",
+		"readersBibleChirho": "Alkitab Pembaca",
+		"dashboardChirho": "Dasbor"
+	},
+	"visionChirho": {
+		"titleChirho": "Visi",
+		"preferToReadChirho": "Lebih suka membaca?",
+		"languageLearningChirho": "Pembelajaran Bahasa",
+		"biblicalStudyChirho": "Studi Alkitab",
+		"languageLessonsChirho": {
+			"titleChirho": "Kursus Bahasa",
+			"descriptionChirho": "Kursus YouTube menyediakan pelatihan Yunani dan Ibrani gratis untuk semua orang."
+		},
+		"readersBibleChirho": {
+			"titleChirho": "Alkitab Pembaca",
+			"descriptionChirho": "Alkitab pembaca digital membantu pembelajar bahasa mempercepat pemahaman mereka dengan membaca teks Alkitab dengan bantuan."
+		},
+		"lexiconsChirho": {
+			"titleChirho": "Leksikon",
+			"descriptionChirho": "Leksikon diperlukan dalam studi Alkitab untuk mengeksplorasi rentang makna kata-kata Yunani dan Ibrani."
+		},
+		"grammarsChirho": {
+			"titleChirho": "Tata Bahasa",
+			"descriptionChirho": "Tata bahasa digunakan dalam studi Alkitab untuk mempelajari struktur bahasa-bahasa Alkitab."
+		},
+		"textCriticalChirho": {
+			"titleChirho": "Catatan Kritik Teks",
+			"descriptionChirho": "Catatan kritik teks menjelaskan perbedaan dalam kesaksian manuskrip teks Alkitab."
+		}
+	},
+	"contributeChirho": {
+		"titleChirho": "Berkontribusi",
+		"giveChirho": {
+			"titleChirho": "Berikan",
+			"descriptionChirho": "Silakan berikan melalui Betheden Ministries untuk mendanai pekerjaan ini."
+		},
+		"softwareChirho": {
+			"titleChirho": "Pengembangan Perangkat Lunak",
+			"descriptionChirho": "Jika Anda dapat membantu dengan pengembangan perangkat lunak atau desain UI, lihat repositori GitHub kami."
+		},
+		"translateChirho": {
+			"titleChirho": "Alkitab Pembaca",
+			"descriptionChirho": "Jika Anda dapat membantu menerjemahkan glos untuk Alkitab Ibrani atau Yunani Pembaca, silakan isi formulir ini."
+		},
+		"resourcesChirho": {
+			"titleChirho": "Sumber Daya",
+			"descriptionChirho": "Jika Anda memiliki sumber daya studi bahasa asli yang ingin Anda kontribusikan atau digitalkan, hubungi kami."
+		}
+	},
+	"progressChirho": {
+		"titleChirho": "Kemajuan",
+		"translationProgressChirho": "Terjemahan Alkitab Pembaca"
+	},
+	"aboutChirho": {
+		"titleChirho": "Tentang",
+		"descriptionChirho": "Andrew dan Bethany Case adalah pendiri Betheden Ministries, organisasi nirlaba di balik Global Bible Tools. Tujuan kami adalah membantu melihat seluruh Alkitab dalam setiap bahasa, dan memperlengkapi Gereja global untuk pertumbuhan dan kedewasaan. Di dunia Barat, kami memiliki \"kekayaan yang berlimpah\". Kami memiliki ribuan sumber daya Alkitab hanya dengan satu klik, dalam bahasa yang paling kami pahami. Sementara itu, jutaan orang di negara lain bahkan tidak memiliki Alkitab dalam bahasa ibu mereka.",
+		"statementOfFaithChirho": "Pernyataan Iman",
+		"constitutionChirho": "Konstitusi",
+		"coreValuesChirho": "Nilai Inti",
+		"pursuitOfJoyChirho": {
+			"titleChirho": "Mengejar Sukacita",
+			"descriptionChirho": "Seluruh hidup harus dijalani bukan karena ketakutan, tetapi sebagai pengejaran sukacita di dalam Tuhan."
+		},
+		"partnershipChirho": {
+			"titleChirho": "Kemitraan",
+			"descriptionChirho": "Karena Kitab Suci mengajarkan bahwa kita adalah bagian dari Tubuh yang lebih besar, kami berusaha bekerja sama dengan orang lain."
+		},
+		"eagernessToLearnChirho": {
+			"titleChirho": "Semangat untuk Belajar",
+			"descriptionChirho": "Kami ingin berinovasi dengan keunggulan, yang membutuhkan keingintahuan dan studi yang berkelanjutan."
+		},
+		"humilityChirho": {
+			"titleChirho": "Kerendahan Hati",
+			"descriptionChirho": "Harapan kami adalah melayani Gereja global, yang membutuhkan kerendahan hati untuk mengutamakan mereka."
+		},
+		"freelyGivingChirho": {
+			"titleChirho": "Memberi dengan Bebas",
+			"descriptionChirho": "Karena kami menerima segalanya dari Tuhan sebagai hadiah, kami berkomitmen untuk membuat semua konten kami gratis dan dapat diakses."
+		},
+		"empoweringChirho": {
+			"titleChirho": "Memberdayakan yang Kurang Beruntung",
+			"descriptionChirho": "Karena banyak orang Kristen non-Barat menderita kekurangan sumber daya Alkitab berkualitas, kami berusaha memberi mereka akses."
+		}
+	},
+	"quickAccessChirho": {
+		"readChirho": {
+			"titleChirho": "Baca",
+			"descriptionChirho": "Terjemahan interlinear"
+		},
+		"translateChirho": {
+			"titleChirho": "Terjemahkan",
+			"descriptionChirho": "Kontribusi terjemahan"
+		},
+		"downloadsChirho": {
+			"titleChirho": "Unduhan",
+			"descriptionChirho": "Alkitab PDF (KJV, WEB)"
+		}
+	}
+}

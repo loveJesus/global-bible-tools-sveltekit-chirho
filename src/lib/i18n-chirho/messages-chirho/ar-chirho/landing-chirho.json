@@ -1,0 +1,108 @@
+{
+	"heroChirho": {
+		"missionChirho": "تحتاج الكنيسة العالمية إلى الوصول إلى أدوات دراسة لغات الكتاب المقدس الجادة بدون تكلفة أو عائق.",
+		"learnMoreChirho": "اعرف المزيد"
+	},
+	"navChirho": {
+		"visionChirho": "الرؤية",
+		"contributeChirho": "المساهمة",
+		"progressChirho": "التقدم",
+		"aboutChirho": "حولنا",
+		"readersBibleChirho": "كتاب القارئ المقدس",
+		"dashboardChirho": "لوحة التحكم"
+	},
+	"visionChirho": {
+		"titleChirho": "الرؤية",
+		"preferToReadChirho": "تفضل القراءة؟",
+		"languageLearningChirho": "تعلم اللغات",
+		"biblicalStudyChirho": "الدراسة الكتابية",
+		"languageLessonsChirho": {
+			"titleChirho": "دروس اللغة",
+			"descriptionChirho": "دورات يوتيوب توفر تدريبًا مجانيًا على اليونانية والعبرية للجميع."
+		},
+		"readersBibleChirho": {
+			"titleChirho": "كتاب القارئ المقدس",
+			"descriptionChirho": "يساعد الكتاب المقدس الرقمي للقارئ المتعلمين على تسريع فهمهم من خلال قراءة النص الكتابي بمساعدة."
+		},
+		"lexiconsChirho": {
+			"titleChirho": "القواميس",
+			"descriptionChirho": "القواميس ضرورية في الدراسة الكتابية لاستكشاف نطاق معاني الكلمات اليونانية والعبرية."
+		},
+		"grammarsChirho": {
+			"titleChirho": "القواعد",
+			"descriptionChirho": "تُستخدم القواعد في الدراسة الكتابية لتعلم بنية لغات الكتاب المقدس."
+		},
+		"textCriticalChirho": {
+			"titleChirho": "ملاحظات نقد النص",
+			"descriptionChirho": "تشرح ملاحظات نقد النص الاختلافات في شهادة المخطوطات للنص الكتابي."
+		}
+	},
+	"contributeChirho": {
+		"titleChirho": "المساهمة",
+		"giveChirho": {
+			"titleChirho": "التبرع",
+			"descriptionChirho": "يرجى التبرع عبر Betheden Ministries لتمويل هذا العمل."
+		},
+		"softwareChirho": {
+			"titleChirho": "تطوير البرمجيات",
+			"descriptionChirho": "إذا كنت تستطيع المساعدة في تطوير البرمجيات أو تصميم واجهة المستخدم، تفقد مستودعنا على GitHub."
+		},
+		"translateChirho": {
+			"titleChirho": "كتاب القارئ المقدس",
+			"descriptionChirho": "إذا كنت تستطيع المساعدة في ترجمة الشروحات للكتاب المقدس العبري أو اليوناني، يرجى ملء هذا النموذج."
+		},
+		"resourcesChirho": {
+			"titleChirho": "الموارد",
+			"descriptionChirho": "إذا كان لديك موارد لدراسة اللغات الأصلية ترغب في المساهمة بها أو رقمنتها، تواصل معنا."
+		}
+	},
+	"progressChirho": {
+		"titleChirho": "التقدم",
+		"translationProgressChirho": "ترجمة كتاب القارئ المقدس"
+	},
+	"aboutChirho": {
+		"titleChirho": "حولنا",
+		"descriptionChirho": "أندرو وبيثاني كيس هما مؤسسا Betheden Ministries، المنظمة غير الربحية وراء Global Bible Tools. هدفنا هو المساعدة في رؤية الكتاب المقدس كاملاً بكل لغة، وتجهيز الكنيسة العالمية للنمو والنضج. في العالم الغربي لدينا \"وفرة من الثروات\". لدينا آلاف الموارد الكتابية على بعد نقرة واحدة، باللغة التي نفهمها أفضل. بينما الملايين في بلدان أخرى ليس لديهم حتى الكتاب المقدس بلغتهم الأم.",
+		"statementOfFaithChirho": "بيان الإيمان",
+		"constitutionChirho": "الدستور",
+		"coreValuesChirho": "القيم الأساسية",
+		"pursuitOfJoyChirho": {
+			"titleChirho": "السعي وراء الفرح",
+			"descriptionChirho": "يجب أن تُعاش الحياة كلها ليس بدافع الخوف، بل كسعي وراء الفرح في الله."
+		},
+		"partnershipChirho": {
+			"titleChirho": "الشراكة",
+			"descriptionChirho": "لأن الكتاب المقدس يعلم أننا جزء من جسد أكبر، نسعى للعمل مع الآخرين."
+		},
+		"eagernessToLearnChirho": {
+			"titleChirho": "الشغف بالتعلم",
+			"descriptionChirho": "نريد الابتكار بامتياز، مما يتطلب فضولًا ودراسة مستمرة."
+		},
+		"humilityChirho": {
+			"titleChirho": "التواضع",
+			"descriptionChirho": "أملنا هو خدمة الكنيسة العالمية، مما يتطلب التواضع لوضعها في المقام الأول."
+		},
+		"freelyGivingChirho": {
+			"titleChirho": "العطاء بحرية",
+			"descriptionChirho": "لأننا تلقينا كل شيء من الله كهدية، نلتزم بجعل كل محتوانا مجانيًا ومتاحًا."
+		},
+		"empoweringChirho": {
+			"titleChirho": "تمكين المحرومين",
+			"descriptionChirho": "لأن العديد من المسيحيين غير الغربيين يفتقرون إلى موارد كتابية جيدة، نسعى لمنحهم إمكانية الوصول."
+		}
+	},
+	"quickAccessChirho": {
+		"readChirho": {
+			"titleChirho": "قراءة",
+			"descriptionChirho": "ترجمات بين السطور"
+		},
+		"translateChirho": {
+			"titleChirho": "ترجمة",
+			"descriptionChirho": "المساهمة بالترجمات"
+		},
+		"downloadsChirho": {
+			"titleChirho": "التنزيلات",
+			"descriptionChirho": "كتب PDF مقدسة (KJV، WEB)"
+		}
+	}
+}

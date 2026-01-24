@@ -1,0 +1,108 @@
+{
+	"heroChirho": {
+		"missionChirho": "L'Église mondiale a besoin d'accéder à des outils sérieux d'étude des langues bibliques sans coût ni obstacle.",
+		"learnMoreChirho": "En savoir plus"
+	},
+	"navChirho": {
+		"visionChirho": "Vision",
+		"contributeChirho": "Contribuer",
+		"progressChirho": "Progrès",
+		"aboutChirho": "À propos",
+		"readersBibleChirho": "Bible du lecteur",
+		"dashboardChirho": "Tableau de bord"
+	},
+	"visionChirho": {
+		"titleChirho": "Vision",
+		"preferToReadChirho": "Préférez-vous lire ?",
+		"languageLearningChirho": "Apprentissage des langues",
+		"biblicalStudyChirho": "Étude biblique",
+		"languageLessonsChirho": {
+			"titleChirho": "Cours de langues",
+			"descriptionChirho": "Des cours YouTube offrent une formation gratuite en grec et en hébreu à tous."
+		},
+		"readersBibleChirho": {
+			"titleChirho": "Bible du lecteur",
+			"descriptionChirho": "Une Bible numérique du lecteur aide les apprenants à accélérer leur compréhension en lisant le texte biblique avec assistance."
+		},
+		"lexiconsChirho": {
+			"titleChirho": "Lexiques",
+			"descriptionChirho": "Les lexiques sont nécessaires pour explorer l'éventail des significations des mots grecs et hébreux."
+		},
+		"grammarsChirho": {
+			"titleChirho": "Grammaires",
+			"descriptionChirho": "Les grammaires servent à apprendre la structure des langues bibliques."
+		},
+		"textCriticalChirho": {
+			"titleChirho": "Notes critiques textuelles",
+			"descriptionChirho": "Les notes critiques textuelles expliquent les différences dans les témoins manuscrits du texte biblique."
+		}
+	},
+	"contributeChirho": {
+		"titleChirho": "Contribuer",
+		"giveChirho": {
+			"titleChirho": "Donner",
+			"descriptionChirho": "Veuillez donner par l'intermédiaire de Betheden Ministries pour financer ce travail."
+		},
+		"softwareChirho": {
+			"titleChirho": "Développement logiciel",
+			"descriptionChirho": "Si vous pouvez aider au développement ou à la conception UI, consultez notre dépôt GitHub."
+		},
+		"translateChirho": {
+			"titleChirho": "Bible du lecteur",
+			"descriptionChirho": "Si vous pouvez aider à traduire les gloses pour la Bible hébraïque ou grecque, veuillez remplir ce formulaire."
+		},
+		"resourcesChirho": {
+			"titleChirho": "Ressources",
+			"descriptionChirho": "Si vous avez des ressources d'étude des langues originales à contribuer ou à numériser, contactez-nous."
+		}
+	},
+	"progressChirho": {
+		"titleChirho": "Progrès",
+		"translationProgressChirho": "Traduction de la Bible du lecteur"
+	},
+	"aboutChirho": {
+		"titleChirho": "À propos",
+		"descriptionChirho": "Andrew et Bethany Case sont les fondateurs de Betheden Ministries, l'organisation à but non lucratif derrière Global Bible Tools. Notre but est d'aider à voir la Bible entière dans chaque langue et d'équiper l'Église mondiale pour la croissance et la maturité. Dans le monde occidental, nous avons une « abondance de richesses ». Nous avons des milliers de ressources bibliques à un clic, dans la langue que nous comprenons le mieux. Pendant ce temps, des millions de personnes dans d'autres pays n'ont même pas de Bible dans leur langue maternelle. Nous croyons que la connaissance des langues bibliques est l'un des besoins les plus fondamentaux de chaque église dans le monde.",
+		"statementOfFaithChirho": "Déclaration de foi",
+		"constitutionChirho": "Constitution",
+		"coreValuesChirho": "Valeurs fondamentales",
+		"pursuitOfJoyChirho": {
+			"titleChirho": "Poursuite de la joie",
+			"descriptionChirho": "Toute la vie devrait être vécue non par peur, mais comme une poursuite de la joie en Dieu."
+		},
+		"partnershipChirho": {
+			"titleChirho": "Partenariat",
+			"descriptionChirho": "Parce que l'Écriture enseigne que nous faisons partie d'un Corps plus grand, nous cherchons à travailler avec les autres."
+		},
+		"eagernessToLearnChirho": {
+			"titleChirho": "Désir d'apprendre",
+			"descriptionChirho": "Nous voulons innover avec excellence, ce qui nécessite curiosité et étude continues."
+		},
+		"humilityChirho": {
+			"titleChirho": "Humilité",
+			"descriptionChirho": "Notre espoir est de servir l'Église mondiale, ce qui nécessite l'humilité de la mettre en premier."
+		},
+		"freelyGivingChirho": {
+			"titleChirho": "Donner librement",
+			"descriptionChirho": "Parce que nous avons tout reçu de Dieu comme un don, nous nous engageons à rendre tout notre contenu gratuit et accessible."
+		},
+		"empoweringChirho": {
+			"titleChirho": "Autonomiser les sous-ressourcés",
+			"descriptionChirho": "Parce que de nombreux chrétiens non occidentaux manquent de ressources bibliques de qualité, nous nous efforçons de leur donner accès."
+		}
+	},
+	"quickAccessChirho": {
+		"readChirho": {
+			"titleChirho": "Lire",
+			"descriptionChirho": "Traductions interlinéaires"
+		},
+		"translateChirho": {
+			"titleChirho": "Traduire",
+			"descriptionChirho": "Contribuer des traductions"
+		},
+		"downloadsChirho": {
+			"titleChirho": "Téléchargements",
+			"descriptionChirho": "Bibles PDF (KJV, WEB)"
+		}
+	}
+}

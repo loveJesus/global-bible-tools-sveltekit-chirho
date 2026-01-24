@@ -1,0 +1,108 @@
+{
+	"heroChirho": {
+		"missionChirho": "Мировая Церковь нуждается в доступе к серьёзным инструментам изучения библейских языков без затрат и препятствий.",
+		"learnMoreChirho": "Узнать больше"
+	},
+	"navChirho": {
+		"visionChirho": "Видение",
+		"contributeChirho": "Внести вклад",
+		"progressChirho": "Прогресс",
+		"aboutChirho": "О нас",
+		"readersBibleChirho": "Библия читателя",
+		"dashboardChirho": "Панель управления"
+	},
+	"visionChirho": {
+		"titleChirho": "Видение",
+		"preferToReadChirho": "Предпочитаете читать?",
+		"languageLearningChirho": "Изучение языков",
+		"biblicalStudyChirho": "Библейские исследования",
+		"languageLessonsChirho": {
+			"titleChirho": "Уроки языков",
+			"descriptionChirho": "YouTube-курсы предоставляют бесплатное обучение греческому и ивриту для всех."
+		},
+		"readersBibleChirho": {
+			"titleChirho": "Библия читателя",
+			"descriptionChirho": "Цифровая Библия читателя помогает изучающим язык ускорить понимание, читая библейский текст с помощью подсказок."
+		},
+		"lexiconsChirho": {
+			"titleChirho": "Лексиконы",
+			"descriptionChirho": "Лексиконы необходимы для изучения диапазона значений греческих и еврейских слов."
+		},
+		"grammarsChirho": {
+			"titleChirho": "Грамматики",
+			"descriptionChirho": "Грамматики используются для изучения структуры библейских языков."
+		},
+		"textCriticalChirho": {
+			"titleChirho": "Текстологические заметки",
+			"descriptionChirho": "Текстологические заметки объясняют различия в рукописных свидетельствах библейского текста."
+		}
+	},
+	"contributeChirho": {
+		"titleChirho": "Внести вклад",
+		"giveChirho": {
+			"titleChirho": "Пожертвовать",
+			"descriptionChirho": "Пожалуйста, жертвуйте через Betheden Ministries для финансирования этой работы."
+		},
+		"softwareChirho": {
+			"titleChirho": "Разработка ПО",
+			"descriptionChirho": "Если вы можете помочь с разработкой ПО или дизайном UI, посетите наш репозиторий GitHub."
+		},
+		"translateChirho": {
+			"titleChirho": "Библия читателя",
+			"descriptionChirho": "Если вы можете помочь перевести глоссы для еврейской или греческой Библии читателя, пожалуйста, заполните эту форму."
+		},
+		"resourcesChirho": {
+			"titleChirho": "Ресурсы",
+			"descriptionChirho": "Если у вас есть ресурсы для изучения оригинальных языков, которыми вы хотите поделиться, свяжитесь с нами."
+		}
+	},
+	"progressChirho": {
+		"titleChirho": "Прогресс",
+		"translationProgressChirho": "Перевод Библии читателя"
+	},
+	"aboutChirho": {
+		"titleChirho": "О нас",
+		"descriptionChirho": "Эндрю и Бетани Кейс являются основателями Betheden Ministries, некоммерческой организации, стоящей за Global Bible Tools. Наша цель — помочь увидеть всю Библию на каждом языке и оснастить мировую Церковь для роста и зрелости. В западном мире мы имеем «изобилие богатств». У нас тысячи библейских ресурсов в одном клике, на языке, который мы лучше всего понимаем. Между тем миллионы людей в других странах не имеют даже Библии на своём родном языке.",
+		"statementOfFaithChirho": "Исповедание веры",
+		"constitutionChirho": "Устав",
+		"coreValuesChirho": "Основные ценности",
+		"pursuitOfJoyChirho": {
+			"titleChirho": "Стремление к радости",
+			"descriptionChirho": "Вся жизнь должна прожитаться не из страха, а как стремление к радости в Боге."
+		},
+		"partnershipChirho": {
+			"titleChirho": "Партнёрство",
+			"descriptionChirho": "Поскольку Писание учит, что мы часть большего Тела, мы стремимся работать с другими."
+		},
+		"eagernessToLearnChirho": {
+			"titleChirho": "Жажда знаний",
+			"descriptionChirho": "Мы хотим инновировать с превосходством, что требует постоянного любопытства и изучения."
+		},
+		"humilityChirho": {
+			"titleChirho": "Смирение",
+			"descriptionChirho": "Наша надежда — служить мировой Церкви, что требует смирения, чтобы ставить её на первое место."
+		},
+		"freelyGivingChirho": {
+			"titleChirho": "Безвозмездно давать",
+			"descriptionChirho": "Поскольку мы получили всё от Бога как дар, мы обязуемся делать весь наш контент бесплатным и доступным."
+		},
+		"empoweringChirho": {
+			"titleChirho": "Укреплять нуждающихся",
+			"descriptionChirho": "Поскольку многие незападные христиане страдают от нехватки качественных библейских ресурсов, мы стремимся дать им доступ."
+		}
+	},
+	"quickAccessChirho": {
+		"readChirho": {
+			"titleChirho": "Читать",
+			"descriptionChirho": "Подстрочные переводы"
+		},
+		"translateChirho": {
+			"titleChirho": "Переводить",
+			"descriptionChirho": "Внести переводы"
+		},
+		"downloadsChirho": {
+			"titleChirho": "Загрузки",
+			"descriptionChirho": "PDF Библии (KJV, WEB)"
+		}
+	}
+}

@@ -1,0 +1,108 @@
+{
+	"heroChirho": {
+		"missionChirho": "전 세계 교회는 비용이나 장벽 없이 진지한 성경 언어 학습 도구에 접근할 필요가 있습니다.",
+		"learnMoreChirho": "자세히 알아보기"
+	},
+	"navChirho": {
+		"visionChirho": "비전",
+		"contributeChirho": "기여",
+		"progressChirho": "진행상황",
+		"aboutChirho": "소개",
+		"readersBibleChirho": "독자용 성경",
+		"dashboardChirho": "대시보드"
+	},
+	"visionChirho": {
+		"titleChirho": "비전",
+		"preferToReadChirho": "읽는 것을 선호하십니까?",
+		"languageLearningChirho": "언어 학습",
+		"biblicalStudyChirho": "성경 연구",
+		"languageLessonsChirho": {
+			"titleChirho": "언어 강좌",
+			"descriptionChirho": "YouTube 강좌는 모든 사람에게 무료로 그리스어와 히브리어 훈련을 제공합니다."
+		},
+		"readersBibleChirho": {
+			"titleChirho": "독자용 성경",
+			"descriptionChirho": "디지털 독자용 성경은 도움을 받아 성경 본문을 읽음으로써 언어 학습자의 이해를 가속화합니다."
+		},
+		"lexiconsChirho": {
+			"titleChirho": "사전",
+			"descriptionChirho": "사전은 그리스어와 히브리어 단어의 의미 범위를 탐구하기 위해 성경 연구에 필요합니다."
+		},
+		"grammarsChirho": {
+			"titleChirho": "문법서",
+			"descriptionChirho": "문법서는 성경 언어의 구조를 배우기 위해 성경 연구에 사용됩니다."
+		},
+		"textCriticalChirho": {
+			"titleChirho": "본문비평 주석",
+			"descriptionChirho": "본문비평 주석은 성경 본문의 사본 증거에서의 차이를 설명합니다."
+		}
+	},
+	"contributeChirho": {
+		"titleChirho": "기여",
+		"giveChirho": {
+			"titleChirho": "후원",
+			"descriptionChirho": "이 사역을 지원하기 위해 Betheden Ministries를 통해 후원해 주세요."
+		},
+		"softwareChirho": {
+			"titleChirho": "소프트웨어 개발",
+			"descriptionChirho": "소프트웨어 개발이나 UI 디자인에 도움을 주실 수 있다면 GitHub 저장소를 확인해 주세요."
+		},
+		"translateChirho": {
+			"titleChirho": "독자용 성경",
+			"descriptionChirho": "히브리어 또는 그리스어 독자용 성경의 주석 번역에 도움을 주실 수 있다면 이 양식을 작성해 주세요."
+		},
+		"resourcesChirho": {
+			"titleChirho": "자료",
+			"descriptionChirho": "기여하거나 디지털화하고 싶은 원어 학습 자료가 있으시면 연락해 주세요."
+		}
+	},
+	"progressChirho": {
+		"titleChirho": "진행상황",
+		"translationProgressChirho": "독자용 성경 번역"
+	},
+	"aboutChirho": {
+		"titleChirho": "소개",
+		"descriptionChirho": "Andrew와 Bethany Case는 Global Bible Tools의 비영리 단체인 Betheden Ministries의 설립자입니다. 우리의 목적은 모든 언어로 전체 성경을 보고 전 세계 교회를 성장과 성숙을 위해 갖추는 것입니다. 서양 세계에서 우리는 \"풍요의 과잉\"을 가지고 있습니다. 우리가 가장 잘 이해하는 언어로 수천 개의 성경 자료가 클릭 한 번으로 제공됩니다. 한편, 다른 나라의 수백만 명의 사람들은 모국어로 된 성경조차 없습니다.",
+		"statementOfFaithChirho": "신앙고백",
+		"constitutionChirho": "정관",
+		"coreValuesChirho": "핵심 가치",
+		"pursuitOfJoyChirho": {
+			"titleChirho": "기쁨의 추구",
+			"descriptionChirho": "모든 삶은 두려움이 아니라 하나님 안에서의 기쁨 추구로 살아야 합니다."
+		},
+		"partnershipChirho": {
+			"titleChirho": "동역",
+			"descriptionChirho": "성경은 우리가 더 큰 몸의 일부라고 가르치기 때문에 우리는 다른 사람들과 협력하고자 합니다."
+		},
+		"eagernessToLearnChirho": {
+			"titleChirho": "배움의 열정",
+			"descriptionChirho": "우리는 탁월함으로 혁신하기를 원하며, 이를 위해서는 지속적인 호기심과 학습이 필요합니다."
+		},
+		"humilityChirho": {
+			"titleChirho": "겸손",
+			"descriptionChirho": "우리의 소망은 전 세계 교회를 섬기는 것이며, 이를 위해서는 그들을 최우선으로 하는 겸손이 필요합니다."
+		},
+		"freelyGivingChirho": {
+			"titleChirho": "아낌없이 주기",
+			"descriptionChirho": "우리가 모든 것을 하나님으로부터 선물로 받았기 때문에, 우리는 모든 콘텐츠를 무료로 공개할 것을 약속합니다."
+		},
+		"empoweringChirho": {
+			"titleChirho": "자원 부족자 역량 강화",
+			"descriptionChirho": "많은 비서양 기독교인들이 양질의 성경 자료 부족으로 어려움을 겪고 있기 때문에, 우리는 그들에게 접근권을 제공하기 위해 노력합니다."
+		}
+	},
+	"quickAccessChirho": {
+		"readChirho": {
+			"titleChirho": "읽기",
+			"descriptionChirho": "행간 번역"
+		},
+		"translateChirho": {
+			"titleChirho": "번역",
+			"descriptionChirho": "번역 기여"
+		},
+		"downloadsChirho": {
+			"titleChirho": "다운로드",
+			"descriptionChirho": "PDF 성경 (KJV, WEB)"
+		}
+	}
+}

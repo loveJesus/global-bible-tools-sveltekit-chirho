@@ -52,11 +52,21 @@ const configChirho: ConfigChirho = {
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/fr-chirho/common-chirho.json')).default
 		},
+		{
+			locale: 'fr',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/fr-chirho/landing-chirho.json')).default
+		},
 		// German
 		{
 			locale: 'de',
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/de-chirho/common-chirho.json')).default
+		},
+		{
+			locale: 'de',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/de-chirho/landing-chirho.json')).default
 		},
 		// Portuguese
 		{
@@ -64,11 +74,21 @@ const configChirho: ConfigChirho = {
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/pt-chirho/common-chirho.json')).default
 		},
+		{
+			locale: 'pt',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/pt-chirho/landing-chirho.json')).default
+		},
 		// Russian
 		{
 			locale: 'ru',
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/ru-chirho/common-chirho.json')).default
+		},
+		{
+			locale: 'ru',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/ru-chirho/landing-chirho.json')).default
 		},
 		// Chinese
 		{
@@ -76,11 +96,21 @@ const configChirho: ConfigChirho = {
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/zh-chirho/common-chirho.json')).default
 		},
+		{
+			locale: 'zh',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/zh-chirho/landing-chirho.json')).default
+		},
 		// Arabic
 		{
 			locale: 'ar',
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/ar-chirho/common-chirho.json')).default
+		},
+		{
+			locale: 'ar',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/ar-chirho/landing-chirho.json')).default
 		},
 		// Japanese
 		{
@@ -88,11 +118,21 @@ const configChirho: ConfigChirho = {
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/ja-chirho/common-chirho.json')).default
 		},
+		{
+			locale: 'ja',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/ja-chirho/landing-chirho.json')).default
+		},
 		// Korean
 		{
 			locale: 'ko',
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/ko-chirho/common-chirho.json')).default
+		},
+		{
+			locale: 'ko',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/ko-chirho/landing-chirho.json')).default
 		},
 		// Indonesian
 		{
@@ -100,17 +140,32 @@ const configChirho: ConfigChirho = {
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/id-chirho/common-chirho.json')).default
 		},
+		{
+			locale: 'id',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/id-chirho/landing-chirho.json')).default
+		},
 		// Italian
 		{
 			locale: 'it',
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/it-chirho/common-chirho.json')).default
 		},
+		{
+			locale: 'it',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/it-chirho/landing-chirho.json')).default
+		},
 		// Dutch
 		{
 			locale: 'nl',
 			key: 'common',
 			loader: async () => (await import('./messages-chirho/nl-chirho/common-chirho.json')).default
+		},
+		{
+			locale: 'nl',
+			key: 'landing',
+			loader: async () => (await import('./messages-chirho/nl-chirho/landing-chirho.json')).default
 		}
 	]
 };

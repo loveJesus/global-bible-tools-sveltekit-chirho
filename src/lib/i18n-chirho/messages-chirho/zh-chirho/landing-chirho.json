@@ -1,0 +1,108 @@
+{
+	"heroChirho": {
+		"missionChirho": "全球教会需要免费且无障碍地获取严肃的圣经语言学习工具。",
+		"learnMoreChirho": "了解更多"
+	},
+	"navChirho": {
+		"visionChirho": "愿景",
+		"contributeChirho": "贡献",
+		"progressChirho": "进度",
+		"aboutChirho": "关于",
+		"readersBibleChirho": "读者圣经",
+		"dashboardChirho": "控制面板"
+	},
+	"visionChirho": {
+		"titleChirho": "愿景",
+		"preferToReadChirho": "更喜欢阅读？",
+		"languageLearningChirho": "语言学习",
+		"biblicalStudyChirho": "圣经研究",
+		"languageLessonsChirho": {
+			"titleChirho": "语言课程",
+			"descriptionChirho": "YouTube课程为所有人提供免费的希腊语和希伯来语培训。"
+		},
+		"readersBibleChirho": {
+			"titleChirho": "读者圣经",
+			"descriptionChirho": "数字读者圣经通过辅助阅读帮助语言学习者加快理解圣经文本。"
+		},
+		"lexiconsChirho": {
+			"titleChirho": "词典",
+			"descriptionChirho": "词典在圣经研究中是必需的，用于探索希腊语和希伯来语词汇的含义范围。"
+		},
+		"grammarsChirho": {
+			"titleChirho": "语法",
+			"descriptionChirho": "语法在圣经研究中用于学习圣经语言的结构。"
+		},
+		"textCriticalChirho": {
+			"titleChirho": "文本批评注释",
+			"descriptionChirho": "文本批评注释解释圣经文本手稿证据中的差异。"
+		}
+	},
+	"contributeChirho": {
+		"titleChirho": "贡献",
+		"giveChirho": {
+			"titleChirho": "捐赠",
+			"descriptionChirho": "请通过Betheden Ministries捐赠以资助这项工作。"
+		},
+		"softwareChirho": {
+			"titleChirho": "软件开发",
+			"descriptionChirho": "如果您能帮助软件开发或UI设计，请查看我们的GitHub仓库。"
+		},
+		"translateChirho": {
+			"titleChirho": "读者圣经",
+			"descriptionChirho": "如果您能帮助翻译希伯来语或希腊语读者圣经的注释，请填写此表格。"
+		},
+		"resourcesChirho": {
+			"titleChirho": "资源",
+			"descriptionChirho": "如果您有原始语言学习资源想要贡献或数字化，请联系我们。"
+		}
+	},
+	"progressChirho": {
+		"titleChirho": "进度",
+		"translationProgressChirho": "读者圣经翻译"
+	},
+	"aboutChirho": {
+		"titleChirho": "关于",
+		"descriptionChirho": "Andrew和Bethany Case是Betheden Ministries的创始人，这是Global Bible Tools背后的非营利组织。我们的目标是帮助将整本圣经翻译成每种语言，并装备全球教会实现成长和成熟。在西方世界，我们有\\\"丰富的资源\\\"。我们有数千种圣经资源只需点击即可获得，使用我们最熟悉的语言。与此同时，其他国家的数百万人甚至没有母语圣经。",
+		"statementOfFaithChirho": "信仰声明",
+		"constitutionChirho": "章程",
+		"coreValuesChirho": "核心价值观",
+		"pursuitOfJoyChirho": {
+			"titleChirho": "追求喜乐",
+			"descriptionChirho": "整个生命应该不是出于恐惧而活，而是作为在神里追求喜乐而活。"
+		},
+		"partnershipChirho": {
+			"titleChirho": "伙伴关系",
+			"descriptionChirho": "因为圣经教导我们是更大身体的一部分，我们寻求与他人合作。"
+		},
+		"eagernessToLearnChirho": {
+			"titleChirho": "渴望学习",
+			"descriptionChirho": "我们希望以卓越的方式创新，这需要持续的好奇心和学习。"
+		},
+		"humilityChirho": {
+			"titleChirho": "谦卑",
+			"descriptionChirho": "我们的希望是服务全球教会，这需要谦卑地将他们放在首位。"
+		},
+		"freelyGivingChirho": {
+			"titleChirho": "无偿给予",
+			"descriptionChirho": "因为我们从神那里得到一切作为礼物，我们致力于使我们所有的内容免费开放。"
+		},
+		"empoweringChirho": {
+			"titleChirho": "赋能资源不足者",
+			"descriptionChirho": "因为许多非西方基督徒缺乏优质的圣经资源，我们努力为他们提供获取途径。"
+		}
+	},
+	"quickAccessChirho": {
+		"readChirho": {
+			"titleChirho": "阅读",
+			"descriptionChirho": "逐行翻译"
+		},
+		"translateChirho": {
+			"titleChirho": "翻译",
+			"descriptionChirho": "贡献翻译"
+		},
+		"downloadsChirho": {
+			"titleChirho": "下载",
+			"descriptionChirho": "PDF圣经（KJV, WEB）"
+		}
+	}
+}
