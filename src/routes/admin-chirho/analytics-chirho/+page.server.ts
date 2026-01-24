@@ -59,7 +59,7 @@ export const load: PageServerLoadChirho = async ({ locals: localsChirho }) => {
 		`
 		SELECT
 			(SELECT COUNT(*) FROM language)::int AS "totalLanguagesChirho",
-			(SELECT COUNT(*) FROM "user" WHERE status = 'active')::int AS "totalUsersChirho",
+			(SELECT COUNT(*) FROM users WHERE status = 'active')::int AS "totalUsersChirho",
 			(SELECT COUNT(*) FROM gloss)::int AS "totalGlossesChirho",
 			(SELECT COUNT(*) FROM gloss WHERE state = 'APPROVED')::int AS "approvedGlossesChirho",
 			(SELECT COUNT(*) FROM machine_gloss)::int AS "machineGlossesChirho"
