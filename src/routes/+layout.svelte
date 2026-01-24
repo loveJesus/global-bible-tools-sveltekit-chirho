@@ -20,9 +20,16 @@
 	});
 
 	let userMenuOpenChirho = $state(false);
+	let mobileMenuOpenChirho = $state(false);
 
 	// Hide the default header/footer on landing page (it has its own)
 	const isLandingPageChirho = $derived(pageChirho.url.pathname === '/');
+
+	// Close mobile menu on route change
+	$effect(() => {
+		pageChirho.url.pathname;
+		mobileMenuOpenChirho = false;
+	});
 
 	function getInitialsChirho(nameChirho: string | null | undefined, emailChirho: string): string {
 		if (nameChirho) {
@@ -46,14 +53,33 @@
 	{#if !isLandingPageChirho}
 	<header class="bg-white border-b border-slate-200">
 		<div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-			<div class="flex items-center gap-6">
+			<div class="flex items-center gap-4 sm:gap-6">
+				<!-- Mobile menu button -->
+				<button
+					type="button"
+					onclick={() => (mobileMenuOpenChirho = !mobileMenuOpenChirho)}
+					class="sm:hidden p-2 -ml-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg"
+					aria-label="Toggle menu"
+					aria-expanded={mobileMenuOpenChirho}
+				>
+					{#if mobileMenuOpenChirho}
+						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+						</svg>
+					{:else}
+						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+						</svg>
+					{/if}
+				</button>
+
 				<a href="/" class="flex items-center gap-2">
 					<img
 						src="https://assets.globalbibletools.com/landing/logo.png"
 						alt="Global Bible Tools"
 						class="h-8 w-8"
 					/>
-					<span class="text-xl font-bold text-slate-900">Global Bible Tools</span>
+					<span class="text-xl font-bold text-slate-900 hidden xs:inline">Global Bible Tools</span>
 				</a>
 				<nav class="hidden sm:flex gap-4">
 					<a href="/read-chirho" class="text-slate-600 hover:text-slate-900">{$tChirho('common.navChirho.readChirho')}</a>
@@ -130,6 +156,102 @@
 			</div>
 		</div>
 	</header>
+
+	<!-- Mobile navigation menu -->
+	{#if mobileMenuOpenChirho}
+		<div class="sm:hidden fixed inset-0 z-40">
+			<!-- Backdrop -->
+			<button
+				type="button"
+				class="absolute inset-0 bg-black/50"
+				onclick={() => (mobileMenuOpenChirho = false)}
+				aria-label="Close menu"
+			></button>
+
+			<!-- Slide-out menu -->
+			<nav class="absolute left-0 top-0 bottom-0 w-72 bg-white shadow-xl flex flex-col">
+				<div class="flex items-center justify-between px-4 py-3 border-b border-slate-200">
+					<span class="font-semibold text-slate-900">Menu</span>
+					<button
+						type="button"
+						onclick={() => (mobileMenuOpenChirho = false)}
+						class="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg"
+						aria-label="Close menu"
+					>
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+						</svg>
+					</button>
+				</div>
+
+				<div class="flex-1 overflow-y-auto py-2">
+					<a href="/read-chirho" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-100">
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+						</svg>
+						{$tChirho('common.navChirho.readChirho')}
+					</a>
+					<a href="/translate-chirho" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-100">
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+						</svg>
+						{$tChirho('common.navChirho.translateChirho')}
+					</a>
+					<a href="/downloads-chirho" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-100">
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+						</svg>
+						{$tChirho('common.navChirho.downloadsChirho')}
+					</a>
+
+					{#if dataChirho.userChirho}
+						<div class="border-t border-slate-200 mt-2 pt-2">
+							<a href="/profile-chirho" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-100">
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+								</svg>
+								{$tChirho('common.navChirho.profileChirho')}
+							</a>
+
+							{#if dataChirho.userChirho.isAdminChirho}
+								<a href="/admin-chirho" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-100">
+									<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+									</svg>
+									{$tChirho('common.navChirho.adminChirho')}
+								</a>
+							{/if}
+						</div>
+					{/if}
+				</div>
+
+				<!-- Mobile menu footer -->
+				<div class="border-t border-slate-200 p-4">
+					{#if dataChirho.userChirho}
+						<div class="flex items-center gap-3 mb-3">
+							<div class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+								{getInitialsChirho(dataChirho.userChirho.nameChirho, dataChirho.userChirho.emailChirho)}
+							</div>
+							<div class="flex-1 min-w-0">
+								<p class="text-sm font-medium text-slate-900 truncate">{dataChirho.userChirho.nameChirho ?? 'User'}</p>
+								<p class="text-xs text-slate-500 truncate">{dataChirho.userChirho.emailChirho}</p>
+							</div>
+						</div>
+						<a href="/logout-chirho" class="flex items-center justify-center gap-2 w-full px-4 py-2 text-sm text-red-600 border border-red-200 rounded-lg hover:bg-red-50">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+							</svg>
+							{$tChirho('common.navChirho.logoutChirho')}
+						</a>
+					{:else}
+						<a href="/login-chirho" class="flex items-center justify-center gap-2 w-full px-4 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+							{$tChirho('common.navChirho.loginChirho')}
+						</a>
+					{/if}
+				</div>
+			</nav>
+		</div>
+	{/if}
 	{/if}
 
 	<main class="flex-1">
