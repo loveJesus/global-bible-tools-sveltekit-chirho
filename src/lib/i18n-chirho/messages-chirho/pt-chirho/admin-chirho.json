@@ -1,0 +1,105 @@
+{
+	"titleChirho": "Administração",
+	"backToAdminChirho": "← Voltar para Administração",
+	"languagesChirho": {
+		"titleChirho": "Gestão de Idiomas",
+		"subtitleChirho": "Gerenciar idiomas de tradução",
+		"searchPlaceholderChirho": "Pesquisar idiomas...",
+		"addLanguageChirho": "Adicionar Idioma",
+		"tableHeadersChirho": {
+			"languageChirho": "Idioma",
+			"codeChirho": "Código",
+			"membersChirho": "Membros",
+			"progressChirho": "Progresso",
+			"dirChirho": "Dir",
+			"actionsChirho": "Ações"
+		},
+		"wordsChirho": "palavras",
+		"approvedChirho": "aprovadas",
+		"viewChirho": "Ver",
+		"settingsChirho": "Configurações",
+		"snapshotsChirho": "Instantâneos",
+		"editChirho": "Editar",
+		"noMatchChirho": "Nenhum idioma corresponde",
+		"noLanguagesChirho": "Nenhum idioma encontrado",
+		"addModalChirho": {
+			"titleChirho": "Adicionar Novo Idioma",
+			"codeChirho": "Código do Idioma",
+			"codeHintChirho": "Código ISO 639-3 de 3 letras",
+			"codePlaceholderChirho": "ex., fra, deu, jpn",
+			"nameChirho": "Nome do Idioma",
+			"namePlaceholderChirho": "ex., Francês, Alemão, Japonês",
+			"fontChirho": "Fonte",
+			"textDirectionChirho": "Direção do Texto",
+			"ltrChirho": "Esquerda para Direita (LTR)",
+			"rtlChirho": "Direita para Esquerda (RTL)",
+			"cancelChirho": "Cancelar",
+			"addChirho": "Adicionar Idioma"
+		},
+		"editModalChirho": {
+			"titleChirho": "Editar Idioma",
+			"codeDisabledChirho": "O código não pode ser alterado",
+			"saveChirho": "Salvar Alterações"
+		}
+	},
+	"jobsChirho": {
+		"titleChirho": "Tarefas em Segundo Plano",
+		"subtitleChirho": "Ver status e histórico de tarefas de importação",
+		"statsChirho": {
+			"totalChirho": "Total de Tarefas",
+			"successfulChirho": "Bem-sucedidas",
+			"failedChirho": "Falharam",
+			"runningChirho": "Em Execução"
+		},
+		"filterChirho": {
+			"allChirho": "Todas",
+			"successChirho": "Sucesso",
+			"failedChirho": "Falhou",
+			"runningChirho": "Em Execução"
+		},
+		"tableHeadersChirho": {
+			"languageChirho": "Idioma",
+			"startedChirho": "Iniciado",
+			"durationChirho": "Duração",
+			"userChirho": "Usuário",
+			"statusChirho": "Status"
+		},
+		"statusChirho": {
+			"successChirho": "Sucesso",
+			"failedChirho": "Falhou",
+			"runningChirho": "Em Execução",
+			"unknownChirho": "Desconhecido"
+		},
+		"systemUserChirho": "Sistema",
+		"noJobsFilteredChirho": "Nenhuma tarefa encontrada com status",
+		"noJobsChirho": "Nenhuma tarefa de importação encontrada",
+		"helpTextChirho": "As tarefas de importação são criadas quando os tradutores importam glosas de fontes externas. As tarefas são executadas de forma assíncrona e podem levar vários minutos para serem concluídas."
+	},
+	"analyticsChirho": {
+		"titleChirho": "Painel de Análise",
+		"subtitleChirho": "Visão geral do progresso e atividade de tradução",
+		"overviewChirho": {
+			"languagesChirho": "Idiomas",
+			"activeUsersChirho": "Usuários Ativos",
+			"totalGlossesChirho": "Total de Glosas",
+			"approvedChirho": "Aprovadas",
+			"machineGlossesChirho": "Glosas Automáticas"
+		},
+		"languageProgressChirho": {
+			"titleChirho": "Progresso por Idioma",
+			"membersChirho": "membros",
+			"noLanguagesChirho": "Nenhum idioma configurado ainda"
+		},
+		"recentActivityChirho": {
+			"titleChirho": "Atividade Recente (Últimos 7 Dias)",
+			"glossesChirho": "glosas",
+			"approvedChirho": "aprovadas",
+			"noActivityChirho": "Sem atividade recente"
+		},
+		"bookProgressChirho": {
+			"titleChirho": "Progresso por Livro (Principais Idiomas)",
+			"oldTestamentChirho": "Antigo Testamento",
+			"newTestamentChirho": "Novo Testamento"
+		}
+	}
+}

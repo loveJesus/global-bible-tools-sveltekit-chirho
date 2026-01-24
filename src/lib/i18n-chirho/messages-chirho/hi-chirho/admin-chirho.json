@@ -1,0 +1,105 @@
+{
+	"titleChirho": "प्रशासन",
+	"backToAdminChirho": "← प्रशासन पर वापस जाएं",
+	"languagesChirho": {
+		"titleChirho": "भाषा प्रबंधन",
+		"subtitleChirho": "अनुवाद भाषाओं का प्रबंधन करें",
+		"searchPlaceholderChirho": "भाषाएं खोजें...",
+		"addLanguageChirho": "भाषा जोड़ें",
+		"tableHeadersChirho": {
+			"languageChirho": "भाषा",
+			"codeChirho": "कोड",
+			"membersChirho": "सदस्य",
+			"progressChirho": "प्रगति",
+			"dirChirho": "दिशा",
+			"actionsChirho": "कार्रवाई"
+		},
+		"wordsChirho": "शब्द",
+		"approvedChirho": "स्वीकृत",
+		"viewChirho": "देखें",
+		"settingsChirho": "सेटिंग्स",
+		"snapshotsChirho": "स्नैपशॉट",
+		"editChirho": "संपादित करें",
+		"noMatchChirho": "कोई भाषा मेल नहीं खाती",
+		"noLanguagesChirho": "कोई भाषा नहीं मिली",
+		"addModalChirho": {
+			"titleChirho": "नई भाषा जोड़ें",
+			"codeChirho": "भाषा कोड",
+			"codeHintChirho": "3-अक्षर ISO 639-3 कोड",
+			"codePlaceholderChirho": "उदा., fra, deu, jpn",
+			"nameChirho": "भाषा का नाम",
+			"namePlaceholderChirho": "उदा., फ्रेंच, जर्मन, जापानी",
+			"fontChirho": "फ़ॉन्ट",
+			"textDirectionChirho": "पाठ की दिशा",
+			"ltrChirho": "बाएं से दाएं (LTR)",
+			"rtlChirho": "दाएं से बाएं (RTL)",
+			"cancelChirho": "रद्द करें",
+			"addChirho": "भाषा जोड़ें"
+		},
+		"editModalChirho": {
+			"titleChirho": "भाषा संपादित करें",
+			"codeDisabledChirho": "कोड बदला नहीं जा सकता",
+			"saveChirho": "परिवर्तन सहेजें"
+		}
+	},
+	"jobsChirho": {
+		"titleChirho": "पृष्ठभूमि कार्य",
+		"subtitleChirho": "आयात कार्य की स्थिति और इतिहास देखें",
+		"statsChirho": {
+			"totalChirho": "कुल कार्य",
+			"successfulChirho": "सफल",
+			"failedChirho": "विफल",
+			"runningChirho": "चल रहा है"
+		},
+		"filterChirho": {
+			"allChirho": "सभी",
+			"successChirho": "सफल",
+			"failedChirho": "विफल",
+			"runningChirho": "चल रहा है"
+		},
+		"tableHeadersChirho": {
+			"languageChirho": "भाषा",
+			"startedChirho": "शुरू हुआ",
+			"durationChirho": "अवधि",
+			"userChirho": "उपयोगकर्ता",
+			"statusChirho": "स्थिति"
+		},
+		"statusChirho": {
+			"successChirho": "सफल",
+			"failedChirho": "विफल",
+			"runningChirho": "चल रहा है",
+			"unknownChirho": "अज्ञात"
+		},
+		"systemUserChirho": "सिस्टम",
+		"noJobsFilteredChirho": "इस स्थिति वाला कोई कार्य नहीं मिला",
+		"noJobsChirho": "कोई आयात कार्य नहीं मिला",
+		"helpTextChirho": "आयात कार्य तब बनाए जाते हैं जब अनुवादक बाहरी स्रोतों से ग्लॉस आयात करते हैं। कार्य असमकालिक रूप से चलते हैं और पूरा होने में कई मिनट लग सकते हैं।"
+	},
+	"analyticsChirho": {
+		"titleChirho": "विश्लेषण डैशबोर्ड",
+		"subtitleChirho": "अनुवाद प्रगति और गतिविधि का अवलोकन",
+		"overviewChirho": {
+			"languagesChirho": "भाषाएं",
+			"activeUsersChirho": "सक्रिय उपयोगकर्ता",
+			"totalGlossesChirho": "कुल ग्लॉस",
+			"approvedChirho": "स्वीकृत",
+			"machineGlossesChirho": "मशीन ग्लॉस"
+		},
+		"languageProgressChirho": {
+			"titleChirho": "भाषा प्रगति",
+			"membersChirho": "सदस्य",
+			"noLanguagesChirho": "अभी तक कोई भाषा कॉन्फ़िगर नहीं की गई"
+		},
+		"recentActivityChirho": {
+			"titleChirho": "हाल की गतिविधि (पिछले 7 दिन)",
+			"glossesChirho": "ग्लॉस",
+			"approvedChirho": "स्वीकृत",
+			"noActivityChirho": "कोई हाल की गतिविधि नहीं"
+		},
+		"bookProgressChirho": {
+			"titleChirho": "पुस्तक प्रगति (शीर्ष भाषाएं)",
+			"oldTestamentChirho": "पुराना नियम",
+			"newTestamentChirho": "नया नियम"
+		}
+	}
+}

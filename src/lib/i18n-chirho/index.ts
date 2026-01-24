@@ -35,6 +35,11 @@ const configChirho: ConfigChirho = {
 			key: 'landing',
 			loader: async () => (await import('./messages-chirho/es-chirho/landing-chirho.json')).default
 		},
+		{
+			locale: 'es',
+			key: 'admin',
+			loader: async () => (await import('./messages-chirho/es-chirho/admin-chirho.json')).default
+		},
 		// Hindi
 		{
 			locale: 'hi',
@@ -45,6 +50,11 @@ const configChirho: ConfigChirho = {
 			locale: 'hi',
 			key: 'landing',
 			loader: async () => (await import('./messages-chirho/hi-chirho/landing-chirho.json')).default
+		},
+		{
+			locale: 'hi',
+			key: 'admin',
+			loader: async () => (await import('./messages-chirho/hi-chirho/admin-chirho.json')).default
 		},
 		// French
 		{
@@ -78,6 +88,11 @@ const configChirho: ConfigChirho = {
 			locale: 'pt',
 			key: 'landing',
 			loader: async () => (await import('./messages-chirho/pt-chirho/landing-chirho.json')).default
+		},
+		{
+			locale: 'pt',
+			key: 'admin',
+			loader: async () => (await import('./messages-chirho/pt-chirho/admin-chirho.json')).default
 		},
 		// Russian
 		{
