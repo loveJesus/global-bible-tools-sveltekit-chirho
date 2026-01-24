@@ -78,8 +78,8 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const userIdChirho = formDataChirho.get('userId') as string;
-		const makeAdminChirho = formDataChirho.get('makeAdmin') === 'true';
+		const userIdChirho = formDataChirho.get('userIdChirho') as string;
+		const makeAdminChirho = formDataChirho.get('makeAdminChirho') === 'true';
 
 		if (!userIdChirho) {
 			return failChirho(400, { errorChirho: 'User ID is required' });
@@ -128,8 +128,8 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const userIdChirho = formDataChirho.get('userId') as string;
-		const newStatusChirho = formDataChirho.get('status') as 'active' | 'disabled';
+		const userIdChirho = formDataChirho.get('userIdChirho') as string;
+		const newStatusChirho = formDataChirho.get('statusChirho') as 'active' | 'disabled';
 
 		if (!userIdChirho || !newStatusChirho) {
 			return failChirho(400, { errorChirho: 'User ID and status are required' });

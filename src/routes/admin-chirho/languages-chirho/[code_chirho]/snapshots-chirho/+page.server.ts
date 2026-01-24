@@ -75,7 +75,7 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const noteChirho = (formDataChirho.get('note') as string) || undefined;
+		const noteChirho = (formDataChirho.get('noteChirho') as string) || undefined;
 
 		try {
 			const snapshotChirho = await createSnapshotChirho(codeChirho, sessionChirho.userIdChirho, noteChirho);
@@ -105,7 +105,7 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const snapshotIdChirho = formDataChirho.get('snapshotId') as string;
+		const snapshotIdChirho = formDataChirho.get('snapshotIdChirho') as string;
 
 		if (!snapshotIdChirho) {
 			return failChirho(400, { errorChirho: 'Snapshot ID is required' });

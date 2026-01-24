@@ -169,10 +169,10 @@
 									<div class="flex justify-end gap-2">
 										<!-- Toggle Admin -->
 										<form method="POST" action="?/toggleAdminChirho" use:enhanceChirho>
-											<input type="hidden" name="userId" value={userChirho.idChirho} />
+											<input type="hidden" name="userIdChirho" value={userChirho.idChirho} />
 											<input
 												type="hidden"
-												name="makeAdmin"
+												name="makeAdminChirho"
 												value={userChirho.isAdminChirho ? 'false' : 'true'}
 											/>
 											<button
@@ -187,10 +187,10 @@
 
 										<!-- Toggle Status -->
 										<form method="POST" action="?/toggleStatusChirho" use:enhanceChirho>
-											<input type="hidden" name="userId" value={userChirho.idChirho} />
+											<input type="hidden" name="userIdChirho" value={userChirho.idChirho} />
 											<input
 												type="hidden"
-												name="status"
+												name="statusChirho"
 												value={userChirho.statusChirho === 'active' ? 'disabled' : 'active'}
 											/>
 											<button

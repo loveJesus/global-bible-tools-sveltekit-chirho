@@ -135,10 +135,10 @@ export const POST: RequestHandler = async ({ request: requestChirho, locals: loc
 
 		// Validate with Zod
 		const validationChirho = noteCreateSchemaChirho.safeParse({
-			wordIdChirho: formDataChirho.get('wordId'),
-			languageCodeChirho: formDataChirho.get('languageCode'),
-			contentChirho: formDataChirho.get('content'),
-			typeChirho: formDataChirho.get('type')
+			wordIdChirho: formDataChirho.get('wordIdChirho'),
+			languageCodeChirho: formDataChirho.get('languageCodeChirho'),
+			contentChirho: formDataChirho.get('contentChirho'),
+			typeChirho: formDataChirho.get('typeChirho')
 		});
 
 		if (!validationChirho.success) {

@@ -86,7 +86,7 @@
 				>
 					<input
 						type="text"
-						name="note"
+						name="noteChirho"
 						bind:value={noteChirho}
 						placeholder="Optional note (e.g., 'Before major changes')"
 						class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -202,7 +202,7 @@
 													}}
 													class="inline-flex items-center gap-2"
 												>
-													<input type="hidden" name="snapshotId" value={snapshotChirho.idChirho} />
+													<input type="hidden" name="snapshotIdChirho" value={snapshotChirho.idChirho} />
 													<button
 														type="submit"
 														disabled={restoringIdChirho === snapshotChirho.idChirho}

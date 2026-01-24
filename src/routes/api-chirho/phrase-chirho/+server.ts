@@ -32,13 +32,13 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		// Parse word IDs from JSON
 		let wordIdsChirho: string[];
 		try {
-			const wordIdsJsonChirho = formDataChirho.get('wordIds') as string;
+			const wordIdsJsonChirho = formDataChirho.get('wordIdsChirho') as string;
 			wordIdsChirho = JSON.parse(wordIdsJsonChirho);
 		} catch {
 			return json({ errorChirho: 'Invalid wordIds JSON format' }, { status: 400 });
 		}
 
-		const languageCodeChirho = formDataChirho.get('languageCode') as string;
+		const languageCodeChirho = formDataChirho.get('languageCodeChirho') as string;
 
 		// Validate with Zod
 		const validationChirho = phraseCreateSchemaChirho.safeParse({
@@ -104,7 +104,7 @@ export const DELETE: RequestHandler = async ({ request, locals }) => {
 
 	try {
 		const formDataChirho = await request.formData();
-		const phraseIdRawChirho = formDataChirho.get('phraseId') as string;
+		const phraseIdRawChirho = formDataChirho.get('phraseIdChirho') as string;
 
 		// Validate with Zod
 		const validationChirho = phraseDeleteSchemaChirho.safeParse({

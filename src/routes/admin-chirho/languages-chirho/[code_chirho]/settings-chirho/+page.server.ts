@@ -126,11 +126,11 @@ export const actions: ActionsChirho = {
 
 		// Parse form data
 		const formDataChirho = await requestChirho.formData();
-		const nameChirho = (formDataChirho.get('name') as string)?.trim();
-		const fontChirho = (formDataChirho.get('font') as string)?.trim();
-		const textDirectionChirho = formDataChirho.get('textDirection') as string;
-		const translationIdsRawChirho = formDataChirho.get('translationIds') as string;
-		const referenceLanguageIdChirho = (formDataChirho.get('referenceLanguageId') as string) || null;
+		const nameChirho = (formDataChirho.get('nameChirho') as string)?.trim();
+		const fontChirho = (formDataChirho.get('fontChirho') as string)?.trim();
+		const textDirectionChirho = formDataChirho.get('textDirectionChirho') as string;
+		const translationIdsRawChirho = formDataChirho.get('translationIdsChirho') as string;
+		const referenceLanguageIdChirho = (formDataChirho.get('referenceLanguageIdChirho') as string) || null;
 
 		// Parse translation IDs (comma-separated)
 		const translationIdsChirho = translationIdsRawChirho

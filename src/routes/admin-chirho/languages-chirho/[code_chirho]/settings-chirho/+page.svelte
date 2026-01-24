@@ -122,7 +122,7 @@
 			}}
 		>
 			<!-- Hidden field for translation IDs -->
-			<input type="hidden" name="translationIds" value={translationIdsChirho.join(',')} />
+			<input type="hidden" name="translationIdsChirho" value={translationIdsChirho.join(',')} />
 
 			<!-- Identification Section -->
 			<section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
@@ -155,13 +155,13 @@
 					</div>
 					<div class="flex-shrink-0 w-full lg:w-80">
 						<div class="mb-4">
-							<label for="name" class="block text-sm font-medium text-slate-700 mb-1">
+							<label for="nameChirho" class="block text-sm font-medium text-slate-700 mb-1">
 								Name
 							</label>
 							<input
 								type="text"
-								id="name"
-								name="name"
+								id="nameChirho"
+								name="nameChirho"
 								bind:value={nameChirho}
 								required
 								class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -195,12 +195,12 @@
 					</div>
 					<div class="flex-shrink-0 w-full lg:w-80">
 						<div class="mb-4">
-							<label for="font" class="block text-sm font-medium text-slate-700 mb-1">
+							<label for="fontChirho" class="block text-sm font-medium text-slate-700 mb-1">
 								FONT
 							</label>
 							<select
-								id="font"
-								name="font"
+								id="fontChirho"
+								name="fontChirho"
 								bind:value={fontChirho}
 								class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 							>
@@ -244,7 +244,7 @@
 									RTL
 								</button>
 							</div>
-							<input type="hidden" name="textDirection" value={textDirectionChirho} />
+							<input type="hidden" name="textDirectionChirho" value={textDirectionChirho} />
 						</div>
 					</div>
 				</div>
@@ -261,12 +261,12 @@
 						</p>
 					</div>
 					<div class="flex-shrink-0 w-full lg:w-80">
-						<label for="referenceLanguageId" class="block text-sm font-medium text-slate-700 mb-1">
+						<label for="referenceLanguageIdChirho" class="block text-sm font-medium text-slate-700 mb-1">
 							REFERENCE LANGUAGE
 						</label>
 						<select
-							id="referenceLanguageId"
-							name="referenceLanguageId"
+							id="referenceLanguageIdChirho"
+							name="referenceLanguageIdChirho"
 							bind:value={referenceLanguageIdChirho}
 							class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 						>
