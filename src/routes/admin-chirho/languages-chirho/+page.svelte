@@ -244,7 +244,7 @@
 					<input
 						type="text"
 						id="code"
-						name="code"
+						name="codeChirho"
 						required
 						maxlength="3"
 						pattern="[a-z]{'{'}3{'}'}"
@@ -259,7 +259,7 @@
 					<input
 						type="text"
 						id="name"
-						name="name"
+						name="nameChirho"
 						required
 						placeholder="e.g., French, German, Japanese"
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -271,7 +271,7 @@
 					<input
 						type="text"
 						id="font"
-						name="font"
+						name="fontChirho"
 						value="Noto Sans"
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					/>
@@ -283,7 +283,7 @@
 					>
 					<select
 						id="textDirection"
-						name="textDirection"
+						name="textDirectionChirho"
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					>
 						<option value="ltr">Left to Right (LTR)</option>
@@ -324,7 +324,7 @@
 			<h2 class="text-xl font-semibold text-slate-800">Edit Language</h2>
 
 			<form method="POST" action="?/updateLanguageChirho" use:enhanceChirho class="mt-4 space-y-4">
-				<input type="hidden" name="id" value={editingLanguageChirho.idChirho} />
+				<input type="hidden" name="idChirho" value={editingLanguageChirho.idChirho} />
 
 				<div>
 					<label for="edit-code" class="block text-sm font-medium text-slate-700">Language Code</label>
@@ -345,7 +345,7 @@
 					<input
 						type="text"
 						id="edit-name"
-						name="name"
+						name="nameChirho"
 						required
 						value={editingLanguageChirho.nameChirho}
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -357,7 +357,7 @@
 					<input
 						type="text"
 						id="edit-font"
-						name="font"
+						name="fontChirho"
 						value={editingLanguageChirho.fontChirho}
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					/>
@@ -369,7 +369,7 @@
 					>
 					<select
 						id="edit-textDirection"
-						name="textDirection"
+						name="textDirectionChirho"
 						class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					>
 						<option value="ltr" selected={editingLanguageChirho.textDirectionChirho === 'ltr'}
