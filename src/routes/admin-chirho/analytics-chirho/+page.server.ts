@@ -5,15 +5,27 @@
 import type { PageServerLoad as PageServerLoadChirho } from './$types';
 import { error as errorChirho, redirect as redirectChirho } from '@sveltejs/kit';
 import { isUserAdminChirho } from '$lib/server/auth-helpers-chirho';
-import { queryRawChirho } from '$lib/server/db-chirho';
-
-interface OverviewStatsChirho {
-	totalLanguagesChirho: number;
-	totalUsersChirho: number;
-	totalGlossesChirho: number;
-	approvedGlossesChirho: number;
-	machineGlossesChirho: number;
-}
+import {
+	dbChirho,
+	queryRawChirho,
+	countChirho,
+	countDistinctChirho,
+	eqChirho,
+	andChirho,
+	isNullChirho,
+	gteChirho,
+	descChirho,
+	sqlChirho
+} from '$lib/server/db-chirho';
+import {
+	languageTableChirho,
+	userTableChirho,
+	glossTableChirho,
+	machineGlossTableChirho,
+	phraseTableChirho,
+	phraseWordTableChirho,
+	languageMemberTableChirho
+} from '$lib/server/schema-chirho';
 
 interface LanguageProgressChirho {
 	codeChirho: string;
@@ -54,19 +66,38 @@ export const load: PageServerLoadChirho = async ({ locals: localsChirho }) => {
 		throw errorChirho(403, 'Access denied. Admin privileges required.');
 	}
 
-	// Get overview stats
-	const overviewStatsChirho = await queryRawChirho<OverviewStatsChirho>(
-		`
-		SELECT
-			(SELECT COUNT(*) FROM language)::int AS "totalLanguagesChirho",
-			(SELECT COUNT(*) FROM users WHERE status = 'active')::int AS "totalUsersChirho",
-			(SELECT COUNT(*) FROM gloss)::int AS "totalGlossesChirho",
-			(SELECT COUNT(*) FROM gloss WHERE state = 'APPROVED')::int AS "approvedGlossesChirho",
-			(SELECT COUNT(*) FROM machine_gloss)::int AS "machineGlossesChirho"
-		`
-	);
+	// Get overview stats using Drizzle queries (parallel execution)
+	const [
+		totalLanguagesResultChirho,
+		totalUsersResultChirho,
+		totalGlossesResultChirho,
+		approvedGlossesResultChirho,
+		machineGlossesResultChirho
+	] = await Promise.all([
+		dbChirho.select({ countChirho: countChirho() }).from(languageTableChirho),
+		dbChirho
+			.select({ countChirho: countChirho() })
+			.from(userTableChirho)
+			.where(eqChirho(userTableChirho.statusChirho, 'active')),
+		dbChirho.select({ countChirho: countChirho() }).from(glossTableChirho),
+		dbChirho
+			.select({ countChirho: countChirho() })
+			.from(glossTableChirho)
+			.where(eqChirho(glossTableChirho.stateChirho, 'APPROVED')),
+		dbChirho.select({ countChirho: countChirho() }).from(machineGlossTableChirho)
+	]);
 
-	// Get language progress
+	const overviewStatsChirho = {
+		totalLanguagesChirho: Number(totalLanguagesResultChirho[0]?.countChirho ?? 0),
+		totalUsersChirho: Number(totalUsersResultChirho[0]?.countChirho ?? 0),
+		totalGlossesChirho: Number(totalGlossesResultChirho[0]?.countChirho ?? 0),
+		approvedGlossesChirho: Number(approvedGlossesResultChirho[0]?.countChirho ?? 0),
+		machineGlossesChirho: Number(machineGlossesResultChirho[0]?.countChirho ?? 0)
+	};
+
+	// Get language progress using LATERAL joins for performance
+	// NOTE: LATERAL joins are PostgreSQL-specific and optimize this query significantly.
+	// Converting to pure Drizzle would require N+1 queries or complex subqueries.
 	const languageProgressChirho = await queryRawChirho<LanguageProgressChirho>(
 		`
 		SELECT
@@ -96,49 +127,81 @@ export const load: PageServerLoadChirho = async ({ locals: localsChirho }) => {
 		`
 	);
 
-	// Get recent activity (last 7 days by language)
-	const recentActivityChirho = await queryRawChirho<RecentActivityChirho>(
-		`
-		SELECT
-			DATE(g.updated_at)::text AS "dateChirho",
-			l.code AS "languageCodeChirho",
-			l.name AS "languageNameChirho",
-			COUNT(*)::int AS "glossCountChirho",
-			COUNT(CASE WHEN g.state = 'APPROVED' THEN 1 END)::int AS "approvedCountChirho"
-		FROM gloss g
-		JOIN phrase p ON p.id = g.phrase_id
-		JOIN language l ON l.id = p.language_id
-		WHERE g.updated_at >= CURRENT_DATE - INTERVAL '7 days'
-			AND p.deleted_at IS NULL
-		GROUP BY DATE(g.updated_at), l.code, l.name
-		ORDER BY DATE(g.updated_at) DESC, l.name
-		LIMIT 50
-		`
-	);
+	// Get recent activity (last 7 days by language) using Drizzle
+	const sevenDaysAgoChirho = new Date();
+	sevenDaysAgoChirho.setDate(sevenDaysAgoChirho.getDate() - 7);
 
-	// Get top 10 languages by progress for book progress view
-	const topLanguagesChirho = await queryRawChirho<{ codeChirho: string }>(
-		`
-		SELECT l.code AS "codeChirho"
-		FROM language l
-		LEFT JOIN (
-			SELECT p.language_id, COUNT(DISTINCT pw.word_id) AS count
-			FROM phrase p
-			JOIN phrase_word pw ON pw.phrase_id = p.id
-			JOIN gloss g ON g.phrase_id = p.id AND g.state = 'APPROVED'
-			WHERE p.deleted_at IS NULL
-			GROUP BY p.language_id
-		) AS progress ON progress.language_id = l.id
-		ORDER BY COALESCE(progress.count, 0) DESC
-		LIMIT 5
-		`
-	);
+	const recentActivityRawChirho = await dbChirho
+		.select({
+			dateChirho: sqlChirho<string>`DATE(${glossTableChirho.updatedAtChirho})::text`,
+			languageCodeChirho: languageTableChirho.codeChirho,
+			languageNameChirho: languageTableChirho.nameChirho,
+			glossCountChirho: countChirho(),
+			approvedCountChirho: countChirho(
+				sqlChirho`CASE WHEN ${glossTableChirho.stateChirho} = 'APPROVED' THEN 1 END`
+			)
+		})
+		.from(glossTableChirho)
+		.innerJoin(phraseTableChirho, eqChirho(phraseTableChirho.idChirho, glossTableChirho.phraseIdChirho))
+		.innerJoin(languageTableChirho, eqChirho(languageTableChirho.idChirho, phraseTableChirho.languageIdChirho))
+		.where(
+			andChirho(
+				gteChirho(glossTableChirho.updatedAtChirho, sevenDaysAgoChirho),
+				isNullChirho(phraseTableChirho.deletedAtChirho)
+			)
+		)
+		.groupBy(
+			sqlChirho`DATE(${glossTableChirho.updatedAtChirho})`,
+			languageTableChirho.codeChirho,
+			languageTableChirho.nameChirho
+		)
+		.orderBy(
+			descChirho(sqlChirho`DATE(${glossTableChirho.updatedAtChirho})`),
+			languageTableChirho.nameChirho
+		)
+		.limit(50);
+
+	const recentActivityChirho: RecentActivityChirho[] = recentActivityRawChirho.map((rowChirho) => ({
+		dateChirho: rowChirho.dateChirho,
+		languageCodeChirho: rowChirho.languageCodeChirho,
+		languageNameChirho: rowChirho.languageNameChirho,
+		glossCountChirho: Number(rowChirho.glossCountChirho),
+		approvedCountChirho: Number(rowChirho.approvedCountChirho)
+	}));
+
+	// Get top 5 languages by approved word count using Drizzle subquery
+	const topLanguagesResultChirho = await dbChirho
+		.select({
+			codeChirho: languageTableChirho.codeChirho,
+			approvedCountChirho: countDistinctChirho(phraseWordTableChirho.wordIdChirho)
+		})
+		.from(languageTableChirho)
+		.leftJoin(
+			phraseTableChirho,
+			andChirho(
+				eqChirho(phraseTableChirho.languageIdChirho, languageTableChirho.idChirho),
+				isNullChirho(phraseTableChirho.deletedAtChirho)
+			)
+		)
+		.leftJoin(phraseWordTableChirho, eqChirho(phraseWordTableChirho.phraseIdChirho, phraseTableChirho.idChirho))
+		.leftJoin(
+			glossTableChirho,
+			andChirho(
+				eqChirho(glossTableChirho.phraseIdChirho, phraseTableChirho.idChirho),
+				eqChirho(glossTableChirho.stateChirho, 'APPROVED')
+			)
+		)
+		.groupBy(languageTableChirho.codeChirho)
+		.orderBy(descChirho(countDistinctChirho(phraseWordTableChirho.wordIdChirho)))
+		.limit(5);
+
+	const topLanguagesChirho = topLanguagesResultChirho.map((lChirho) => lChirho.codeChirho);
 
 	// Get book progress for top languages
+	// NOTE: LATERAL joins with CROSS JOIN are optimal here to avoid 66 * N separate queries.
+	// This query benefits from PostgreSQL's query planner optimizations.
 	let bookProgressChirho: BookProgressChirho[] = [];
 	if (topLanguagesChirho.length > 0) {
-		const topCodesChirho = topLanguagesChirho.map((lChirho) => lChirho.codeChirho);
-
 		bookProgressChirho = await queryRawChirho<BookProgressChirho>(
 			`
 			SELECT
@@ -169,21 +232,15 @@ export const load: PageServerLoadChirho = async ({ locals: localsChirho }) => {
 			WHERE l.code = ANY($1)
 			ORDER BY b.id, l.code
 			`,
-			[topCodesChirho]
+			[topLanguagesChirho]
 		);
 	}
 
 	return {
-		overviewStatsChirho: overviewStatsChirho[0] || {
-			totalLanguagesChirho: 0,
-			totalUsersChirho: 0,
-			totalGlossesChirho: 0,
-			approvedGlossesChirho: 0,
-			machineGlossesChirho: 0
-		},
+		overviewStatsChirho,
 		languageProgressChirho,
 		recentActivityChirho,
 		bookProgressChirho,
-		topLanguagesChirho: topLanguagesChirho.map((lChirho) => lChirho.codeChirho)
+		topLanguagesChirho
 	};
 };
