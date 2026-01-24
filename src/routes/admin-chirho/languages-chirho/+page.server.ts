@@ -89,10 +89,10 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const codeChirho = (formDataChirho.get('code') as string)?.trim().toLowerCase();
-		const nameChirho = (formDataChirho.get('name') as string)?.trim();
-		const fontChirho = (formDataChirho.get('font') as string)?.trim() || 'Noto Sans';
-		const textDirectionChirho = (formDataChirho.get('textDirection') as string) || 'ltr';
+		const codeChirho = (formDataChirho.get('codeChirho') as string)?.trim().toLowerCase();
+		const nameChirho = (formDataChirho.get('nameChirho') as string)?.trim();
+		const fontChirho = (formDataChirho.get('fontChirho') as string)?.trim() || 'Noto Sans';
+		const textDirectionChirho = (formDataChirho.get('textDirectionChirho') as string) || 'ltr';
 
 		if (!codeChirho || !nameChirho) {
 			return failChirho(400, { errorChirho: 'Code and name are required' });
@@ -144,10 +144,10 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const idChirho = formDataChirho.get('id') as string;
-		const nameChirho = (formDataChirho.get('name') as string)?.trim();
-		const fontChirho = (formDataChirho.get('font') as string)?.trim() || 'Noto Sans';
-		const textDirectionChirho = (formDataChirho.get('textDirection') as string) || 'ltr';
+		const idChirho = formDataChirho.get('idChirho') as string;
+		const nameChirho = (formDataChirho.get('nameChirho') as string)?.trim();
+		const fontChirho = (formDataChirho.get('fontChirho') as string)?.trim() || 'Noto Sans';
+		const textDirectionChirho = (formDataChirho.get('textDirectionChirho') as string) || 'ltr';
 
 		if (!idChirho || !nameChirho) {
 			return failChirho(400, { errorChirho: 'ID and name are required' });

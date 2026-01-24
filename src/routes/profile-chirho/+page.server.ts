@@ -74,7 +74,7 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const newNameChirho = formDataChirho.get('name') as string;
+		const newNameChirho = formDataChirho.get('nameChirho') as string;
 
 		if (!newNameChirho || newNameChirho.trim().length === 0) {
 			return failChirho(400, { errorChirho: 'Name is required' });
@@ -101,7 +101,7 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const pictureChirho = formDataChirho.get('picture') as string;
+		const pictureChirho = formDataChirho.get('pictureChirho') as string;
 
 		// Validate it's a proper data URI
 		if (!pictureChirho?.startsWith('data:image/jpeg;base64,')) {
@@ -154,9 +154,9 @@ export const actions: ActionsChirho = {
 		}
 
 		const formDataChirho = await requestChirho.formData();
-		const currentPasswordChirho = formDataChirho.get('currentPassword') as string;
-		const newPasswordChirho = formDataChirho.get('newPassword') as string;
-		const confirmPasswordChirho = formDataChirho.get('confirmPassword') as string;
+		const currentPasswordChirho = formDataChirho.get('currentPasswordChirho') as string;
+		const newPasswordChirho = formDataChirho.get('newPasswordChirho') as string;
+		const confirmPasswordChirho = formDataChirho.get('confirmPasswordChirho') as string;
 
 		// Validate input
 		if (!newPasswordChirho || newPasswordChirho.length < 8) {

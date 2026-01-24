@@ -180,7 +180,7 @@
 								if (pictureInputChirho) pictureInputChirho.value = '';
 							};
 						}}>
-							<input type="hidden" name="picture" value={previewChirho} />
+							<input type="hidden" name="pictureChirho" value={previewChirho} />
 							<div class="flex gap-2">
 								<button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm">
 									Save
@@ -226,12 +226,12 @@
 
 				<!-- Name (editable) -->
 				<form method="POST" action="?/updateNameChirho" use:enhanceChirho>
-					<label for="name" class="block text-sm font-medium text-slate-700">Name</label>
+					<label for="nameChirho" class="block text-sm font-medium text-slate-700">Name</label>
 					<div class="mt-1 flex items-center gap-3">
 						<input
 							type="text"
-							id="name"
-							name="name"
+							id="nameChirho"
+							name="nameChirho"
 							value={dataChirho.userChirho.nameChirho ?? ''}
 							placeholder="Enter your name"
 							class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -272,13 +272,13 @@
 				<form method="POST" action="?/updatePasswordChirho" use:enhanceChirho class="mt-4 space-y-4">
 					{#if dataChirho.userChirho.hasPasswordChirho}
 						<div>
-							<label for="currentPassword" class="block text-sm font-medium text-slate-700"
+							<label for="currentPasswordChirho" class="block text-sm font-medium text-slate-700"
 								>Current Password</label
 							>
 							<input
 								type="password"
-								id="currentPassword"
-								name="currentPassword"
+								id="currentPasswordChirho"
+								name="currentPasswordChirho"
 								required
 								class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 							/>
@@ -286,13 +286,13 @@
 					{/if}
 
 					<div>
-						<label for="newPassword" class="block text-sm font-medium text-slate-700"
+						<label for="newPasswordChirho" class="block text-sm font-medium text-slate-700"
 							>New Password</label
 						>
 						<input
 							type="password"
-							id="newPassword"
-							name="newPassword"
+							id="newPasswordChirho"
+							name="newPasswordChirho"
 							required
 							minlength="8"
 							class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -301,13 +301,13 @@
 					</div>
 
 					<div>
-						<label for="confirmPassword" class="block text-sm font-medium text-slate-700"
+						<label for="confirmPasswordChirho" class="block text-sm font-medium text-slate-700"
 							>Confirm Password</label
 						>
 						<input
 							type="password"
-							id="confirmPassword"
-							name="confirmPassword"
+							id="confirmPasswordChirho"
+							name="confirmPasswordChirho"
 							required
 							minlength="8"
 							class="mt-1 w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
