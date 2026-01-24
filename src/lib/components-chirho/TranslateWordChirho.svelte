@@ -4,6 +4,7 @@
 
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { filterPuaChirho } from '$lib/shared-chirho/text-utils-chirho';
 
 	// Props interface
 	interface WordChirho {
@@ -241,7 +242,7 @@
 			onkeydown={(eChirho) => eChirho.key === 'Enter' && onShowDetailChirho?.()}
 			role="button"
 		>
-			{wordChirho.textChirho}
+			{filterPuaChirho(wordChirho.textChirho)}
 		</span>
 
 		{#if hasNoteChirho}

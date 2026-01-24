@@ -9,6 +9,7 @@
 	import { onMount as onMountChirho } from 'svelte';
 	import AudioDialogChirho from '$lib/components-chirho/AudioDialogChirho.svelte';
 	import { tChirho } from '$lib/i18n-chirho';
+	import { filterPuaChirho, formatGlossChirho as formatGlossUtilChirho } from '$lib/shared-chirho/text-utils-chirho';
 
 	let { data: dataChirho }: { data: PageDataChirho } = $props();
 
@@ -51,13 +52,9 @@
 		}
 	});
 
-	// Format gloss text - optionally remove n-dashes
+	// Format gloss text using shared utility - respects hideNdash preference
 	function formatGlossChirho(glossChirho: string | null): string {
-		if (!glossChirho) return '—';
-		if (hideNdashChirho) {
-			return glossChirho.replace(/–/g, ' ').replace(/\s+/g, ' ').trim();
-		}
-		return glossChirho;
+		return formatGlossUtilChirho(glossChirho, hideNdashChirho);
 	}
 
 	// Get CSS class for gloss based on state - improved styling
@@ -410,7 +407,7 @@
 									title="{wordChirho.lemmaIdChirho ?? ''} | {wordChirho.grammarChirho ?? ''} — Click for BibleHub"
 									onclick={() => onWordClickChirho(wordChirho.lemmaIdChirho)}
 								>
-									<span class="text-slate-800 text-xs sm:text-sm">{wordChirho.textChirho}</span>
+									<span class="text-slate-800 text-xs sm:text-sm">{filterPuaChirho(wordChirho.textChirho)}</span>
 									<span
 										class="text-[10px] sm:text-xs leading-tight {getGlossClassChirho(wordChirho.glossStateChirho, wordChirho.glossSourceChirho)}"
 										style="font-family: {dataChirho.languageChirho?.fontChirho ?? 'Noto Sans'}"
