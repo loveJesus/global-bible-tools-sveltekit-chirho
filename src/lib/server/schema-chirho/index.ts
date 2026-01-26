@@ -20,5 +20,8 @@ export * from './translation-chirho';
 // Reference versions (KJV, WEB, etc.)
 export * from './reference-chirho';
 
+// Feedback tables
+export * from './feedback-chirho';
+
 // Relations (for Drizzle relational queries)
 export * from './relations-chirho';
