@@ -29,7 +29,7 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 			l.name as name_chirho,
 			l.font as font_chirho,
 			l.text_direction as text_direction_chirho,
-			COUNT(DISTINCT g.id) as gloss_count_chirho
+			COUNT(DISTINCT g.phrase_id) as gloss_count_chirho
 		FROM language l
 		LEFT JOIN phrase p ON p.language_id = l.id AND p.deleted_at IS NULL
 		LEFT JOIN gloss g ON g.phrase_id = p.id

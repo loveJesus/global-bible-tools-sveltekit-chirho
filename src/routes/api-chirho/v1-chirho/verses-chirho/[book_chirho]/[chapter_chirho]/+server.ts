@@ -45,11 +45,12 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 			v.number as verse_number_chirho,
 			w.id as word_id_chirho,
 			w.text as text_chirho,
-			w.lemma_id as lemma_id_chirho,
-			w.grammar as grammar_chirho
+			lf.lemma_id as lemma_id_chirho,
+			lf.grammar as grammar_chirho
 		FROM word w
 		JOIN verse v ON w.verse_id = v.id
 		JOIN book b ON v.book_id = b.id
+		JOIN lemma_form lf ON w.form_id = lf.id
 		WHERE ${bookWhereChirho}
 		  AND v.chapter = $2
 		ORDER BY v.number, w.id

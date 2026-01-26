@@ -57,12 +57,13 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 			v.number as verse_number_chirho,
 			w.id as word_id_chirho,
 			w.text as source_text_chirho,
-			w.lemma_id as lemma_id_chirho,
+			lf.lemma_id as lemma_id_chirho,
 			g.gloss as gloss_chirho,
 			g.state as state_chirho
 		FROM word w
 		JOIN verse v ON w.verse_id = v.id
 		JOIN book b ON v.book_id = b.id
+		JOIN lemma_form lf ON w.form_id = lf.id
 		LEFT JOIN phrase_word pw ON pw.word_id = w.id
 		LEFT JOIN phrase p ON pw.phrase_id = p.id
 			AND p.language_id = (SELECT id FROM language WHERE code = $3)
