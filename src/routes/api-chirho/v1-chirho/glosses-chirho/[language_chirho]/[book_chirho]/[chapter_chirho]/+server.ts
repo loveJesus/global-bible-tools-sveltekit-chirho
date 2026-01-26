@@ -138,17 +138,22 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 			w.id as word_id_chirho,
 			w.text as source_text_chirho,
 			lf.lemma_id as lemma_id_chirho,
-			g.gloss as gloss_chirho,
-			g.state as state_chirho
+			gl.gloss as gloss_chirho,
+			gl.state as state_chirho
 		FROM word w
 		JOIN verse v ON w.verse_id = v.id
 		JOIN book b ON v.book_id = b.id
-		JOIN lemma_form lf ON w.form_id = lf.id
-		LEFT JOIN phrase_word pw ON pw.word_id = w.id
-		LEFT JOIN phrase p ON pw.phrase_id = p.id
-			AND p.language_id = (SELECT id FROM language WHERE code = $3)
-			AND p.deleted_at IS NULL
-		LEFT JOIN gloss g ON g.phrase_id = p.id
+		LEFT JOIN lemma_form lf ON w.form_id = lf.id
+		LEFT JOIN LATERAL (
+			SELECT g.gloss, g.state
+			FROM phrase_word pw
+			JOIN phrase p ON p.id = pw.phrase_id
+			LEFT JOIN gloss g ON g.phrase_id = p.id
+			WHERE pw.word_id = w.id
+				AND p.language_id = (SELECT id FROM language WHERE code = $3)
+				AND p.deleted_at IS NULL
+			LIMIT 1
+		) gl ON true
 		WHERE b.id = $1
 		  AND v.chapter = $2
 		ORDER BY v.number, w.id
