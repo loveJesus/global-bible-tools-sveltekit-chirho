@@ -238,6 +238,86 @@ curl -H "X-API-Key: YOUR_KEY" \
 
 ---
 
+## Book Reference
+
+Books can be specified by ID (1-66), full name, or abbreviation.
+
+### Old Testament (1-39)
+| ID | Name | Aliases |
+|----|------|---------|
+| 1 | Genesis | gen, gn |
+| 2 | Exodus | exo, ex |
+| 3 | Leviticus | lev, lv |
+| 4 | Numbers | num, nm |
+| 5 | Deuteronomy | deu, deut, dt |
+| 6 | Joshua | jos, josh |
+| 7 | Judges | jdg, judg |
+| 8 | Ruth | rut, ru |
+| 9 | 1 Samuel | 1sam, 1sm |
+| 10 | 2 Samuel | 2sam, 2sm |
+| 11 | 1 Kings | 1kgs, 1ki |
+| 12 | 2 Kings | 2kgs, 2ki |
+| 13 | 1 Chronicles | 1chr, 1ch |
+| 14 | 2 Chronicles | 2chr, 2ch |
+| 15 | Ezra | ezr |
+| 16 | Nehemiah | neh, ne |
+| 17 | Esther | est, esth |
+| 18 | Job | jb |
+| 19 | Psalms | psa, ps, psalm |
+| 20 | Proverbs | pro, prov, pr |
+| 21 | Ecclesiastes | ecc, eccl, ec |
+| 22 | Song of Solomon | sos, song, sng |
+| 23 | Isaiah | isa, is |
+| 24 | Jeremiah | jer, je |
+| 25 | Lamentations | lam, la |
+| 26 | Ezekiel | eze, ezek |
+| 27 | Daniel | dan, da |
+| 28 | Hosea | hos, ho |
+| 29 | Joel | jol, jl |
+| 30 | Amos | amo, am |
+| 31 | Obadiah | oba, ob |
+| 32 | Jonah | jon, jnh |
+| 33 | Micah | mic, mi |
+| 34 | Nahum | nah, na |
+| 35 | Habakkuk | hab, hb |
+| 36 | Zephaniah | zep, zph |
+| 37 | Haggai | hag, hg |
+| 38 | Zechariah | zec, zech |
+| 39 | Malachi | mal, ml |
+
+### New Testament (40-66)
+| ID | Name | Aliases |
+|----|------|---------|
+| 40 | Matthew | mat, matt, mt |
+| 41 | Mark | mrk, mk, mar |
+| 42 | Luke | luk, lk |
+| 43 | John | jhn, jn |
+| 44 | Acts | act, ac |
+| 45 | Romans | rom, ro |
+| 46 | 1 Corinthians | 1cor, 1co |
+| 47 | 2 Corinthians | 2cor, 2co |
+| 48 | Galatians | gal, ga |
+| 49 | Ephesians | eph |
+| 50 | Philippians | php, phil |
+| 51 | Colossians | col |
+| 52 | 1 Thessalonians | 1thess, 1th |
+| 53 | 2 Thessalonians | 2thess, 2th |
+| 54 | 1 Timothy | 1tim, 1ti |
+| 55 | 2 Timothy | 2tim, 2ti |
+| 56 | Titus | tit, ti |
+| 57 | Philemon | phm, phlm |
+| 58 | Hebrews | heb |
+| 59 | James | jas, jam, jm |
+| 60 | 1 Peter | 1pet, 1pe, 1pt |
+| 61 | 2 Peter | 2pet, 2pe, 2pt |
+| 62 | 1 John | 1jn, 1jo |
+| 63 | 2 John | 2jn, 2jo |
+| 64 | 3 John | 3jn, 3jo |
+| 65 | Jude | jud, jd |
+| 66 | Revelation | rev, re, apocalypse |
+
+---
+
 ## Error Responses
 
 | Status | Description |
