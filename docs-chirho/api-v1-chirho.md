@@ -197,13 +197,44 @@ curl -H "X-API-Key: YOUR_KEY" \
 
 ---
 
-## Available Languages
+## Available Languages (43 total)
 
-| Code | Language | Coverage |
-|------|----------|----------|
-| `spa` | Spanish | 100% (31,102 verses) |
-| `hin` | Hindi | 100% (31,102 verses) |
-| `ben` | Bengali | 100% (31,102 verses) |
+### Complete Translations (100%)
+| Code | Language | Glosses |
+|------|----------|---------|
+| `eng` | English | 448,269 |
+| `spa` | Spanish | 448,256 |
+| `hin` | Hindi | 442,321 |
+
+### Partial Translations
+| Code | Language | Glosses | Coverage |
+|------|----------|---------|----------|
+| `ben` | Bengali | 153,654 | ~34% |
+| `rus` | Russian | 86,016 | ~19% |
+| `swa` | Swahili | 66,259 | ~15% |
+| `tur` | Turkish | 60,260 | ~13% |
+
+### Starter Translations (~754 glosses each)
+| Code | Language | Code | Language |
+|------|----------|------|----------|
+| `amh` | Amharic | `mar` | Marathi |
+| `arb` | Arabic | `mya` | Burmese |
+| `ces` | Czech | `nld` | Dutch |
+| `dan` | Danish | `nor` | Norwegian |
+| `deu` | German | `pnb` | Western Punjabi |
+| `ell` | Modern Greek | `pol` | Polish |
+| `fra` | French | `por` | Portuguese |
+| `guj` | Gujarati | `ron` | Romanian |
+| `hat` | Haitian Creole | `swe` | Swedish |
+| `hau` | Hausa | `tam` | Tamil |
+| `heb` | Modern Hebrew | `tel` | Telugu |
+| `hun` | Hungarian | `tgl` | Tagalog |
+| `ind` | Indonesian | `tha` | Thai |
+| `ita` | Italian | `ukr` | Ukrainian |
+| `jav` | Javanese | `urd` | Urdu |
+| `jpn` | Japanese | `vie` | Vietnamese |
+| `kor` | Korean | `yor` | Yoruba |
+| `yue` | Cantonese | `zho` | Chinese (Simplified) |
 
 ---
 
