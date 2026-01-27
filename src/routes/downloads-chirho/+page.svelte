@@ -36,10 +36,10 @@
 			versesChirho: '31,102'
 		},
 		{
-			nameChirho: 'Portuguese ACF Interlinear Bible',
-			descriptionChirho: 'Hebrew & Greek text with Portuguese word-by-word translation and Almeida Corrigida Fiel text',
-			pathChirho: '/bibles-chirho/interlinear-por-acf-chirho.pdf',
-			sizeChirho: '128 MB',
+			nameChirho: 'Portuguese Almeida Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Portuguese word-by-word translation and Almeida 1911 text',
+			pathChirho: '/bibles-chirho/interlinear-por-almeida1911-chirho.pdf',
+			sizeChirho: '136 MB',
 			versesChirho: '31,102'
 		},
 		{
