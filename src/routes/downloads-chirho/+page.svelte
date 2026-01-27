@@ -36,10 +36,24 @@
 			versesChirho: '31,102'
 		},
 		{
+			nameChirho: 'Portuguese ACF Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Portuguese word-by-word translation and Almeida Corrigida Fiel text',
+			pathChirho: '/bibles-chirho/interlinear-por-acf-chirho.pdf',
+			sizeChirho: '128 MB',
+			versesChirho: '31,102'
+		},
+		{
 			nameChirho: 'Hindi ERV Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Hindi word-by-word translation and Hindi Easy-to-Read Version text',
 			pathChirho: '/bibles-chirho/interlinear-hin-hinerv-chirho.pdf',
 			sizeChirho: '139 MB',
+			versesChirho: '31,102'
+		},
+		{
+			nameChirho: 'Bengali 2006EB Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Bengali word-by-word translation and Bengali 2006 Easy Bible text',
+			pathChirho: '/bibles-chirho/interlinear-ben-ben2006eb-chirho.pdf',
+			sizeChirho: '131 MB',
 			versesChirho: '31,102'
 		}
 	];
