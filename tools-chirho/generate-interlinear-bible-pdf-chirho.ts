@@ -9,64 +9,45 @@
  * Creates a complete Bible PDF with Greek/Hebrew text and word-by-word glosses
  * for a specified language translation. Optionally includes reference Bible text.
  *
+ * Uses shared PDF utilities from pdf-generator-chirho.ts for proper font support
+ * including Bengali, Hindi, Arabic, Thai, CJK, and other international scripts.
+ *
  * Usage:
- *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path] [reference_version]
+ *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path] [reference_version] [--large-font]
  *
  * Examples:
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts spa
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Interlinear-Bible.pdf
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./KJV-Interlinear.pdf kjv
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./WEB-Interlinear.pdf web
+ *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Large.pdf hinfbi --large-font
  */
 
-import PdfDocumentChirho from 'pdfkit';
-import { writeFileSync as writeFileSyncChirho, readFileSync as readFileSyncChirho } from 'fs';
+import { writeFileSync as writeFileSyncChirho } from 'fs';
 import { join as joinChirho } from 'path';
 import pg from 'pg';
 
+// Import standalone PDF utilities for proper font support (Bengali, Hindi, Arabic, etc.)
+// This module doesn't depend on SvelteKit and can be used in CLI tools
+import {
+	createPdfDocumentChirho,
+	getMainFontChirho,
+	getBoldFontChirho,
+	getFontForTextChirho,
+	stripPuaChirho,
+	getStrongLinkChirho,
+	isHebrewTextChirho
+} from './pdf-fonts-chirho';
+
 const { Pool: PoolChirho } = pg;
 
-// Type aliases
-type PdfDocumentInstanceChirho = InstanceType<typeof PdfDocumentChirho>;
+// Type alias for PDF document instance
+type PdfDocumentInstanceChirho = ReturnType<typeof createPdfDocumentChirho>;
 
 // Database connection
 const poolChirho = new PoolChirho({
 	connectionString: process.env.DATABASE_URL_CHIRHO || 'postgresql://postgres:asdfasdf@localhost:5435/postgres'
 });
-
-// Load fonts
-const FONT_PATH_CHIRHO = joinChirho(process.cwd(), 'static/fonts-chirho/NotoSans-Regular.ttf');
-const FONT_BOLD_PATH_CHIRHO = joinChirho(process.cwd(), 'static/fonts-chirho/NotoSans-Bold.ttf');
-const FONT_HEBREW_PATH_CHIRHO = joinChirho(process.cwd(), 'static/fonts-chirho/EzraSIL-Regular.ttf');
-
-let notoFontChirho: Buffer | null = null;
-let notoBoldFontChirho: Buffer | null = null;
-let notoHebrewFontChirho: Buffer | null = null;
-
-try {
-	notoFontChirho = readFileSyncChirho(FONT_PATH_CHIRHO);
-} catch {
-	console.warn('Noto Sans regular font not found at', FONT_PATH_CHIRHO);
-}
-
-try {
-	notoBoldFontChirho = readFileSyncChirho(FONT_BOLD_PATH_CHIRHO);
-} catch {
-	console.warn('Noto Sans bold font not found');
-}
-
-try {
-	notoHebrewFontChirho = readFileSyncChirho(FONT_HEBREW_PATH_CHIRHO);
-} catch {
-	console.warn('Noto Sans Hebrew font not found');
-}
-
-/**
- * Check if text contains Hebrew characters (Unicode range 0x0590-0x05FF)
- */
-function isHebrewTextChirho(textChirho: string): boolean {
-	return /[\u0590-\u05FF]/.test(textChirho);
-}
 
 // Book definitions
 const BOOKS_CHIRHO = [
@@ -137,6 +118,66 @@ const BOOKS_CHIRHO = [
 	{ idChirho: 65, nameChirho: 'Jude', chaptersChirho: 1 },
 	{ idChirho: 66, nameChirho: 'Revelation', chaptersChirho: 22 }
 ];
+
+// Font size configuration (can be scaled with --large-font flag)
+interface FontSizesChirho {
+	titleChirho: number;
+	subtitleChirho: number;
+	languageChirho: number;
+	bookHeaderChirho: number;
+	chapterHeaderChirho: number;
+	verseNumChirho: number;
+	originalTextChirho: number;
+	glossChirho: number;
+	strongsChirho: number;
+	refTextChirho: number;
+	tocHeaderChirho: number;
+	tocItemChirho: number;
+	footerChirho: number;
+	wordHeightChirho: number;
+	wordHeightNoStrongsChirho: number;
+}
+
+// Normal font sizes (default)
+const NORMAL_FONT_SIZES_CHIRHO: FontSizesChirho = {
+	titleChirho: 36,
+	subtitleChirho: 18,
+	languageChirho: 16,
+	bookHeaderChirho: 24,
+	chapterHeaderChirho: 14,
+	verseNumChirho: 9,
+	originalTextChirho: 10,
+	glossChirho: 9,
+	strongsChirho: 7,
+	refTextChirho: 9,
+	tocHeaderChirho: 24,
+	tocItemChirho: 10,
+	footerChirho: 10,
+	wordHeightChirho: 45,
+	wordHeightNoStrongsChirho: 32
+};
+
+// Large font sizes (~40% larger)
+const LARGE_FONT_SIZES_CHIRHO: FontSizesChirho = {
+	titleChirho: 48,
+	subtitleChirho: 24,
+	languageChirho: 22,
+	bookHeaderChirho: 32,
+	chapterHeaderChirho: 20,
+	verseNumChirho: 13,
+	originalTextChirho: 14,
+	glossChirho: 13,
+	strongsChirho: 10,
+	refTextChirho: 13,
+	tocHeaderChirho: 32,
+	tocItemChirho: 14,
+	footerChirho: 14,
+	wordHeightChirho: 60,
+	wordHeightNoStrongsChirho: 45
+};
+
+// Global font sizes (set based on --large-font flag)
+let fontSizesChirho: FontSizesChirho = NORMAL_FONT_SIZES_CHIRHO;
 
 interface WordRowChirho {
 	wordIdChirho: string;
@@ -235,36 +276,35 @@ async function getChapterReferenceVersesChirho(
 }
 
 /**
- * Add cover page
+ * Add cover page - fits on single page
  */
 function addCoverPageChirho(docChirho: PdfDocumentInstanceChirho, languageNameChirho: string): void {
-	const mainFontChirho = notoFontChirho ? 'NotoSans' : 'Helvetica';
-	const boldFontChirho = notoBoldFontChirho ? 'NotoSansBold' : 'Helvetica-Bold';
+	const mainFontChirho = getMainFontChirho();
+	const boldFontChirho = getBoldFontChirho();
 
-	docChirho.font(boldFontChirho).fontSize(36).fillColor('#1e293b');
-	docChirho.moveDown(8);
+	// Title at top third of page (reduced from moveDown(8) to moveDown(5))
+	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.titleChirho).fillColor('#1e293b');
+	docChirho.moveDown(5);
 	docChirho.text('INTERLINEAR BIBLE', { align: 'center' });
 
 	docChirho.moveDown(1);
-	docChirho.font(mainFontChirho).fontSize(18).fillColor('#475569');
+	docChirho.font(mainFontChirho).fontSize(fontSizesChirho.subtitleChirho).fillColor('#475569');
 	docChirho.text('Greek & Hebrew Text with Word-by-Word Translation', { align: 'center' });
 
 	docChirho.moveDown(0.5);
-	docChirho.fontSize(16).fillColor('#64748b');
+	docChirho.fontSize(fontSizesChirho.languageChirho).fillColor('#64748b');
 	docChirho.text(languageNameChirho, { align: 'center' });
 
 	// Decorative line
-	docChirho.moveDown(3);
+	docChirho.moveDown(2);
 	const lineYChirho = docChirho.y;
 	docChirho.moveTo(150, lineYChirho).lineTo(445, lineYChirho).stroke('#cbd5e1');
 
-	// Attribution
-	docChirho.moveDown(10);
-	docChirho.font(mainFontChirho).fontSize(10).fillColor('#94a3b8');
-	docChirho.text('Global Bible Tools', { align: 'center' });
-	docChirho.text('global-tools.bible.systems', { align: 'center' });
-	docChirho.moveDown(0.5);
-	docChirho.text(new Date().getFullYear().toString(), { align: 'center' });
+	// Attribution - position at bottom of page (fixed Y position instead of moveDown)
+	docChirho.font(mainFontChirho).fontSize(fontSizesChirho.footerChirho).fillColor('#94a3b8');
+	docChirho.text('Global Bible Tools', 50, 700, { align: 'center', width: 495 });
+	docChirho.text('global-tools.bible.systems', 50, 715, { align: 'center', width: 495 });
+	docChirho.text(new Date().getFullYear().toString(), 50, 735, { align: 'center', width: 495 });
 
 	docChirho.addPage();
 }
@@ -273,22 +313,22 @@ function addCoverPageChirho(docChirho: PdfDocumentInstanceChirho, languageNameCh
  * Add table of contents
  */
 function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
-	const mainFontChirho = notoFontChirho ? 'NotoSans' : 'Helvetica';
-	const boldFontChirho = notoBoldFontChirho ? 'NotoSansBold' : 'Helvetica-Bold';
+	const mainFontChirho = getMainFontChirho();
+	const boldFontChirho = getBoldFontChirho();
 
-	docChirho.font(boldFontChirho).fontSize(24).fillColor('#1e293b');
+	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.tocHeaderChirho).fillColor('#1e293b');
 	docChirho.text('Table of Contents', { align: 'center' });
 	docChirho.moveDown(2);
 
 	// Old Testament
-	docChirho.font(boldFontChirho).fontSize(14).fillColor('#475569');
+	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
 	docChirho.text('Old Testament', { align: 'left' });
 	docChirho.moveDown(0.5);
 
 	const otBooksChirho = BOOKS_CHIRHO.filter(bChirho => bChirho.idChirho <= 39);
 	const ntBooksChirho = BOOKS_CHIRHO.filter(bChirho => bChirho.idChirho > 39);
 
-	docChirho.font(mainFontChirho).fontSize(10).fillColor('#334155');
+	docChirho.font(mainFontChirho).fontSize(fontSizesChirho.tocItemChirho).fillColor('#334155');
 	const colWidthChirho = 160;
 	let colChirho = 0;
 	let startYChirho = docChirho.y;
@@ -309,11 +349,11 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 	docChirho.moveDown(1);
 
 	// New Testament
-	docChirho.font(boldFontChirho).fontSize(14).fillColor('#475569');
+	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
 	docChirho.text('New Testament', { align: 'left' });
 	docChirho.moveDown(0.5);
 
-	docChirho.font(mainFontChirho).fontSize(10).fillColor('#334155');
+	docChirho.font(mainFontChirho).fontSize(fontSizesChirho.tocItemChirho).fillColor('#334155');
 	colChirho = 0;
 	startYChirho = docChirho.y;
 
@@ -337,8 +377,8 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
  */
 function addBookHeaderChirho(docChirho: PdfDocumentInstanceChirho, bookNameChirho: string): void {
 	docChirho.addPage();
-	const boldFontChirho = notoBoldFontChirho ? 'NotoSansBold' : 'Helvetica-Bold';
-	docChirho.font(boldFontChirho).fontSize(24).fillColor('#1e293b');
+	const boldFontChirho = getBoldFontChirho();
+	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.bookHeaderChirho).fillColor('#1e293b');
 	docChirho.text(bookNameChirho, { align: 'center' });
 	docChirho.moveDown(2);
 }
@@ -349,27 +389,16 @@ function addBookHeaderChirho(docChirho: PdfDocumentInstanceChirho, bookNameChirh
 function addChapterHeaderChirho(docChirho: PdfDocumentInstanceChirho, chapterChirho: number): void {
 	if (docChirho.y > 700) docChirho.addPage();
 
-	const boldFontChirho = notoBoldFontChirho ? 'NotoSansBold' : 'Helvetica-Bold';
+	const boldFontChirho = getBoldFontChirho();
 	docChirho.moveDown(1);
-	docChirho.font(boldFontChirho).fontSize(14).fillColor('#334155');
+	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#334155');
 	docChirho.text(`Chapter ${chapterChirho}`, { align: 'left' });
 	docChirho.moveDown(0.5);
 }
 
 /**
- * Get Strong's link
- */
-function getStrongLinkChirho(lemmaIdChirho: string | null): string | null {
-	if (!lemmaIdChirho) return null;
-	const matchChirho = lemmaIdChirho.match(/^([HG])(\d+)$/);
-	if (!matchChirho) return null;
-	const [, prefixChirho, numberStrChirho] = matchChirho;
-	const langChirho = prefixChirho === 'H' ? 'hebrew' : 'greek';
-	return `https://biblehub.com/${langChirho}/${parseInt(numberStrChirho, 10)}.htm`;
-}
-
-/**
- * Render interlinear verse
+ * Render interlinear verse with proper font support for all scripts
+ * Uses getFontForTextChirho() from shared module for Bengali, Hindi, Arabic, etc.
  */
 function renderInterlinearVerseChirho(
 	docChirho: PdfDocumentInstanceChirho,
@@ -378,21 +407,26 @@ function renderInterlinearVerseChirho(
 	showStrongsChirho: boolean = true,
 	isRtlChirho: boolean = false
 ): void {
-	const mainFontChirho = notoFontChirho ? 'NotoSans' : 'Helvetica';
-	const hebrewFontChirho = notoHebrewFontChirho ? 'EzraSIL' : mainFontChirho;
+	const mainFontChirho = getMainFontChirho();
 	const PAGE_WIDTH_CHIRHO = 495;
-	const WORD_PADDING_CHIRHO = 12;
-	const WORD_HEIGHT_CHIRHO = showStrongsChirho ? 45 : 32;
+	const WORD_PADDING_CHIRHO = fontSizesChirho === LARGE_FONT_SIZES_CHIRHO ? 16 : 12;
+	const WORD_HEIGHT_CHIRHO = showStrongsChirho ? fontSizesChirho.wordHeightChirho : fontSizesChirho.wordHeightNoStrongsChirho;
 	const LEFT_MARGIN_CHIRHO = 50;
 	const RIGHT_MARGIN_CHIRHO = 545; // 595 (A4 width) - 50 margin
 
-	// Calculate word widths (use appropriate font for Hebrew vs Greek)
+	// Calculate word widths using appropriate fonts for each script
 	const wordWidthsChirho = wordsChirho.map((wChirho) => {
-		const textFontChirho = isHebrewTextChirho(wChirho.textChirho) ? hebrewFontChirho : mainFontChirho;
-		const originalWidthChirho = docChirho.font(textFontChirho).fontSize(10).widthOfString(wChirho.textChirho);
-		const glossWidthChirho = docChirho.font(mainFontChirho).fontSize(9).widthOfString(wChirho.glossChirho ?? '—');
+		const cleanTextChirho = stripPuaChirho(wChirho.textChirho);
+		const cleanGlossChirho = stripPuaChirho(wChirho.glossChirho ?? '');
+		// Use script-aware font selection for source text
+		const textFontChirho = getFontForTextChirho(cleanTextChirho);
+		// Use script-aware font selection for gloss (Bengali, Hindi, etc.)
+		const glossFontChirho = getFontForTextChirho(cleanGlossChirho);
+
+		const originalWidthChirho = docChirho.font(textFontChirho).fontSize(fontSizesChirho.originalTextChirho).widthOfString(cleanTextChirho);
+		const glossWidthChirho = docChirho.font(glossFontChirho).fontSize(fontSizesChirho.glossChirho).widthOfString(cleanGlossChirho || '—');
 		const strongsWidthChirho = wChirho.lemmaIdChirho && showStrongsChirho
-			? docChirho.font(mainFontChirho).fontSize(7).widthOfString(wChirho.lemmaIdChirho)
+			? docChirho.font(mainFontChirho).fontSize(fontSizesChirho.strongsChirho).widthOfString(wChirho.lemmaIdChirho)
 			: 0;
 		return Math.max(originalWidthChirho, glossWidthChirho, strongsWidthChirho) + WORD_PADDING_CHIRHO;
 	});
@@ -433,10 +467,12 @@ function renderInterlinearVerseChirho(
 		if (isRtlChirho) {
 			// RTL layout: start from right, move left
 			let xPositionChirho = RIGHT_MARGIN_CHIRHO;
+			const glossYOffsetChirho = fontSizesChirho === LARGE_FONT_SIZES_CHIRHO ? 18 : 14;
+			const strongsYOffsetChirho = fontSizesChirho === LARGE_FONT_SIZES_CHIRHO ? 36 : 28;
 
 			// Verse number on the right
 			if (rowIdxChirho === 0) {
-				docChirho.font(mainFontChirho).fontSize(9).fillColor('#666').text(`${verseNumChirho}`, xPositionChirho - 20, rowYChirho);
+				docChirho.font(mainFontChirho).fontSize(fontSizesChirho.verseNumChirho).fillColor('#666').text(`${verseNumChirho}`, xPositionChirho - 20, rowYChirho);
 				xPositionChirho -= 25;
 			} else {
 				xPositionChirho -= 20;
@@ -445,30 +481,36 @@ function renderInterlinearVerseChirho(
 			// Render words from right to left
 			for (let wordIdxChirho = 0; wordIdxChirho < rowChirho.wordsChirho.length; wordIdxChirho++) {
 				const currentWordChirho = rowChirho.wordsChirho[wordIdxChirho];
+				const cleanTextChirho = stripPuaChirho(currentWordChirho.textChirho);
+				const cleanGlossChirho = stripPuaChirho(currentWordChirho.glossChirho ?? '');
 				const strongsLinkChirho = showStrongsChirho ? getStrongLinkChirho(currentWordChirho.lemmaIdChirho) : null;
-				const selectedFontChirho = isHebrewTextChirho(currentWordChirho.textChirho) ? hebrewFontChirho : mainFontChirho;
+				// Use script-aware font selection
+				const selectedFontChirho = getFontForTextChirho(cleanTextChirho);
+				const glossFontChirho = getFontForTextChirho(cleanGlossChirho);
 
 				// Move x left by the word width before rendering
 				xPositionChirho -= rowChirho.widthsChirho[wordIdxChirho];
 
-				// Original text (Hebrew)
-				docChirho.font(selectedFontChirho).fontSize(10).fillColor('#333').text(currentWordChirho.textChirho, xPositionChirho, rowYChirho);
+				// Original text (Hebrew/Aramaic)
+				docChirho.font(selectedFontChirho).fontSize(fontSizesChirho.originalTextChirho).fillColor('#333').text(cleanTextChirho, xPositionChirho, rowYChirho);
 
-				// Gloss (always use main font)
-				docChirho.font(mainFontChirho).fontSize(9).fillColor('#000').text(currentWordChirho.glossChirho ?? '—', xPositionChirho, rowYChirho + 14);
+				// Gloss (using appropriate font for Bengali, Hindi, etc.)
+				docChirho.font(glossFontChirho).fontSize(fontSizesChirho.glossChirho).fillColor('#000').text(cleanGlossChirho || '—', xPositionChirho, rowYChirho + glossYOffsetChirho);
 
 				// Strong's number
 				if (currentWordChirho.lemmaIdChirho && strongsLinkChirho && showStrongsChirho) {
-					docChirho.font(mainFontChirho).fontSize(7).fillColor('#0066cc')
-						.text(currentWordChirho.lemmaIdChirho, xPositionChirho, rowYChirho + 28, { link: strongsLinkChirho, underline: true });
+					docChirho.font(mainFontChirho).fontSize(fontSizesChirho.strongsChirho).fillColor('#0066cc')
+						.text(currentWordChirho.lemmaIdChirho, xPositionChirho, rowYChirho + strongsYOffsetChirho, { link: strongsLinkChirho, underline: true });
 				}
 			}
 		} else {
-			// LTR layout (original)
+			// LTR layout (Greek NT, etc.)
 			let xPositionChirho = LEFT_MARGIN_CHIRHO;
+			const glossYOffsetChirho = fontSizesChirho === LARGE_FONT_SIZES_CHIRHO ? 18 : 14;
+			const strongsYOffsetChirho = fontSizesChirho === LARGE_FONT_SIZES_CHIRHO ? 36 : 28;
 
 			if (rowIdxChirho === 0) {
-				docChirho.font(mainFontChirho).fontSize(9).fillColor('#666').text(`${verseNumChirho}`, xPositionChirho, rowYChirho);
+				docChirho.font(mainFontChirho).fontSize(fontSizesChirho.verseNumChirho).fillColor('#666').text(`${verseNumChirho}`, xPositionChirho, rowYChirho);
 				xPositionChirho += 25;
 			} else {
 				xPositionChirho += 20;
@@ -476,19 +518,23 @@ function renderInterlinearVerseChirho(
 
 			for (let wordIdxChirho = 0; wordIdxChirho < rowChirho.wordsChirho.length; wordIdxChirho++) {
 				const currentWordChirho = rowChirho.wordsChirho[wordIdxChirho];
+				const cleanTextChirho = stripPuaChirho(currentWordChirho.textChirho);
+				const cleanGlossChirho = stripPuaChirho(currentWordChirho.glossChirho ?? '');
 				const strongsLinkChirho = showStrongsChirho ? getStrongLinkChirho(currentWordChirho.lemmaIdChirho) : null;
-				const selectedFontChirho = isHebrewTextChirho(currentWordChirho.textChirho) ? hebrewFontChirho : mainFontChirho;
+				// Use script-aware font selection
+				const selectedFontChirho = getFontForTextChirho(cleanTextChirho);
+				const glossFontChirho = getFontForTextChirho(cleanGlossChirho);
 
 				// Original text (Greek)
-				docChirho.font(selectedFontChirho).fontSize(10).fillColor('#333').text(currentWordChirho.textChirho, xPositionChirho, rowYChirho);
+				docChirho.font(selectedFontChirho).fontSize(fontSizesChirho.originalTextChirho).fillColor('#333').text(cleanTextChirho, xPositionChirho, rowYChirho);
 
-				// Gloss (always use main font)
-				docChirho.font(mainFontChirho).fontSize(9).fillColor('#000').text(currentWordChirho.glossChirho ?? '—', xPositionChirho, rowYChirho + 14);
+				// Gloss (using appropriate font for Bengali, Hindi, etc.)
+				docChirho.font(glossFontChirho).fontSize(fontSizesChirho.glossChirho).fillColor('#000').text(cleanGlossChirho || '—', xPositionChirho, rowYChirho + glossYOffsetChirho);
 
 				// Strong's number
 				if (currentWordChirho.lemmaIdChirho && strongsLinkChirho && showStrongsChirho) {
-					docChirho.font(mainFontChirho).fontSize(7).fillColor('#0066cc')
-						.text(currentWordChirho.lemmaIdChirho, xPositionChirho, rowYChirho + 28, { link: strongsLinkChirho, underline: true });
+					docChirho.font(mainFontChirho).fontSize(fontSizesChirho.strongsChirho).fillColor('#0066cc')
+						.text(currentWordChirho.lemmaIdChirho, xPositionChirho, rowYChirho + strongsYOffsetChirho, { link: strongsLinkChirho, underline: true });
 				}
 
 				xPositionChirho += rowChirho.widthsChirho[wordIdxChirho];
@@ -509,17 +555,17 @@ function renderReferenceVerseChirho(
 	verseNumChirho: number,
 	textChirho: string
 ): void {
-	const mainFontChirho = notoFontChirho ? 'NotoSans' : 'Helvetica';
+	const cleanTextChirho = stripPuaChirho(textChirho);
+	const textFontChirho = getFontForTextChirho(cleanTextChirho);
 
 	// Check if we need a new page
 	if (docChirho.y > 700) {
 		docChirho.addPage();
 	}
 
-	// Render reference text in italic, indented
-	// Reset x position to left margin (50) before rendering text
-	docChirho.font(mainFontChirho).fontSize(9).fillColor('#475569');
-	docChirho.text(`  ${textChirho}`, 50, docChirho.y, {
+	// Render reference text with appropriate font
+	docChirho.font(textFontChirho).fontSize(fontSizesChirho.refTextChirho).fillColor('#475569');
+	docChirho.text(`  ${cleanTextChirho}`, 50, docChirho.y, {
 		indent: 20,
 		width: 495,
 		align: 'left'
@@ -531,13 +577,24 @@ function renderReferenceVerseChirho(
  * Main function
  */
 async function mainChirho(): Promise<void> {
-	const argsChirho = process.argv.slice(2);
+	const rawArgsChirho = process.argv.slice(2);
+
+	// Parse --large-font flag
+	const largeFontChirho = rawArgsChirho.includes('--large-font');
+	const argsChirho = rawArgsChirho.filter(aChirho => aChirho !== '--large-font');
+
+	// Set font sizes based on flag
+	if (largeFontChirho) {
+		fontSizesChirho = LARGE_FONT_SIZES_CHIRHO;
+		console.log('Using large font mode');
+	}
 
 	if (argsChirho.length === 0) {
-		console.log('Usage: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path] [reference_version]');
+		console.log('Usage: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path] [reference_version] [--large-font]');
 		console.log('Example: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts spa');
 		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Bible.pdf');
 		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./KJV-Interlinear.pdf kjv');
+		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Large.pdf hinfbi --large-font');
 		process.exit(1);
 	}
 
@@ -574,11 +631,8 @@ async function mainChirho(): Promise<void> {
 		console.log(`Found reference version: ${refVersionChirho.nameChirho}`);
 	}
 
-	// Create PDF
-	const docChirho = new PdfDocumentChirho({
-		size: 'A4',
-		margins: { top: 50, bottom: 50, left: 50, right: 50 },
-		bufferPages: true,
+	// Create PDF using shared utility (registers all fonts: Bengali, Hindi, Arabic, Thai, CJK, etc.)
+	const docChirho = createPdfDocumentChirho({
 		info: {
 			Title: `Interlinear Bible - ${languageChirho.nameChirho}`,
 			Author: 'Global Bible Tools',
@@ -586,11 +640,6 @@ async function mainChirho(): Promise<void> {
 			Creator: 'Global Bible Tools (global-tools.bible.systems)'
 		}
 	});
-
-	// Register fonts
-	if (notoFontChirho) docChirho.registerFont('NotoSans', notoFontChirho);
-	if (notoBoldFontChirho) docChirho.registerFont('NotoSansBold', notoBoldFontChirho);
-	if (notoHebrewFontChirho) docChirho.registerFont('EzraSIL', notoHebrewFontChirho);
 
 	// Collect chunks
 	const chunksChirho: Buffer[] = [];
@@ -644,12 +693,11 @@ async function mainChirho(): Promise<void> {
 			}
 
 			// Render verses
-			// For Hebrew (OT books 1-39), reverse word order for RTL display
+			// For Hebrew (OT books 1-39), use RTL display
 			const isHebrewBookChirho = bookChirho.idChirho <= 39;
 
 			for (const [verseIdChirho, verseWordsChirho] of verseGroupsChirho) {
 				const verseNumChirho = parseInt(verseIdChirho.slice(-3), 10);
-				// RTL rendering handles right-to-left placement internally, no array reversal needed
 				renderInterlinearVerseChirho(docChirho, verseNumChirho, verseWordsChirho, true, isHebrewBookChirho);
 
 				// Render reference verse text below the interlinear if available

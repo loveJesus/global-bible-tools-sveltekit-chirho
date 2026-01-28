@@ -67,17 +67,39 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
 
 	// Check which reference version interlinear PDFs exist
 	// Format: interlinear-{lang}-{version}-chirho.pdf (e.g., interlinear-hin-erv-chirho.pdf)
-	const interlinearVersionsChirho = referenceVersionsChirho
-		.map((vChirho) => {
-			const pdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${codeChirho}-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`);
-			return {
+	// Also check for large font versions: interlinear-{lang}-large-{version}-chirho.pdf
+	const interlinearVersionsChirho: {
+		codeChirho: string;
+		nameChirho: string;
+		hasPdfChirho: boolean;
+		pdfPathChirho: string;
+		badgeChirho?: string;
+	}[] = [];
+
+	for (const vChirho of referenceVersionsChirho) {
+		// Check normal PDF
+		const normalPdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${codeChirho}-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`);
+		if (existsSyncChirho(normalPdfPathChirho)) {
+			interlinearVersionsChirho.push({
 				codeChirho: vChirho.codeChirho,
 				nameChirho: vChirho.nameChirho,
-				hasPdfChirho: existsSyncChirho(pdfPathChirho),
+				hasPdfChirho: true,
 				pdfPathChirho: `/bibles-chirho/interlinear-${codeChirho}-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`
-			};
-		})
-		.filter((vChirho) => vChirho.hasPdfChirho);
+			});
+		}
+
+		// Check large font PDF
+		const largePdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${codeChirho}-large-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`);
+		if (existsSyncChirho(largePdfPathChirho)) {
+			interlinearVersionsChirho.push({
+				codeChirho: vChirho.codeChirho + '-large',
+				nameChirho: vChirho.nameChirho,
+				hasPdfChirho: true,
+				pdfPathChirho: `/bibles-chirho/interlinear-${codeChirho}-large-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`,
+				badgeChirho: 'Large Font'
+			});
+		}
+	}
 
 	// Check if any interlinear PDF exists for this language
 	const hasInterlinearPdfChirho = interlinearVersionsChirho.length > 0;

@@ -11,6 +11,7 @@
 		pathChirho: string;
 		sizeChirho: string;
 		versesChirho: string;
+		badgeChirho?: string;
 	}
 
 	const downloadsChirho: PdfDownloadChirho[] = [
@@ -50,10 +51,18 @@
 			versesChirho: '31,102'
 		},
 		{
+			nameChirho: 'Hindi FBI Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Hindi word-by-word translation and Free Bible India text. Larger fonts for easier reading.',
+			pathChirho: '/bibles-chirho/interlinear-hin-large-hinfbi-chirho.pdf',
+			sizeChirho: '141 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Large Font'
+		},
+		{
 			nameChirho: 'Bengali 2006EB Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Bengali word-by-word translation and Bengali 2006 Easy Bible text',
 			pathChirho: '/bibles-chirho/interlinear-ben-ben2006eb-chirho.pdf',
-			sizeChirho: '131 MB',
+			sizeChirho: '140 MB',
 			versesChirho: '31,102'
 		}
 	];
@@ -78,7 +87,14 @@
 				<div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow">
 					<div class="flex items-start justify-between gap-4">
 						<div class="flex-1">
-							<h2 class="text-xl font-semibold text-slate-800">{downloadChirho.nameChirho}</h2>
+							<div class="flex items-center gap-2">
+								<h2 class="text-xl font-semibold text-slate-800">{downloadChirho.nameChirho}</h2>
+								{#if downloadChirho.badgeChirho}
+									<span class="px-2 py-0.5 text-xs font-medium bg-emerald-100 text-emerald-700 rounded-full">
+										{downloadChirho.badgeChirho}
+									</span>
+								{/if}
+							</div>
 							<p class="mt-1 text-slate-600">{downloadChirho.descriptionChirho}</p>
 							<div class="mt-3 flex items-center gap-4 text-sm text-slate-500">
 								<span class="flex items-center gap-1">
