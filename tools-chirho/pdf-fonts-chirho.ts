@@ -261,11 +261,35 @@ export function getFontForTextChirho(textChirho: string): string {
 }
 
 /**
- * Sanitize text for Arabic fonts (replace en-dash with space since Arabic fonts lack en-dash glyph)
+ * Sanitize text for non-Latin fonts (Bengali, Urdu, Arabic, etc.)
+ * These fonts often lack Latin punctuation glyphs, causing blocks to render.
+ * Replace Latin punctuation with spaces or script-appropriate alternatives.
+ */
+export function sanitizeForNonLatinFontChirho(textChirho: string): string {
+	return textChirho
+		// Dashes to space
+		.replace(/[\u2013\u2014\u2012\u2015]/g, ' ')  // en-dash, em-dash, figure dash, horizontal bar
+		.replace(/-/g, ' ')  // ASCII hyphen-minus
+		// Commas to space (Latin comma not in many non-Latin fonts)
+		.replace(/,/g, ' ')
+		// Semicolons and colons to space
+		.replace(/[;:]/g, ' ')
+		// Parentheses to space
+		.replace(/[()[\]{}]/g, ' ')
+		// Quotation marks to space
+		.replace(/["'""''«»]/g, ' ')
+		// Ellipsis to space
+		.replace(/…/g, ' ')
+		// Collapse multiple spaces
+		.replace(/\s+/g, ' ')
+		.trim();
+}
+
+/**
+ * Legacy alias for backwards compatibility
  */
 export function sanitizeForArabicFontChirho(textChirho: string): string {
-	// Replace en-dash (U+2013) with space for Arabic fonts
-	return textChirho.replace(/\u2013/g, ' ');
+	return sanitizeForNonLatinFontChirho(textChirho);
 }
 
 /**

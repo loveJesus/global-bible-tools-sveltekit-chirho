@@ -64,6 +64,14 @@
 			pathChirho: '/bibles-chirho/interlinear-ben-ben2006eb-chirho.pdf',
 			sizeChirho: '140 MB',
 			versesChirho: '31,102'
+		},
+		{
+			nameChirho: 'Urdu Geo Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Urdu word-by-word translation and Urdu Geo reference text. Larger fonts for easier reading.',
+			pathChirho: '/bibles-chirho/interlinear-urd-urdugeo-chirho.pdf',
+			sizeChirho: '164 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Large Font'
 		}
 	];
 </script>

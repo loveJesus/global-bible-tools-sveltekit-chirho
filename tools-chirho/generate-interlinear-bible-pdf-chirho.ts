@@ -21,25 +21,29 @@
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./KJV-Interlinear.pdf kjv
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./WEB-Interlinear.pdf web
  *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Large.pdf hinfbi --large-font
+ *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts ben ./Bengali.pdf ben2006eb
+ *   bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts urd ./Urdu.pdf urdugeo --large-font
+ *
+ * Note: Non-Latin scripts (Bengali, Urdu, Arabic, Hindi, etc.) automatically have
+ * punctuation sanitized since their fonts lack Latin glyphs for commas, dashes, etc.
  */
 
 import { writeFileSync as writeFileSyncChirho } from 'fs';
 import { join as joinChirho } from 'path';
 import pg from 'pg';
 
-// Import standalone PDF utilities for proper font support (Bengali, Hindi, Arabic, etc.)
-// This module doesn't depend on SvelteKit and can be used in CLI tools
+// Import shared PDF utilities from $lib/server (single source of truth)
+// Supports Bengali, Hindi, Arabic, Urdu, Thai, CJK, etc.
 import {
 	createPdfDocumentChirho,
 	getMainFontChirho,
 	getBoldFontChirho,
 	getFontForTextChirho,
 	stripPuaChirho,
+	sanitizeGlossChirho,
 	getStrongLinkChirho,
-	isHebrewTextChirho,
-	sanitizeForArabicFontChirho,
 	isRtlTextChirho
-} from './pdf-fonts-chirho';
+} from '../src/lib/server/pdf-utils-chirho';
 
 const { Pool: PoolChirho } = pg;
 
@@ -419,7 +423,7 @@ function renderInterlinearVerseChirho(
 	// Calculate word widths using appropriate fonts for each script
 	const wordWidthsChirho = wordsChirho.map((wChirho) => {
 		const cleanTextChirho = stripPuaChirho(wChirho.textChirho);
-		const cleanGlossChirho = sanitizeForArabicFontChirho(stripPuaChirho(wChirho.glossChirho ?? ''));
+		const cleanGlossChirho = sanitizeGlossChirho(wChirho.glossChirho ?? '');
 		// Use script-aware font selection for source text
 		const textFontChirho = getFontForTextChirho(cleanTextChirho);
 		// Use script-aware font selection for gloss (Bengali, Hindi, etc.)
@@ -484,7 +488,7 @@ function renderInterlinearVerseChirho(
 			for (let wordIdxChirho = 0; wordIdxChirho < rowChirho.wordsChirho.length; wordIdxChirho++) {
 				const currentWordChirho = rowChirho.wordsChirho[wordIdxChirho];
 				const cleanTextChirho = stripPuaChirho(currentWordChirho.textChirho);
-				const cleanGlossChirho = sanitizeForArabicFontChirho(stripPuaChirho(currentWordChirho.glossChirho ?? ''));
+				const cleanGlossChirho = sanitizeGlossChirho(currentWordChirho.glossChirho ?? '');
 				const strongsLinkChirho = showStrongsChirho ? getStrongLinkChirho(currentWordChirho.lemmaIdChirho) : null;
 				// Use script-aware font selection
 				const selectedFontChirho = getFontForTextChirho(cleanTextChirho);
@@ -521,7 +525,7 @@ function renderInterlinearVerseChirho(
 			for (let wordIdxChirho = 0; wordIdxChirho < rowChirho.wordsChirho.length; wordIdxChirho++) {
 				const currentWordChirho = rowChirho.wordsChirho[wordIdxChirho];
 				const cleanTextChirho = stripPuaChirho(currentWordChirho.textChirho);
-				const cleanGlossChirho = sanitizeForArabicFontChirho(stripPuaChirho(currentWordChirho.glossChirho ?? ''));
+				const cleanGlossChirho = sanitizeGlossChirho(currentWordChirho.glossChirho ?? '');
 				const strongsLinkChirho = showStrongsChirho ? getStrongLinkChirho(currentWordChirho.lemmaIdChirho) : null;
 				// Use script-aware font selection
 				const selectedFontChirho = getFontForTextChirho(cleanTextChirho);
@@ -557,7 +561,8 @@ function renderReferenceVerseChirho(
 	verseNumChirho: number,
 	textChirho: string
 ): void {
-	const cleanTextChirho = stripPuaChirho(textChirho);
+	// Use sanitizeGlossChirho to handle non-Latin punctuation (Bengali, Urdu, etc.)
+	const cleanTextChirho = sanitizeGlossChirho(textChirho);
 	const textFontChirho = getFontForTextChirho(cleanTextChirho);
 
 	// Check if we need a new page
