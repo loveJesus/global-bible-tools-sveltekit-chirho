@@ -36,7 +36,9 @@ import {
 	getFontForTextChirho,
 	stripPuaChirho,
 	getStrongLinkChirho,
-	isHebrewTextChirho
+	isHebrewTextChirho,
+	sanitizeForArabicFontChirho,
+	isRtlTextChirho
 } from './pdf-fonts-chirho';
 
 const { Pool: PoolChirho } = pg;
@@ -417,7 +419,7 @@ function renderInterlinearVerseChirho(
 	// Calculate word widths using appropriate fonts for each script
 	const wordWidthsChirho = wordsChirho.map((wChirho) => {
 		const cleanTextChirho = stripPuaChirho(wChirho.textChirho);
-		const cleanGlossChirho = stripPuaChirho(wChirho.glossChirho ?? '');
+		const cleanGlossChirho = sanitizeForArabicFontChirho(stripPuaChirho(wChirho.glossChirho ?? ''));
 		// Use script-aware font selection for source text
 		const textFontChirho = getFontForTextChirho(cleanTextChirho);
 		// Use script-aware font selection for gloss (Bengali, Hindi, etc.)
@@ -482,7 +484,7 @@ function renderInterlinearVerseChirho(
 			for (let wordIdxChirho = 0; wordIdxChirho < rowChirho.wordsChirho.length; wordIdxChirho++) {
 				const currentWordChirho = rowChirho.wordsChirho[wordIdxChirho];
 				const cleanTextChirho = stripPuaChirho(currentWordChirho.textChirho);
-				const cleanGlossChirho = stripPuaChirho(currentWordChirho.glossChirho ?? '');
+				const cleanGlossChirho = sanitizeForArabicFontChirho(stripPuaChirho(currentWordChirho.glossChirho ?? ''));
 				const strongsLinkChirho = showStrongsChirho ? getStrongLinkChirho(currentWordChirho.lemmaIdChirho) : null;
 				// Use script-aware font selection
 				const selectedFontChirho = getFontForTextChirho(cleanTextChirho);
@@ -519,7 +521,7 @@ function renderInterlinearVerseChirho(
 			for (let wordIdxChirho = 0; wordIdxChirho < rowChirho.wordsChirho.length; wordIdxChirho++) {
 				const currentWordChirho = rowChirho.wordsChirho[wordIdxChirho];
 				const cleanTextChirho = stripPuaChirho(currentWordChirho.textChirho);
-				const cleanGlossChirho = stripPuaChirho(currentWordChirho.glossChirho ?? '');
+				const cleanGlossChirho = sanitizeForArabicFontChirho(stripPuaChirho(currentWordChirho.glossChirho ?? ''));
 				const strongsLinkChirho = showStrongsChirho ? getStrongLinkChirho(currentWordChirho.lemmaIdChirho) : null;
 				// Use script-aware font selection
 				const selectedFontChirho = getFontForTextChirho(cleanTextChirho);
@@ -563,12 +565,15 @@ function renderReferenceVerseChirho(
 		docChirho.addPage();
 	}
 
-	// Render reference text with appropriate font
+	// Detect RTL text (Hebrew, Arabic, Urdu) for proper alignment
+	const alignmentChirho = isRtlTextChirho(cleanTextChirho) ? 'right' : 'left';
+
+	// Render reference text with appropriate font and alignment
 	docChirho.font(textFontChirho).fontSize(fontSizesChirho.refTextChirho).fillColor('#475569');
 	docChirho.text(`  ${cleanTextChirho}`, 50, docChirho.y, {
 		indent: 20,
 		width: 495,
-		align: 'left'
+		align: alignmentChirho
 	});
 	docChirho.moveDown(0.4);
 }
