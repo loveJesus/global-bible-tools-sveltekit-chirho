@@ -72,6 +72,13 @@
 			sizeChirho: '164 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Large Font'
+		},
+		{
+			nameChirho: 'Indonesian TB Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Indonesian word-by-word translation and Terjemahan Baru reference text',
+			pathChirho: '/bibles-chirho/interlinear-ind-indtb-chirho.pdf',
+			sizeChirho: '137 MB',
+			versesChirho: '31,102'
 		}
 	];
 </script>
