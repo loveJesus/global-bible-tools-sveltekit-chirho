@@ -79,6 +79,13 @@
 			pathChirho: '/bibles-chirho/interlinear-ind-indtb-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102'
+		},
+		{
+			nameChirho: 'Javanese SABDA Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Javanese word-by-word translation and SABDA reference text',
+			pathChirho: '/bibles-chirho/interlinear-jav-javsabda-chirho.pdf',
+			sizeChirho: '139 MB',
+			versesChirho: '31,102'
 		}
 	];
 </script>
