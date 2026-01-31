@@ -16,6 +16,14 @@
 
 	const downloadsChirho: PdfDownloadChirho[] = [
 		{
+			nameChirho: 'English Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with English word-by-word translation (New Testament complete)',
+			pathChirho: '/bibles-chirho/interlinear-eng-chirho.pdf',
+			sizeChirho: '129 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'NT Complete'
+		},
+		{
 			nameChirho: 'KJV Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with English word-by-word translation and King James Version text',
 			pathChirho: '/bibles-chirho/interlinear-eng-kjv-chirho.pdf',
