@@ -88,6 +88,20 @@
 			pathChirho: '/bibles-chirho/interlinear-jav-javsabda-chirho.pdf',
 			sizeChirho: '139 MB',
 			versesChirho: '31,102'
+		},
+		{
+			nameChirho: 'Russian Synodal Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Russian word-by-word translation and Synodal reference text',
+			pathChirho: '/bibles-chirho/interlinear-rus-synodal-chirho.pdf',
+			sizeChirho: '137 MB',
+			versesChirho: '31,102'
+		},
+		{
+			nameChirho: 'Turkish Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Turkish word-by-word translation',
+			pathChirho: '/bibles-chirho/interlinear-tur-chirho.pdf',
+			sizeChirho: '133 MB',
+			versesChirho: '31,102'
 		}
 	];
 </script>
