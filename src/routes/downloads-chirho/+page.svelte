@@ -99,7 +99,7 @@
 		{
 			nameChirho: 'Turkish HADI Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Turkish word-by-word translation and HADI (Easy-to-Read) reference text',
-			pathChirho: '/bibles-chirho/interlinear-tur-chirho.pdf',
+			pathChirho: '/bibles-chirho/interlinear-tur-turhadi-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102'
 		}
