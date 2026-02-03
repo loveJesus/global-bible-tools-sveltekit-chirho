@@ -97,10 +97,10 @@
 			versesChirho: '31,102'
 		},
 		{
-			nameChirho: 'Turkish Interlinear Bible',
-			descriptionChirho: 'Hebrew & Greek text with Turkish word-by-word translation',
+			nameChirho: 'Turkish HADI Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Turkish word-by-word translation and HADI (Easy-to-Read) reference text',
 			pathChirho: '/bibles-chirho/interlinear-tur-chirho.pdf',
-			sizeChirho: '133 MB',
+			sizeChirho: '137 MB',
 			versesChirho: '31,102'
 		}
 	];
