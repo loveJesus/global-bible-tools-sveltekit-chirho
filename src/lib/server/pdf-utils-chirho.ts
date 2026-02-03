@@ -131,6 +131,35 @@ export function stripPuaChirho(textChirho: string): string {
 }
 
 /**
+ * Decode HTML numeric entities (&#NNN;) to their Unicode characters.
+ * Used for reference Bible text that may contain encoded special characters
+ * like Turkish ş (&#351;), ı (&#305;), ğ (&#287;), ü (&#252;), etc.
+ */
+export function decodeHtmlEntitiesChirho(textChirho: string): string {
+	// Decode numeric entities: &#NNN; → character
+	let decodedChirho = textChirho.replace(/&#(\d+);/g, (_, numChirho) =>
+		String.fromCharCode(parseInt(numChirho, 10))
+	);
+	// Decode hex entities: &#xHHH; → character
+	decodedChirho = decodedChirho.replace(/&#x([0-9a-fA-F]+);/g, (_, hexChirho) =>
+		String.fromCharCode(parseInt(hexChirho, 16))
+	);
+	// Decode common named entities
+	const namedEntitiesChirho: Record<string, string> = {
+		'&amp;': '&',
+		'&lt;': '<',
+		'&gt;': '>',
+		'&quot;': '"',
+		'&apos;': "'",
+		'&nbsp;': ' '
+	};
+	for (const [entityChirho, charChirho] of Object.entries(namedEntitiesChirho)) {
+		decodedChirho = decodedChirho.split(entityChirho).join(charChirho);
+	}
+	return decodedChirho;
+}
+
+/**
  * Sanitize text for Arabic/Urdu - converts to native Arabic punctuation and numerals.
  *
  * For Arabic/Urdu: converts punctuation and numerals to native equivalents (،؛؟۔۰-۹).
@@ -183,10 +212,12 @@ export function needsNonLatinSanitizationChirho(textChirho: string): boolean {
 }
 
 /**
- * Sanitize gloss text - applies non-Latin sanitization if needed
+ * Sanitize gloss text - decodes HTML entities, strips PUA, applies non-Latin sanitization if needed
  */
 export function sanitizeGlossChirho(textChirho: string): string {
-	const cleanedChirho = stripPuaChirho(textChirho);
+	// First decode HTML entities (e.g., &#351; → ş for Turkish)
+	const decodedChirho = decodeHtmlEntitiesChirho(textChirho);
+	const cleanedChirho = stripPuaChirho(decodedChirho);
 	if (needsNonLatinSanitizationChirho(cleanedChirho)) {
 		return sanitizeForNonLatinFontChirho(cleanedChirho);
 	}

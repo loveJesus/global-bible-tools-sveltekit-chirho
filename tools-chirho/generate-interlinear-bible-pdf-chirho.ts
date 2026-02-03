@@ -125,6 +125,192 @@ const BOOKS_CHIRHO = [
 	{ idChirho: 66, nameChirho: 'Revelation', chaptersChirho: 22 }
 ];
 
+// Localized book names by language code
+const BOOK_NAMES_BY_LANGUAGE_CHIRHO: Record<string, Record<number, string>> = {
+	rus: {
+		1: 'Бытие', 2: 'Исход', 3: 'Левит', 4: 'Числа', 5: 'Второзаконие',
+		6: 'Иисус Навин', 7: 'Судей', 8: 'Руфь', 9: '1 Царств', 10: '2 Царств',
+		11: '3 Царств', 12: '4 Царств', 13: '1 Паралипоменон', 14: '2 Паралипоменон',
+		15: 'Ездра', 16: 'Неемия', 17: 'Есфирь', 18: 'Иов', 19: 'Псалтирь',
+		20: 'Притчи', 21: 'Екклесиаст', 22: 'Песнь Песней', 23: 'Исаия', 24: 'Иеремия',
+		25: 'Плач Иеремии', 26: 'Иезекииль', 27: 'Даниил', 28: 'Осия', 29: 'Иоиль',
+		30: 'Амос', 31: 'Авдий', 32: 'Иона', 33: 'Михей', 34: 'Наум',
+		35: 'Аввакум', 36: 'Софония', 37: 'Аггей', 38: 'Захария', 39: 'Малахия',
+		40: 'От Матфея', 41: 'От Марка', 42: 'От Луки', 43: 'От Иоанна', 44: 'Деяния',
+		45: 'Римлянам', 46: '1 Коринфянам', 47: '2 Коринфянам', 48: 'Галатам', 49: 'Ефесянам',
+		50: 'Филиппийцам', 51: 'Колоссянам', 52: '1 Фессалоникийцам', 53: '2 Фессалоникийцам',
+		54: '1 Тимофею', 55: '2 Тимофею', 56: 'Титу', 57: 'Филимону', 58: 'Евреям',
+		59: 'Иакова', 60: '1 Петра', 61: '2 Петра', 62: '1 Иоанна', 63: '2 Иоанна',
+		64: '3 Иоанна', 65: 'Иуды', 66: 'Откровение'
+	},
+	tur: {
+		1: 'Yaratılış', 2: 'Mısır\'dan Çıkış', 3: 'Levililer', 4: 'Çölde Sayım', 5: 'Yasa\'nın Tekrarı',
+		6: 'Yeşu', 7: 'Hâkimler', 8: 'Rut', 9: '1. Samuel', 10: '2. Samuel',
+		11: '1. Krallar', 12: '2. Krallar', 13: '1. Tarihler', 14: '2. Tarihler',
+		15: 'Ezra', 16: 'Nehemya', 17: 'Ester', 18: 'Eyüp', 19: 'Mezmurlar',
+		20: 'Süleyman\'ın Özdeyişleri', 21: 'Vaiz', 22: 'Ezgiler Ezgisi', 23: 'Yeşaya', 24: 'Yeremya',
+		25: 'Ağıtlar', 26: 'Hezekiel', 27: 'Daniel', 28: 'Hoşea', 29: 'Yoel',
+		30: 'Amos', 31: 'Ovadya', 32: 'Yunus', 33: 'Mika', 34: 'Nahum',
+		35: 'Habakkuk', 36: 'Sefanya', 37: 'Hagay', 38: 'Zekeriya', 39: 'Malaki',
+		40: 'Matta', 41: 'Markos', 42: 'Luka', 43: 'Yuhanna', 44: 'Elçilerin İşleri',
+		45: 'Romalılar', 46: '1. Korintliler', 47: '2. Korintliler', 48: 'Galatyalılar', 49: 'Efesliler',
+		50: 'Filipililer', 51: 'Koloseliler', 52: '1. Selanikliler', 53: '2. Selanikliler',
+		54: '1. Timoteos', 55: '2. Timoteos', 56: 'Titus', 57: 'Filimon', 58: 'İbraniler',
+		59: 'Yakup', 60: '1. Petrus', 61: '2. Petrus', 62: '1. Yuhanna', 63: '2. Yuhanna',
+		64: '3. Yuhanna', 65: 'Yahuda', 66: 'Vahiy'
+	},
+	spa: {
+		1: 'Génesis', 2: 'Éxodo', 3: 'Levítico', 4: 'Números', 5: 'Deuteronomio',
+		6: 'Josué', 7: 'Jueces', 8: 'Rut', 9: '1 Samuel', 10: '2 Samuel',
+		11: '1 Reyes', 12: '2 Reyes', 13: '1 Crónicas', 14: '2 Crónicas',
+		15: 'Esdras', 16: 'Nehemías', 17: 'Ester', 18: 'Job', 19: 'Salmos',
+		20: 'Proverbios', 21: 'Eclesiastés', 22: 'Cantares', 23: 'Isaías', 24: 'Jeremías',
+		25: 'Lamentaciones', 26: 'Ezequiel', 27: 'Daniel', 28: 'Oseas', 29: 'Joel',
+		30: 'Amós', 31: 'Abdías', 32: 'Jonás', 33: 'Miqueas', 34: 'Nahúm',
+		35: 'Habacuc', 36: 'Sofonías', 37: 'Hageo', 38: 'Zacarías', 39: 'Malaquías',
+		40: 'Mateo', 41: 'Marcos', 42: 'Lucas', 43: 'Juan', 44: 'Hechos',
+		45: 'Romanos', 46: '1 Corintios', 47: '2 Corintios', 48: 'Gálatas', 49: 'Efesios',
+		50: 'Filipenses', 51: 'Colosenses', 52: '1 Tesalonicenses', 53: '2 Tesalonicenses',
+		54: '1 Timoteo', 55: '2 Timoteo', 56: 'Tito', 57: 'Filemón', 58: 'Hebreos',
+		59: 'Santiago', 60: '1 Pedro', 61: '2 Pedro', 62: '1 Juan', 63: '2 Juan',
+		64: '3 Juan', 65: 'Judas', 66: 'Apocalipsis'
+	},
+	por: {
+		1: 'Gênesis', 2: 'Êxodo', 3: 'Levítico', 4: 'Números', 5: 'Deuteronômio',
+		6: 'Josué', 7: 'Juízes', 8: 'Rute', 9: '1 Samuel', 10: '2 Samuel',
+		11: '1 Reis', 12: '2 Reis', 13: '1 Crônicas', 14: '2 Crônicas',
+		15: 'Esdras', 16: 'Neemias', 17: 'Ester', 18: 'Jó', 19: 'Salmos',
+		20: 'Provérbios', 21: 'Eclesiastes', 22: 'Cânticos', 23: 'Isaías', 24: 'Jeremias',
+		25: 'Lamentações', 26: 'Ezequiel', 27: 'Daniel', 28: 'Oséias', 29: 'Joel',
+		30: 'Amós', 31: 'Obadias', 32: 'Jonas', 33: 'Miquéias', 34: 'Naum',
+		35: 'Habacuque', 36: 'Sofonias', 37: 'Ageu', 38: 'Zacarias', 39: 'Malaquias',
+		40: 'Mateus', 41: 'Marcos', 42: 'Lucas', 43: 'João', 44: 'Atos',
+		45: 'Romanos', 46: '1 Coríntios', 47: '2 Coríntios', 48: 'Gálatas', 49: 'Efésios',
+		50: 'Filipenses', 51: 'Colossenses', 52: '1 Tessalonicenses', 53: '2 Tessalonicenses',
+		54: '1 Timóteo', 55: '2 Timóteo', 56: 'Tito', 57: 'Filemom', 58: 'Hebreus',
+		59: 'Tiago', 60: '1 Pedro', 61: '2 Pedro', 62: '1 João', 63: '2 João',
+		64: '3 João', 65: 'Judas', 66: 'Apocalipse'
+	},
+	hin: {
+		1: 'उत्पत्ति', 2: 'निर्गमन', 3: 'लैव्यव्यवस्था', 4: 'गिनती', 5: 'व्यवस्थाविवरण',
+		6: 'यहोशू', 7: 'न्यायियों', 8: 'रूत', 9: '1 शमूएल', 10: '2 शमूएल',
+		11: '1 राजा', 12: '2 राजा', 13: '1 इतिहास', 14: '2 इतिहास',
+		15: 'एज्रा', 16: 'नहेम्याह', 17: 'एस्तेर', 18: 'अय्यूब', 19: 'भजन संहिता',
+		20: 'नीतिवचन', 21: 'सभोपदेशक', 22: 'श्रेष्ठगीत', 23: 'यशायाह', 24: 'यिर्मयाह',
+		25: 'विलापगीत', 26: 'यहेजकेल', 27: 'दानिय्येल', 28: 'होशे', 29: 'योएल',
+		30: 'आमोस', 31: 'ओबद्याह', 32: 'योना', 33: 'मीका', 34: 'नहूम',
+		35: 'हबक्कूक', 36: 'सपन्याह', 37: 'हाग्गै', 38: 'जकर्याह', 39: 'मलाकी',
+		40: 'मत्ती', 41: 'मरकुस', 42: 'लूका', 43: 'यूहन्ना', 44: 'प्रेरितों',
+		45: 'रोमियों', 46: '1 कुरिन्थियों', 47: '2 कुरिन्थियों', 48: 'गलातियों', 49: 'इफिसियों',
+		50: 'फिलिप्पियों', 51: 'कुलुस्सियों', 52: '1 थिस्सलुनीकियों', 53: '2 थिस्सलुनीकियों',
+		54: '1 तीमुथियुस', 55: '2 तीमुथियुस', 56: 'तीतुस', 57: 'फिलेमोन', 58: 'इब्रानियों',
+		59: 'याकूब', 60: '1 पतरस', 61: '2 पतरस', 62: '1 यूहन्ना', 63: '2 यूहन्ना',
+		64: '3 यूहन्ना', 65: 'यहूदा', 66: 'प्रकाशितवाक्य'
+	},
+	ben: {
+		1: 'আদিপুস্তক', 2: 'যাত্রাপুস্তক', 3: 'লেবীয় পুস্তক', 4: 'গণনাপুস্তক', 5: 'দ্বিতীয় বিবরণ',
+		6: 'যিহোশূয়', 7: 'বিচারকর্তৃগণ', 8: 'রূত', 9: '১ শমূয়েল', 10: '২ শমূয়েল',
+		11: '১ রাজাবলি', 12: '২ রাজাবলি', 13: '১ বংশাবলি', 14: '২ বংশাবলি',
+		15: 'ইষ্রা', 16: 'নহিমিয়', 17: 'ইষ্টের', 18: 'ইয়োব', 19: 'গীতসংহিতা',
+		20: 'হিতোপদেশ', 21: 'উপদেশক', 22: 'পরমগীত', 23: 'যিশাইয়', 24: 'যিরমিয়',
+		25: 'বিলাপ', 26: 'যিহিষ্কেল', 27: 'দানিয়েল', 28: 'হোশেয়', 29: 'যোয়েল',
+		30: 'আমোস', 31: 'ওবদিয়', 32: 'যোনা', 33: 'মীখা', 34: 'নহূম',
+		35: 'হবক্কূক', 36: 'সফনিয়', 37: 'হগয়', 38: 'সখরিয়', 39: 'মালাখি',
+		40: 'মথি', 41: 'মার্ক', 42: 'লূক', 43: 'যোহন', 44: 'প্রেরিত',
+		45: 'রোমীয়', 46: '১ করিন্থীয়', 47: '২ করিন্থীয়', 48: 'গালাতীয়', 49: 'ইফিষীয়',
+		50: 'ফিলিপীয়', 51: 'কলসীয়', 52: '১ থিষলনীকীয়', 53: '২ থিষলনীকীয়',
+		54: '১ তীমথিয়', 55: '২ তীমথিয়', 56: 'তীত', 57: 'ফিলীমোন', 58: 'ইব্রীয়',
+		59: 'যাকোব', 60: '১ পিতর', 61: '২ পিতর', 62: '১ যোহন', 63: '২ যোহন',
+		64: '৩ যোহন', 65: 'যিহূদা', 66: 'প্রকাশিত বাক্য'
+	},
+	ind: {
+		1: 'Kejadian', 2: 'Keluaran', 3: 'Imamat', 4: 'Bilangan', 5: 'Ulangan',
+		6: 'Yosua', 7: 'Hakim-hakim', 8: 'Rut', 9: '1 Samuel', 10: '2 Samuel',
+		11: '1 Raja-raja', 12: '2 Raja-raja', 13: '1 Tawarikh', 14: '2 Tawarikh',
+		15: 'Ezra', 16: 'Nehemia', 17: 'Ester', 18: 'Ayub', 19: 'Mazmur',
+		20: 'Amsal', 21: 'Pengkhotbah', 22: 'Kidung Agung', 23: 'Yesaya', 24: 'Yeremia',
+		25: 'Ratapan', 26: 'Yehezkiel', 27: 'Daniel', 28: 'Hosea', 29: 'Yoel',
+		30: 'Amos', 31: 'Obaja', 32: 'Yunus', 33: 'Mikha', 34: 'Nahum',
+		35: 'Habakuk', 36: 'Zefanya', 37: 'Hagai', 38: 'Zakharia', 39: 'Maleakhi',
+		40: 'Matius', 41: 'Markus', 42: 'Lukas', 43: 'Yohanes', 44: 'Kisah Para Rasul',
+		45: 'Roma', 46: '1 Korintus', 47: '2 Korintus', 48: 'Galatia', 49: 'Efesus',
+		50: 'Filipi', 51: 'Kolose', 52: '1 Tesalonika', 53: '2 Tesalonika',
+		54: '1 Timotius', 55: '2 Timotius', 56: 'Titus', 57: 'Filemon', 58: 'Ibrani',
+		59: 'Yakobus', 60: '1 Petrus', 61: '2 Petrus', 62: '1 Yohanes', 63: '2 Yohanes',
+		64: '3 Yohanes', 65: 'Yudas', 66: 'Wahyu'
+	},
+	jav: {
+		1: 'Purwaning Dumadi', 2: 'Pangentasan', 3: 'Kaimaman', 4: 'Wilangan', 5: 'Pangandharing Toret',
+		6: 'Yusak', 7: 'Hakim-hakim', 8: 'Rut', 9: '1 Samuel', 10: '2 Samuel',
+		11: '1 Raja-raja', 12: '2 Raja-raja', 13: '1 Babad', 14: '2 Babad',
+		15: 'Ezra', 16: 'Nehemya', 17: 'Ester', 18: 'Ayub', 19: 'Mazmur',
+		20: 'Wulang Bebasan', 21: 'Kohelet', 22: 'Kidung Agung', 23: 'Yesaya', 24: 'Yeremia',
+		25: 'Kidung Pasambat', 26: 'Yeheskiel', 27: 'Daniel', 28: 'Hosea', 29: 'Yoel',
+		30: 'Amos', 31: 'Obaja', 32: 'Yunus', 33: 'Mikha', 34: 'Nahum',
+		35: 'Habakuk', 36: 'Zefanya', 37: 'Hagai', 38: 'Zakharia', 39: 'Maleakhi',
+		40: 'Mateus', 41: 'Markus', 42: 'Lukas', 43: 'Yokanan', 44: 'Lelakone Para Rasul',
+		45: 'Rum', 46: '1 Korinta', 47: '2 Korinta', 48: 'Galati', 49: 'Efesus',
+		50: 'Filipi', 51: 'Kolose', 52: '1 Tesalonika', 53: '2 Tesalonika',
+		54: '1 Timoteus', 55: '2 Timoteus', 56: 'Titus', 57: 'Filemon', 58: 'Ibrani',
+		59: 'Yakobus', 60: '1 Petrus', 61: '2 Petrus', 62: '1 Yokanan', 63: '2 Yokanan',
+		64: '3 Yokanan', 65: 'Yudas', 66: 'Wahyu'
+	},
+	urd: {
+		1: 'پیدائش', 2: 'خروج', 3: 'احبار', 4: 'گنتی', 5: 'استثنا',
+		6: 'یشوع', 7: 'قاضیوں', 8: 'روت', 9: '۱ سموئیل', 10: '۲ سموئیل',
+		11: '۱ سلاطین', 12: '۲ سلاطین', 13: '۱ تواریخ', 14: '۲ تواریخ',
+		15: 'عزرا', 16: 'نحمیاہ', 17: 'آستر', 18: 'ایوب', 19: 'زبور',
+		20: 'امثال', 21: 'واعظ', 22: 'غزل الغزلات', 23: 'یسعیاہ', 24: 'یرمیاہ',
+		25: 'نوحہ', 26: 'حزقی ایل', 27: 'دانی ایل', 28: 'ہوسیع', 29: 'یوایل',
+		30: 'عاموس', 31: 'عبدیاہ', 32: 'یوناہ', 33: 'میکاہ', 34: 'ناحوم',
+		35: 'حبقوق', 36: 'صفنیاہ', 37: 'حجی', 38: 'زکریا', 39: 'ملاکی',
+		40: 'متی', 41: 'مرقس', 42: 'لوقا', 43: 'یوحنا', 44: 'اعمال',
+		45: 'رومیوں', 46: '۱ کرنتھیوں', 47: '۲ کرنتھیوں', 48: 'گلتیوں', 49: 'افسیوں',
+		50: 'فلپیوں', 51: 'کلسیوں', 52: '۱ تھسلنیکیوں', 53: '۲ تھسلنیکیوں',
+		54: '۱ تیمتھیس', 55: '۲ تیمتھیس', 56: 'طِطُس', 57: 'فلیمون', 58: 'عبرانیوں',
+		59: 'یعقوب', 60: '۱ پطرس', 61: '۲ پطرس', 62: '۱ یوحنا', 63: '۲ یوحنا',
+		64: '۳ یوحنا', 65: 'یہوداہ', 66: 'مکاشفہ'
+	}
+};
+
+// Localized UI labels
+const UI_LABELS_BY_LANGUAGE_CHIRHO: Record<string, { tocChirho: string; otChirho: string; ntChirho: string }> = {
+	rus: { tocChirho: 'Содержание', otChirho: 'Ветхий Завет', ntChirho: 'Новый Завет' },
+	tur: { tocChirho: 'İçindekiler', otChirho: 'Eski Antlaşma', ntChirho: 'Yeni Antlaşma' },
+	spa: { tocChirho: 'Índice', otChirho: 'Antiguo Testamento', ntChirho: 'Nuevo Testamento' },
+	por: { tocChirho: 'Índice', otChirho: 'Antigo Testamento', ntChirho: 'Novo Testamento' },
+	hin: { tocChirho: 'विषय सूची', otChirho: 'पुराना नियम', ntChirho: 'नया नियम' },
+	ben: { tocChirho: 'সূচিপত্র', otChirho: 'পুরাতন নিয়ম', ntChirho: 'নতুন নিয়ম' },
+	ind: { tocChirho: 'Daftar Isi', otChirho: 'Perjanjian Lama', ntChirho: 'Perjanjian Baru' },
+	jav: { tocChirho: 'Daftar Isi', otChirho: 'Prajanjian Lawas', ntChirho: 'Prajanjian Anyar' },
+	urd: { tocChirho: 'فہرست', otChirho: 'پرانا عہد نامہ', ntChirho: 'نیا عہد نامہ' }
+};
+
+// Helper function to get localized UI label
+function getLocalizedLabelChirho(keyChirho: 'tocChirho' | 'otChirho' | 'ntChirho', languageCodeChirho: string): string {
+	const labelsChirho = UI_LABELS_BY_LANGUAGE_CHIRHO[languageCodeChirho];
+	if (labelsChirho && labelsChirho[keyChirho]) {
+		return labelsChirho[keyChirho];
+	}
+	// Fall back to English
+	const defaultsChirho = { tocChirho: 'Table of Contents', otChirho: 'Old Testament', ntChirho: 'New Testament' };
+	return defaultsChirho[keyChirho];
+}
+
+// Helper function to get localized book name
+function getLocalizedBookNameChirho(bookIdChirho: number, languageCodeChirho: string): string {
+	const localizedNamesChirho = BOOK_NAMES_BY_LANGUAGE_CHIRHO[languageCodeChirho];
+	if (localizedNamesChirho && localizedNamesChirho[bookIdChirho]) {
+		return localizedNamesChirho[bookIdChirho];
+	}
+	// Fall back to English name
+	const bookChirho = BOOKS_CHIRHO.find(b => b.idChirho === bookIdChirho);
+	return bookChirho?.nameChirho || `Book ${bookIdChirho}`;
+}
+
+// Global language code for localized names
+let currentLanguageCodeChirho: string = 'eng';
+
 // Font size configuration (can be scaled with --large-font flag)
 interface FontSizesChirho {
 	titleChirho: number;
@@ -184,6 +370,15 @@ const LARGE_FONT_SIZES_CHIRHO: FontSizesChirho = {
 
 // Global font sizes (set based on --large-font flag)
 let fontSizesChirho: FontSizesChirho = NORMAL_FONT_SIZES_CHIRHO;
+
+// Global current book name for page headers
+let currentBookNameChirho: string = '';
+
+// Disclaimer text for PDFs using reference Bibles that require it
+const NON_COMMERCIAL_DISCLAIMER_CHIRHO =
+	'This interlinear Bible is provided for personal, non-commercial use only. ' +
+	'The reference Bible text may be subject to copyright restrictions. ' +
+	'Please do not redistribute or use commercially without proper authorization.';
 
 interface WordRowChirho {
 	wordIdChirho: string;
@@ -284,7 +479,11 @@ async function getChapterReferenceVersesChirho(
 /**
  * Add cover page - fits on single page
  */
-function addCoverPageChirho(docChirho: PdfDocumentInstanceChirho, languageNameChirho: string): void {
+function addCoverPageChirho(
+	docChirho: PdfDocumentInstanceChirho,
+	languageNameChirho: string,
+	includeDisclaimerChirho: boolean = false
+): void {
 	const mainFontChirho = getMainFontChirho();
 	const boldFontChirho = getBoldFontChirho();
 
@@ -306,6 +505,15 @@ function addCoverPageChirho(docChirho: PdfDocumentInstanceChirho, languageNameCh
 	const lineYChirho = docChirho.y;
 	docChirho.moveTo(150, lineYChirho).lineTo(445, lineYChirho).stroke('#cbd5e1');
 
+	// Non-commercial disclaimer (if reference Bible requires it)
+	if (includeDisclaimerChirho) {
+		docChirho.font(mainFontChirho).fontSize(8).fillColor('#94a3b8');
+		docChirho.text(NON_COMMERCIAL_DISCLAIMER_CHIRHO, 70, 620, {
+			align: 'center',
+			width: 455
+		});
+	}
+
 	// Attribution - position at bottom of page (fixed Y position instead of moveDown)
 	docChirho.font(mainFontChirho).fontSize(fontSizesChirho.footerChirho).fillColor('#94a3b8');
 	docChirho.text('Global Bible Tools', 50, 700, { align: 'center', width: 495 });
@@ -323,12 +531,12 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 	const boldFontChirho = getBoldFontChirho();
 
 	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.tocHeaderChirho).fillColor('#1e293b');
-	docChirho.text('Table of Contents', { align: 'center' });
+	docChirho.text(getLocalizedLabelChirho('tocChirho', currentLanguageCodeChirho), { align: 'center' });
 	docChirho.moveDown(2);
 
 	// Old Testament
 	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
-	docChirho.text('Old Testament', { align: 'left' });
+	docChirho.text(getLocalizedLabelChirho('otChirho', currentLanguageCodeChirho), { align: 'left' });
 	docChirho.moveDown(0.5);
 
 	const otBooksChirho = BOOKS_CHIRHO.filter(bChirho => bChirho.idChirho <= 39);
@@ -341,7 +549,8 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 
 	for (const bookChirho of otBooksChirho) {
 		const xChirho = 50 + (colChirho * colWidthChirho);
-		docChirho.text(bookChirho.nameChirho, xChirho, docChirho.y, { width: colWidthChirho - 10 });
+		const localizedNameChirho = getLocalizedBookNameChirho(bookChirho.idChirho, currentLanguageCodeChirho);
+		docChirho.text(localizedNameChirho, xChirho, docChirho.y, { width: colWidthChirho - 10 });
 		colChirho++;
 		if (colChirho >= 3) {
 			colChirho = 0;
@@ -356,7 +565,7 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 
 	// New Testament
 	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
-	docChirho.text('New Testament', { align: 'left' });
+	docChirho.text(getLocalizedLabelChirho('ntChirho', currentLanguageCodeChirho), { align: 'left' });
 	docChirho.moveDown(0.5);
 
 	docChirho.font(mainFontChirho).fontSize(fontSizesChirho.tocItemChirho).fillColor('#334155');
@@ -365,7 +574,8 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 
 	for (const bookChirho of ntBooksChirho) {
 		const xChirho = 50 + (colChirho * colWidthChirho);
-		docChirho.text(bookChirho.nameChirho, xChirho, docChirho.y, { width: colWidthChirho - 10 });
+		const localizedNameChirho = getLocalizedBookNameChirho(bookChirho.idChirho, currentLanguageCodeChirho);
+		docChirho.text(localizedNameChirho, xChirho, docChirho.y, { width: colWidthChirho - 10 });
 		colChirho++;
 		if (colChirho >= 3) {
 			colChirho = 0;
@@ -379,14 +589,37 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 }
 
 /**
- * Add book header
+ * Add book header - also sets global book name for page headers
  */
 function addBookHeaderChirho(docChirho: PdfDocumentInstanceChirho, bookNameChirho: string): void {
+	// Update global current book name for page headers
+	currentBookNameChirho = bookNameChirho;
+
 	docChirho.addPage();
 	const boldFontChirho = getBoldFontChirho();
 	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.bookHeaderChirho).fillColor('#1e293b');
 	docChirho.text(bookNameChirho, { align: 'center' });
 	docChirho.moveDown(2);
+}
+
+/**
+ * Add page header with book name (called after page breaks)
+ */
+function addPageHeaderChirho(docChirho: PdfDocumentInstanceChirho): void {
+	if (!currentBookNameChirho) return;
+
+	const mainFontChirho = getMainFontChirho();
+	const savedYChirho = docChirho.y;
+
+	// Header at top of page
+	docChirho.font(mainFontChirho).fontSize(9).fillColor('#94a3b8');
+	docChirho.text(currentBookNameChirho, 50, 25, { align: 'center', width: 495 });
+
+	// Draw subtle line below header
+	docChirho.moveTo(50, 38).lineTo(545, 38).stroke('#e2e8f0');
+
+	// Reset Y position to leave room for content
+	docChirho.y = 50;
 }
 
 /**
@@ -630,6 +863,9 @@ async function mainChirho(): Promise<void> {
 
 	console.log(`Found language: ${languageChirho.nameChirho} (ID: ${languageChirho.idChirho})`);
 
+	// Set global language code for localized book names
+	currentLanguageCodeChirho = langCodeChirho;
+
 	// Get reference version if specified
 	let refVersionChirho: { idChirho: number; nameChirho: string } | null = null;
 	if (refVersionCodeChirho) {
@@ -655,11 +891,24 @@ async function mainChirho(): Promise<void> {
 	const chunksChirho: Buffer[] = [];
 	docChirho.on('data', (chunkChirho: Buffer) => chunksChirho.push(chunkChirho));
 
+	// Register page event handler for book headers on new pages
+	// Skip first 3 pages (cover, TOC, first book page)
+	let pageCountChirho = 0;
+	docChirho.on('pageAdded', () => {
+		pageCountChirho++;
+		// Only add page headers after TOC (page 3+) and when there's a current book
+		if (pageCountChirho > 2 && currentBookNameChirho) {
+			addPageHeaderChirho(docChirho);
+		}
+	});
+
 	// Add cover page and TOC
+	// Include disclaimer when using a reference version
 	const titleChirho = refVersionChirho
 		? `${refVersionChirho.nameChirho} - Interlinear`
 		: languageChirho.nameChirho;
-	addCoverPageChirho(docChirho, titleChirho);
+	const includeDisclaimerChirho = refVersionChirho !== null;
+	addCoverPageChirho(docChirho, titleChirho, includeDisclaimerChirho);
 	addTableOfContentsChirho(docChirho);
 
 	let totalVersesChirho = 0;
@@ -677,7 +926,8 @@ async function mainChirho(): Promise<void> {
 
 			// Add book header if this is first chapter with content
 			if (!bookHasContentChirho) {
-				addBookHeaderChirho(docChirho, bookChirho.nameChirho);
+				const localizedBookNameChirho = getLocalizedBookNameChirho(bookChirho.idChirho, currentLanguageCodeChirho);
+				addBookHeaderChirho(docChirho, localizedBookNameChirho);
 				bookHasContentChirho = true;
 			}
 
