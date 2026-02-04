@@ -102,6 +102,14 @@
 			pathChirho: '/bibles-chirho/interlinear-tur-turhadi-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102'
+		},
+		{
+			nameChirho: 'Swahili Neno Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Swahili word-by-word translation and Biblica Neno reference text',
+			pathChirho: '/bibles-chirho/interlinear-swa-swhonen-chirho.pdf',
+			sizeChirho: '136 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
 		}
 	];
 </script>
