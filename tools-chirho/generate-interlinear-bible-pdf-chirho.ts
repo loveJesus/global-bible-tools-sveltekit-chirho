@@ -42,7 +42,8 @@ import {
 	stripPuaChirho,
 	sanitizeGlossChirho,
 	getStrongLinkChirho,
-	isRtlTextChirho
+	isRtlTextChirho,
+	simplifyArabicForPdfChirho
 } from '../src/lib/server/pdf-utils-chirho';
 
 const { Pool: PoolChirho } = pg;
@@ -270,6 +271,38 @@ const BOOK_NAMES_BY_LANGUAGE_CHIRHO: Record<string, Record<number, string>> = {
 		54: '۱ تیمتھیس', 55: '۲ تیمتھیس', 56: 'طِطُس', 57: 'فلیمون', 58: 'عبرانیوں',
 		59: 'یعقوب', 60: '۱ پطرس', 61: '۲ پطرس', 62: '۱ یوحنا', 63: '۲ یوحنا',
 		64: '۳ یوحنا', 65: 'یہوداہ', 66: 'مکاشفہ'
+	},
+	arb: {
+		1: 'التَّكْوِينُ', 2: 'الخُرُوجُ', 3: 'اللَّاوِيِّينَ', 4: 'العَدَدُ', 5: 'التَّثْنِيَةُ',
+		6: 'يَشُوعُ', 7: 'القُضَاةُ', 8: 'رَاعُوثُ', 9: 'صَمُوئِيلُ الأَوَّلُ', 10: 'صَمُوئِيلُ الثَّانِي',
+		11: 'المُلُوكُ الأَوَّلُ', 12: 'المُلُوكُ الثَّانِي', 13: 'أَخْبَارُ الأَيَّامِ الأَوَّلُ', 14: 'أَخْبَارُ الأَيَّامِ الثَّانِي',
+		15: 'عِزْرَا', 16: 'نَحَمْيَا', 17: 'أَسْتِيرُ', 18: 'أَيُّوبُ', 19: 'المَزَامِيرُ',
+		20: 'الأَمْثَالُ', 21: 'الجَامِعَةُ', 22: 'نَشِيدُ الأَنْشَادِ', 23: 'إِشَعْيَاءُ', 24: 'إِرْمِيَاءُ',
+		25: 'مَرَاثِي إِرْمِيَا', 26: 'حِزْقِيَالُ', 27: 'دَانِيَالُ', 28: 'هُوشَعُ', 29: 'يُوئِيلُ',
+		30: 'عَامُوسُ', 31: 'عُوبَدْيَا', 32: 'يُونَانُ', 33: 'مِيخَا', 34: 'نَاحُومُ',
+		35: 'حَبَقُّوقُ', 36: 'صَفَنْيَا', 37: 'حَجَّي', 38: 'زَكَرِيَّا', 39: 'مَلَاخِي',
+		40: 'مَتَّى', 41: 'مَرْقُسُ', 42: 'لُوقَا', 43: 'يُوحَنَّا', 44: 'أَعْمَالُ الرُّسُلِ',
+		45: 'رُومِيَةُ', 46: 'كُورِنْثُوسَ الأُولَى', 47: 'كُورِنْثُوسَ الثَّانِيَةُ', 48: 'غَلَاطِيَّةُ', 49: 'أَفَسُسُ',
+		50: 'فِيلِبِّي', 51: 'كُولُوسِّي', 52: 'تَسَالُونِيكِي الأُولَى', 53: 'تَسَالُونِيكِي الثَّانِيَةُ',
+		54: 'تِيمُوثَاوُسَ الأُولَى', 55: 'تِيمُوثَاوُسَ الثَّانِيَةُ', 56: 'تِيطُسُ', 57: 'فِلِيمُونَ', 58: 'العِبْرَانِيِّينَ',
+		59: 'يَعْقُوبُ', 60: 'بُطْرُسَ الأُولَى', 61: 'بُطْرُسَ الثَّانِيَةُ', 62: 'يُوحَنَّا الأُولَى', 63: 'يُوحَنَّا الثَّانِيَةُ',
+		64: 'يُوحَنَّا الثَّالِثَةُ', 65: 'يَهُوذَا', 66: 'الرُّؤْيَا'
+	},
+	kor: {
+		1: '창세기', 2: '출애굽기', 3: '레위기', 4: '민수기', 5: '신명기',
+		6: '여호수아', 7: '사사기', 8: '룻기', 9: '사무엘상', 10: '사무엘하',
+		11: '열왕기상', 12: '열왕기하', 13: '역대상', 14: '역대하',
+		15: '에스라', 16: '느헤미야', 17: '에스더', 18: '욥기', 19: '시편',
+		20: '잠언', 21: '전도서', 22: '아가', 23: '이사야', 24: '예레미야',
+		25: '예레미야애가', 26: '에스겔', 27: '다니엘', 28: '호세아', 29: '요엘',
+		30: '아모스', 31: '오바댜', 32: '요나', 33: '미가', 34: '나훔',
+		35: '하박국', 36: '스바냐', 37: '학개', 38: '스가랴', 39: '말라기',
+		40: '마태복음', 41: '마가복음', 42: '누가복음', 43: '요한복음', 44: '사도행전',
+		45: '로마서', 46: '고린도전서', 47: '고린도후서', 48: '갈라디아서', 49: '에베소서',
+		50: '빌립보서', 51: '골로새서', 52: '데살로니가전서', 53: '데살로니가후서',
+		54: '디모데전서', 55: '디모데후서', 56: '디도서', 57: '빌레몬서', 58: '히브리서',
+		59: '야고보서', 60: '베드로전서', 61: '베드로후서', 62: '요한일서', 63: '요한이서',
+		64: '요한삼서', 65: '유다서', 66: '요한계시록'
 	}
 };
 
@@ -283,7 +316,9 @@ const UI_LABELS_BY_LANGUAGE_CHIRHO: Record<string, { tocChirho: string; otChirho
 	ben: { tocChirho: 'সূচিপত্র', otChirho: 'পুরাতন নিয়ম', ntChirho: 'নতুন নিয়ম' },
 	ind: { tocChirho: 'Daftar Isi', otChirho: 'Perjanjian Lama', ntChirho: 'Perjanjian Baru' },
 	jav: { tocChirho: 'Daftar Isi', otChirho: 'Prajanjian Lawas', ntChirho: 'Prajanjian Anyar' },
-	urd: { tocChirho: 'فہرست', otChirho: 'پرانا عہد نامہ', ntChirho: 'نیا عہد نامہ' }
+	urd: { tocChirho: 'فہرست', otChirho: 'پرانا عہد نامہ', ntChirho: 'نیا عہد نامہ' },
+	arb: { tocChirho: 'الفِهْرِسُ', otChirho: 'العَهْدُ القَدِيمُ', ntChirho: 'العَهْدُ الجَدِيدُ' },
+	kor: { tocChirho: '목차', otChirho: '구약성경', ntChirho: '신약성경' }
 };
 
 // Helper function to get localized UI label
@@ -379,6 +414,16 @@ const NON_COMMERCIAL_DISCLAIMER_CHIRHO =
 	'This interlinear Bible is provided for personal, non-commercial use only. ' +
 	'The reference Bible text may be subject to copyright restrictions. ' +
 	'Please do not redistribute or use commercially without proper authorization.';
+
+// Copyright notices for specific reference versions
+const REFERENCE_COPYRIGHT_CHIRHO: Record<string, string> = {
+	swhulb:
+		'Swahili reference text: Biblia Takatifu (Swahili Unlocked Literal Bible)\n' +
+		'© 2019 Door43 World Missions Community\n' +
+		'Licensed under Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0)\n' +
+		'https://ebible.org/swhulb',
+	// Add more reference copyrights as needed
+};
 
 interface WordRowChirho {
 	wordIdChirho: string;
@@ -482,7 +527,8 @@ async function getChapterReferenceVersesChirho(
 function addCoverPageChirho(
 	docChirho: PdfDocumentInstanceChirho,
 	languageNameChirho: string,
-	includeDisclaimerChirho: boolean = false
+	includeDisclaimerChirho: boolean = false,
+	refVersionCodeChirho?: string
 ): void {
 	const mainFontChirho = getMainFontChirho();
 	const boldFontChirho = getBoldFontChirho();
@@ -505,6 +551,15 @@ function addCoverPageChirho(
 	const lineYChirho = docChirho.y;
 	docChirho.moveTo(150, lineYChirho).lineTo(445, lineYChirho).stroke('#cbd5e1');
 
+	// Reference Bible copyright (if available)
+	if (refVersionCodeChirho && REFERENCE_COPYRIGHT_CHIRHO[refVersionCodeChirho]) {
+		docChirho.font(mainFontChirho).fontSize(8).fillColor('#64748b');
+		docChirho.text(REFERENCE_COPYRIGHT_CHIRHO[refVersionCodeChirho], 70, 520, {
+			align: 'center',
+			width: 455
+		});
+	}
+
 	// Non-commercial disclaimer (if reference Bible requires it)
 	if (includeDisclaimerChirho) {
 		docChirho.font(mainFontChirho).fontSize(8).fillColor('#94a3b8');
@@ -525,31 +580,43 @@ function addCoverPageChirho(
 
 /**
  * Add table of contents
+ * Uses script-aware font selection for localized text (Arabic, Hebrew, etc.)
  */
 function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 	const mainFontChirho = getMainFontChirho();
 	const boldFontChirho = getBoldFontChirho();
 
-	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.tocHeaderChirho).fillColor('#1e293b');
-	docChirho.text(getLocalizedLabelChirho('tocChirho', currentLanguageCodeChirho), { align: 'center' });
+	// Get localized labels and determine appropriate font
+	// Apply simplifyArabicForPdfChirho to avoid fontkit ligature errors with Arabic diacritics
+	const tocLabelRawChirho = getLocalizedLabelChirho('tocChirho', currentLanguageCodeChirho);
+	const otLabelRawChirho = getLocalizedLabelChirho('otChirho', currentLanguageCodeChirho);
+	const tocLabelChirho = simplifyArabicForPdfChirho(tocLabelRawChirho);
+	const otLabelChirho = simplifyArabicForPdfChirho(otLabelRawChirho);
+	const tocFontChirho = getFontForTextChirho(tocLabelChirho);
+	const otFontChirho = getFontForTextChirho(otLabelChirho);
+
+	docChirho.font(tocFontChirho).fontSize(fontSizesChirho.tocHeaderChirho).fillColor('#1e293b');
+	docChirho.text(tocLabelChirho, { align: 'center' });
 	docChirho.moveDown(2);
 
 	// Old Testament
-	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
-	docChirho.text(getLocalizedLabelChirho('otChirho', currentLanguageCodeChirho), { align: 'left' });
+	docChirho.font(otFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
+	docChirho.text(otLabelChirho, { align: 'left' });
 	docChirho.moveDown(0.5);
 
 	const otBooksChirho = BOOKS_CHIRHO.filter(bChirho => bChirho.idChirho <= 39);
 	const ntBooksChirho = BOOKS_CHIRHO.filter(bChirho => bChirho.idChirho > 39);
 
-	docChirho.font(mainFontChirho).fontSize(fontSizesChirho.tocItemChirho).fillColor('#334155');
 	const colWidthChirho = 160;
 	let colChirho = 0;
 	let startYChirho = docChirho.y;
 
 	for (const bookChirho of otBooksChirho) {
 		const xChirho = 50 + (colChirho * colWidthChirho);
-		const localizedNameChirho = getLocalizedBookNameChirho(bookChirho.idChirho, currentLanguageCodeChirho);
+		const localizedNameRawChirho = getLocalizedBookNameChirho(bookChirho.idChirho, currentLanguageCodeChirho);
+		const localizedNameChirho = simplifyArabicForPdfChirho(localizedNameRawChirho);
+		const bookFontChirho = getFontForTextChirho(localizedNameChirho);
+		docChirho.font(bookFontChirho).fontSize(fontSizesChirho.tocItemChirho).fillColor('#334155');
 		docChirho.text(localizedNameChirho, xChirho, docChirho.y, { width: colWidthChirho - 10 });
 		colChirho++;
 		if (colChirho >= 3) {
@@ -564,18 +631,23 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 	docChirho.moveDown(1);
 
 	// New Testament
-	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
-	docChirho.text(getLocalizedLabelChirho('ntChirho', currentLanguageCodeChirho), { align: 'left' });
+	const ntLabelRawChirho = getLocalizedLabelChirho('ntChirho', currentLanguageCodeChirho);
+	const ntLabelChirho = simplifyArabicForPdfChirho(ntLabelRawChirho);
+	const ntFontChirho = getFontForTextChirho(ntLabelChirho);
+	docChirho.font(ntFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
+	docChirho.text(ntLabelChirho, { align: 'left' });
 	docChirho.moveDown(0.5);
 
-	docChirho.font(mainFontChirho).fontSize(fontSizesChirho.tocItemChirho).fillColor('#334155');
 	colChirho = 0;
 	startYChirho = docChirho.y;
 
 	for (const bookChirho of ntBooksChirho) {
 		const xChirho = 50 + (colChirho * colWidthChirho);
-		const localizedNameChirho = getLocalizedBookNameChirho(bookChirho.idChirho, currentLanguageCodeChirho);
-		docChirho.text(localizedNameChirho, xChirho, docChirho.y, { width: colWidthChirho - 10 });
+		const ntLocalizedNameRawChirho = getLocalizedBookNameChirho(bookChirho.idChirho, currentLanguageCodeChirho);
+		const ntLocalizedNameChirho = simplifyArabicForPdfChirho(ntLocalizedNameRawChirho);
+		const ntBookFontChirho = getFontForTextChirho(ntLocalizedNameChirho);
+		docChirho.font(ntBookFontChirho).fontSize(fontSizesChirho.tocItemChirho).fillColor('#334155');
+		docChirho.text(ntLocalizedNameChirho, xChirho, docChirho.y, { width: colWidthChirho - 10 });
 		colChirho++;
 		if (colChirho >= 3) {
 			colChirho = 0;
@@ -590,29 +662,35 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 
 /**
  * Add book header - also sets global book name for page headers
+ * Uses script-aware font selection for Arabic, Bengali, Hindi, etc.
+ * Applies simplifyArabicForPdfChirho to avoid fontkit ligature errors
  */
 function addBookHeaderChirho(docChirho: PdfDocumentInstanceChirho, bookNameChirho: string): void {
-	// Update global current book name for page headers
-	currentBookNameChirho = bookNameChirho;
+	// Sanitize Arabic text to avoid fontkit ligature errors with diacritics
+	const sanitizedBookNameChirho = simplifyArabicForPdfChirho(bookNameChirho);
+
+	// Update global current book name for page headers (sanitized)
+	currentBookNameChirho = sanitizedBookNameChirho;
 
 	docChirho.addPage();
-	const boldFontChirho = getBoldFontChirho();
-	docChirho.font(boldFontChirho).fontSize(fontSizesChirho.bookHeaderChirho).fillColor('#1e293b');
-	docChirho.text(bookNameChirho, { align: 'center' });
+	const bookFontChirho = getFontForTextChirho(sanitizedBookNameChirho);
+	docChirho.font(bookFontChirho).fontSize(fontSizesChirho.bookHeaderChirho).fillColor('#1e293b');
+	docChirho.text(sanitizedBookNameChirho, { align: 'center' });
 	docChirho.moveDown(2);
 }
 
 /**
  * Add page header with book name (called after page breaks)
+ * Uses script-aware font selection for Arabic, Bengali, Hindi, etc.
  */
 function addPageHeaderChirho(docChirho: PdfDocumentInstanceChirho): void {
 	if (!currentBookNameChirho) return;
 
-	const mainFontChirho = getMainFontChirho();
-	const savedYChirho = docChirho.y;
+	// Use script-aware font selection for Arabic, Bengali, Hindi, etc.
+	const headerFontChirho = getFontForTextChirho(currentBookNameChirho);
 
 	// Header at top of page
-	docChirho.font(mainFontChirho).fontSize(9).fillColor('#94a3b8');
+	docChirho.font(headerFontChirho).fontSize(9).fillColor('#94a3b8');
 	docChirho.text(currentBookNameChirho, 50, 25, { align: 'center', width: 495 });
 
 	// Draw subtle line below header
@@ -908,7 +986,7 @@ async function mainChirho(): Promise<void> {
 		? `${refVersionChirho.nameChirho} - Interlinear`
 		: languageChirho.nameChirho;
 	const includeDisclaimerChirho = refVersionChirho !== null;
-	addCoverPageChirho(docChirho, titleChirho, includeDisclaimerChirho);
+	addCoverPageChirho(docChirho, titleChirho, includeDisclaimerChirho, refVersionCodeChirho);
 	addTableOfContentsChirho(docChirho);
 
 	let totalVersesChirho = 0;

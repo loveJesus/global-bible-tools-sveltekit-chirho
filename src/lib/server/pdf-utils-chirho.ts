@@ -160,6 +160,48 @@ export function decodeHtmlEntitiesChirho(textChirho: string): string {
 }
 
 /**
+ * Simplify Arabic text to avoid fontkit ligature errors.
+ *
+ * Fontkit has issues with certain Arabic diacritics combinations that cause
+ * "TypeError: undefined is not an object (evaluating 'ligAttach[compIndex][markRecord.class]')"
+ *
+ * This function removes problematic diacritics while keeping the essential ones.
+ * We keep: fatha, kasra, damma, sukun, shadda (basic tashkīl)
+ * We remove: maddah, superscript alef, and other complex marks that cause issues
+ */
+export function simplifyArabicForPdfChirho(textChirho: string): string {
+	return textChirho
+		// Remove Arabic Maddah Above (U+0653) - causes ligature issues
+		.replace(/\u0653/g, '')
+		// Remove Arabic Hamza Above (U+0654)
+		.replace(/\u0654/g, '')
+		// Remove Arabic Hamza Below (U+0655)
+		.replace(/\u0655/g, '')
+		// Remove Subscript Alef (U+0656)
+		.replace(/\u0656/g, '')
+		// Remove Arabic Inverted Damma (U+0657)
+		.replace(/\u0657/g, '')
+		// Remove Arabic Mark Noon Ghunna (U+0658)
+		.replace(/\u0658/g, '')
+		// Remove Zwarakay (U+0659)
+		.replace(/\u0659/g, '')
+		// Remove Arabic Vowel Sign Small V Above (U+065A)
+		.replace(/\u065A/g, '')
+		// Remove Arabic Vowel Sign Inverted Small V Above (U+065B)
+		.replace(/\u065B/g, '')
+		// Remove Arabic Vowel Sign Dot Below (U+065C)
+		.replace(/\u065C/g, '')
+		// Remove Arabic Reversed Damma (U+065D)
+		.replace(/\u065D/g, '')
+		// Remove Arabic Fatha with Two Dots (U+065E)
+		.replace(/\u065E/g, '')
+		// Remove Arabic Wavy Hamza Below (U+065F)
+		.replace(/\u065F/g, '')
+		// Remove Arabic Letter Superscript Alef (U+0670) - this is a major cause of issues
+		.replace(/\u0670/g, '');
+}
+
+/**
  * Sanitize text for Arabic/Urdu - converts to native Arabic punctuation and numerals.
  *
  * For Arabic/Urdu: converts punctuation and numerals to native equivalents (،؛؟۔۰-۹).
@@ -177,8 +219,11 @@ export function sanitizeForNonLatinFontChirho(textChirho: string): string {
 		return stripPuaChirho(textChirho);
 	}
 
+	// First simplify Arabic to avoid fontkit ligature errors
+	let sanitizedChirho = simplifyArabicForPdfChirho(textChirho);
+
 	// Convert Latin punctuation to Arabic equivalents for Arabic/Urdu
-	return textChirho
+	return sanitizedChirho
 		// Comma to Arabic comma ،
 		.replace(/,/g, '\u060C')
 		// Semicolon to Arabic semicolon ؛

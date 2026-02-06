@@ -104,10 +104,26 @@
 			versesChirho: '31,102'
 		},
 		{
-			nameChirho: 'Swahili Neno Interlinear Bible',
-			descriptionChirho: 'Hebrew & Greek text with Swahili word-by-word translation and Biblica Neno reference text',
-			pathChirho: '/bibles-chirho/interlinear-swa-swhonen-chirho.pdf',
-			sizeChirho: '136 MB',
+			nameChirho: 'Swahili ULB Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Swahili word-by-word translation and Unlocked Literal Bible reference text (CC BY-SA 4.0)',
+			pathChirho: '/bibles-chirho/interlinear-swa-swhulb-chirho.pdf',
+			sizeChirho: '137 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'Arabic SVD Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Arabic word-by-word translation and Smith Van Dyke reference text',
+			pathChirho: '/bibles-chirho/interlinear-arb-arasvd-chirho.pdf',
+			sizeChirho: '174 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'Korean KorRV Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Korean word-by-word translation and Korean Revised Version reference text',
+			pathChirho: '/bibles-chirho/interlinear-kor-korrv-chirho.pdf',
+			sizeChirho: '135 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
 		}
