@@ -126,6 +126,14 @@
 			sizeChirho: '135 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'German Elberfelder Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with German word-by-word translation and Elberfelder 1905 reference text',
+			pathChirho: '/bibles-chirho/interlinear-deu-gerelb1905-chirho.pdf',
+			sizeChirho: '137 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
 		}
 	];
 </script>
