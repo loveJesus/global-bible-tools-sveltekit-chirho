@@ -134,6 +134,14 @@
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'French Darby Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with French word-by-word translation and J.N. Darby reference text',
+			pathChirho: '/bibles-chirho/interlinear-fra-frejnd-chirho.pdf',
+			sizeChirho: '135 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
 		}
 	];
 </script>
