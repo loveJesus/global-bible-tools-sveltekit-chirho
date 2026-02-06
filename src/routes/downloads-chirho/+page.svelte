@@ -139,7 +139,15 @@
 			nameChirho: 'French Darby Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with French word-by-word translation and J.N. Darby reference text',
 			pathChirho: '/bibles-chirho/interlinear-fra-frejnd-chirho.pdf',
-			sizeChirho: '135 MB',
+			sizeChirho: '137 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'Italian Riveduta Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Italian word-by-word translation and Riveduta 1927 reference text',
+			pathChirho: '/bibles-chirho/interlinear-ita-itarive-chirho.pdf',
+			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
 		}
