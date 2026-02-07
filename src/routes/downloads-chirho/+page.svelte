@@ -158,6 +158,14 @@
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'Burmese Judson Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Burmese word-by-word translation and Judson (1835) reference text',
+			pathChirho: '/bibles-chirho/interlinear-mya-burjudson-chirho.pdf',
+			sizeChirho: '114 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
 		}
 	];
 </script>
