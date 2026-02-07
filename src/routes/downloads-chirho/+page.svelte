@@ -18,7 +18,7 @@
 		{
 			nameChirho: 'KJV Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with English word-by-word translation and King James Version text',
-			pathChirho: '/bibles-chirho/interlinear-eng-kjv-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-eng-kjv-chirho.pdf',
 			sizeChirho: '136 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -26,7 +26,7 @@
 		{
 			nameChirho: 'WEB Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with English word-by-word translation and World English Bible text',
-			pathChirho: '/bibles-chirho/interlinear-eng-web-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-eng-web-chirho.pdf',
 			sizeChirho: '136 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -34,28 +34,28 @@
 		{
 			nameChirho: 'Spanish RV1909 Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Spanish word-by-word translation and Reina-Valera 1909 text',
-			pathChirho: '/bibles-chirho/interlinear-spa-rv1909-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-spa-rv1909-chirho.pdf',
 			sizeChirho: '134 MB',
 			versesChirho: '31,102'
 		},
 		{
 			nameChirho: 'Portuguese Almeida Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Portuguese word-by-word translation and Almeida 1911 text',
-			pathChirho: '/bibles-chirho/interlinear-por-almeida1911-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-por-almeida1911-chirho.pdf',
 			sizeChirho: '136 MB',
 			versesChirho: '31,102'
 		},
 		{
 			nameChirho: 'Hindi ERV Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Hindi word-by-word translation and Hindi Easy-to-Read Version text',
-			pathChirho: '/bibles-chirho/interlinear-hin-hinerv-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-hin-hinerv-chirho.pdf',
 			sizeChirho: '139 MB',
 			versesChirho: '31,102'
 		},
 		{
 			nameChirho: 'Hindi FBI Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Hindi word-by-word translation and Free Bible India text. Larger fonts for easier reading.',
-			pathChirho: '/bibles-chirho/interlinear-hin-large-hinfbi-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-hin-large-hinfbi-chirho.pdf',
 			sizeChirho: '141 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Large Font'
@@ -63,14 +63,14 @@
 		{
 			nameChirho: 'Bengali 2006EB Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Bengali word-by-word translation and Bengali 2006 Easy Bible text',
-			pathChirho: '/bibles-chirho/interlinear-ben-ben2006eb-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-ben-ben2006eb-chirho.pdf',
 			sizeChirho: '140 MB',
 			versesChirho: '31,102'
 		},
 		{
 			nameChirho: 'Urdu Geo Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Urdu word-by-word translation and Urdu Geo reference text. Larger fonts for easier reading.',
-			pathChirho: '/bibles-chirho/interlinear-urd-urdugeo-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-urd-urdugeo-chirho.pdf',
 			sizeChirho: '164 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Large Font'
@@ -78,35 +78,35 @@
 		{
 			nameChirho: 'Indonesian TB Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Indonesian word-by-word translation and Terjemahan Baru reference text',
-			pathChirho: '/bibles-chirho/interlinear-ind-indtb-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-ind-indtb-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102'
 		},
 		{
 			nameChirho: 'Javanese SABDA Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Javanese word-by-word translation and SABDA reference text',
-			pathChirho: '/bibles-chirho/interlinear-jav-javsabda-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-jav-javsabda-chirho.pdf',
 			sizeChirho: '139 MB',
 			versesChirho: '31,102'
 		},
 		{
 			nameChirho: 'Russian Synodal Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Russian word-by-word translation and Synodal reference text',
-			pathChirho: '/bibles-chirho/interlinear-rus-synodal-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-rus-synodal-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102'
 		},
 		{
 			nameChirho: 'Turkish HADI Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Turkish word-by-word translation and HADI (Easy-to-Read) reference text',
-			pathChirho: '/bibles-chirho/interlinear-tur-turhadi-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-tur-turhadi-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102'
 		},
 		{
 			nameChirho: 'Swahili ULB Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Swahili word-by-word translation and Unlocked Literal Bible reference text (CC BY-SA 4.0)',
-			pathChirho: '/bibles-chirho/interlinear-swa-swhulb-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-swa-swhulb-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -114,7 +114,7 @@
 		{
 			nameChirho: 'Arabic SVD Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Arabic word-by-word translation and Smith Van Dyke reference text',
-			pathChirho: '/bibles-chirho/interlinear-arb-arasvd-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-arb-arasvd-chirho.pdf',
 			sizeChirho: '174 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -122,7 +122,7 @@
 		{
 			nameChirho: 'Korean KorRV Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Korean word-by-word translation and Korean Revised Version reference text',
-			pathChirho: '/bibles-chirho/interlinear-kor-korrv-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-kor-korrv-chirho.pdf',
 			sizeChirho: '135 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -130,7 +130,7 @@
 		{
 			nameChirho: 'German Elberfelder Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with German word-by-word translation and Elberfelder 1905 reference text',
-			pathChirho: '/bibles-chirho/interlinear-deu-gerelb1905-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-deu-gerelb1905-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -138,7 +138,7 @@
 		{
 			nameChirho: 'French Darby Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with French word-by-word translation and J.N. Darby reference text',
-			pathChirho: '/bibles-chirho/interlinear-fra-frejnd-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-fra-frejnd-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -146,7 +146,7 @@
 		{
 			nameChirho: 'Italian Riveduta Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Italian word-by-word translation and Riveduta 1927 reference text',
-			pathChirho: '/bibles-chirho/interlinear-ita-itarive-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-ita-itarive-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -154,7 +154,7 @@
 		{
 			nameChirho: 'Modern Hebrew Interlinear Bible',
 			descriptionChirho: 'Biblical Hebrew & Greek text with Modern Hebrew word-by-word glosses — archaic forms modernized as a study aid',
-			pathChirho: '/bibles-chirho/interlinear-heb-hebmodern-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-heb-hebmodern-chirho.pdf',
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
@@ -162,7 +162,7 @@
 		{
 			nameChirho: 'Burmese Judson Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Burmese word-by-word translation and Judson (1835) reference text',
-			pathChirho: '/bibles-chirho/interlinear-mya-burjudson-chirho.pdf',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-mya-burjudson-chirho.pdf',
 			sizeChirho: '114 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
