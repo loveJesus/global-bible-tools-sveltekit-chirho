@@ -150,6 +150,14 @@
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'Modern Hebrew Interlinear Bible',
+			descriptionChirho: 'Biblical Hebrew & Greek text with Modern Hebrew word-by-word glosses — archaic forms modernized as a study aid',
+			pathChirho: '/bibles-chirho/interlinear-heb-chirho.pdf',
+			sizeChirho: '137 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
 		}
 	];
 </script>
