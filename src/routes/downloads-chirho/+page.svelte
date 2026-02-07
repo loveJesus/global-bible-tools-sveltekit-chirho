@@ -79,7 +79,7 @@
 			nameChirho: 'Indonesian TB Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Indonesian word-by-word translation and Terjemahan Baru reference text',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-ind-indtb-chirho.pdf',
-			sizeChirho: '137 MB',
+			sizeChirho: '138 MB',
 			versesChirho: '31,102'
 		},
 		{
@@ -163,7 +163,7 @@
 			nameChirho: 'Burmese Judson Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Burmese word-by-word translation and Judson (1835) reference text',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-mya-burjudson-chirho.pdf',
-			sizeChirho: '146 MB',
+			sizeChirho: '163 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
 		}
