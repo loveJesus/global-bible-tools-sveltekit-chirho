@@ -168,10 +168,10 @@
 			badgeChirho: 'Complete Bible'
 		},
 		{
-			nameChirho: 'Tamil OV Interlinear Bible',
-			descriptionChirho: 'Hebrew & Greek text with Tamil word-by-word translation (தமிழ் இடைவரி விவிலியம்)',
-			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-tam-tamov-chirho.pdf',
-			sizeChirho: '135 MB',
+			nameChirho: 'Tamil IRV Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Tamil word-by-word translation and Indian Revised Version reference text (CC BY-SA 4.0)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-tam-tamirv-chirho.pdf',
+			sizeChirho: '139 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
 		}

@@ -303,6 +303,38 @@ const BOOK_NAMES_BY_LANGUAGE_CHIRHO: Record<string, Record<number, string>> = {
 		54: '디모데전서', 55: '디모데후서', 56: '디도서', 57: '빌레몬서', 58: '히브리서',
 		59: '야고보서', 60: '베드로전서', 61: '베드로후서', 62: '요한일서', 63: '요한이서',
 		64: '요한삼서', 65: '유다서', 66: '요한계시록'
+	},
+	mya: {
+		1: 'ကမ္ဘာဦးကျမ်း', 2: 'ထွက်မြောက်ရာကျမ်း', 3: 'ဝတ်ပြုရာကျမ်း', 4: 'တောလည်ရာကျမ်း', 5: 'တရားဟောရာကျမ်း',
+		6: 'ယောရှုမှတ်စာ', 7: 'တရားသူကြီးမှတ်စာ', 8: 'ရုသဝတ္ထု', 9: 'ဓမ္မရာဇဝင်ပထမစောင်', 10: 'ဓမ္မရာဇဝင်ဒုတိယစောင်',
+		11: 'ရာဇဝင်ချုပ်ပထမစောင်', 12: 'ရာဇဝင်ချုပ်ဒုတိယစောင်', 13: 'ရာဇဝင်ချုပ်တတိယစောင်', 14: 'ရာဇဝင်ချုပ်စတုတ္ထစောင်',
+		15: 'ဧဇရမှတ်စာ', 16: 'နေဟမိမှတ်စာ', 17: 'ဧသတာဝတ္ထု', 18: 'ယောဘဝတ္ထု', 19: 'ဆာလံကျမ်း',
+		20: 'သုတ္တံကျမ်း', 21: 'ဒေသနာကျမ်း', 22: 'ရှောလမုန်သီချင်း', 23: 'ဟေရှာယအနာဂတ္တိကျမ်း', 24: 'ယေရမိအနာဂတ္တိကျမ်း',
+		25: 'မြည်တမ်းစကား', 26: 'ယေဇကျေလအနာဂတ္တိကျမ်း', 27: 'ဒံယေလအနာဂတ္တိကျမ်း', 28: 'ဟောရှေအနာဂတ္တိကျမ်း', 29: 'ယောလအနာဂတ္တိကျမ်း',
+		30: 'အာမုတ်အနာဂတ္တိကျမ်း', 31: 'ဩဗဒိအနာဂတ္တိကျမ်း', 32: 'ယောနဝတ္ထု', 33: 'မိက္ခာအနာဂတ္တိကျမ်း', 34: 'နာဟုံအနာဂတ္တိကျမ်း',
+		35: 'ဟဗက္ကုတ်အနာဂတ္တိကျမ်း', 36: 'ဇေဖနိအနာဂတ္တိကျမ်း', 37: 'ဟဂ္ဂဲအနာဂတ္တိကျမ်း', 38: 'ဇာခရိအနာဂတ္တိကျမ်း', 39: 'မာလခိအနာဂတ္တိကျမ်း',
+		40: 'ရှင်မဿဲခရစ်ဝင်', 41: 'ရှင်မာကုခရစ်ဝင်', 42: 'ရှင်လုကာခရစ်ဝင်', 43: 'ရှင်ယောဟန်ခရစ်ဝင်', 44: 'တမန်တော်ဝတ္ထု',
+		45: 'ရောမဩဝါဒစာ', 46: 'ကောရိန္သုဩဝါဒစာပထမစောင်', 47: 'ကောရိန္သုဩဝါဒစာဒုတိယစောင်', 48: 'ဂလာတိဩဝါဒစာ', 49: 'ဧဖက်ဩဝါဒစာ',
+		50: 'ဖိလိပ္ပိဩဝါဒစာ', 51: 'ကောလောသဲဩဝါဒစာ', 52: 'သက်သာလောနိတ်ဩဝါဒစာပထမစောင်', 53: 'သက်သာလောနိတ်ဩဝါဒစာဒုတိယစောင်',
+		54: 'တိမောသေဩဝါဒစာပထမစောင်', 55: 'တိမောသေဩဝါဒစာဒုတိယစောင်', 56: 'တိတုဩဝါဒစာ', 57: 'ဖိလေမုန်ဩဝါဒစာ', 58: 'ဟေဗြဲဩဝါဒစာ',
+		59: 'ယာကုပ်ဩဝါဒစာ', 60: 'ရှင်ပေတရုဩဝါဒစာပထမစောင်', 61: 'ရှင်ပေတရုဩဝါဒစာဒုတိယစောင်', 62: 'ရှင်ယောဟန်ဩဝါဒစာပထမစောင်', 63: 'ရှင်ယောဟန်ဩဝါဒစာဒုတိယစောင်',
+		64: 'ရှင်ယောဟန်ဩဝါဒစာတတိယစောင်', 65: 'ယုဒဩဝါဒစာ', 66: 'ဗျာဒိတ်ကျမ်း'
+	},
+	tam: {
+		1: 'ஆதியாகமம்', 2: 'யாத்திராகமம்', 3: 'லேவியராகமம்', 4: 'எண்ணாகமம்', 5: 'உபாகமம்',
+		6: 'யோசுவா', 7: 'நியாயாதிபதிகள்', 8: 'ரூத்', 9: '1 சாமுவேல்', 10: '2 சாமுவேல்',
+		11: '1 இராஜாக்கள்', 12: '2 இராஜாக்கள்', 13: '1 நாளாகமம்', 14: '2 நாளாகமம்',
+		15: 'எஸ்றா', 16: 'நெகேமியா', 17: 'எஸ்தர்', 18: 'யோபு', 19: 'சங்கீதம்',
+		20: 'நீதிமொழிகள்', 21: 'பிரசங்கி', 22: 'உன்னதப்பாட்டு', 23: 'ஏசாயா', 24: 'எரேமியா',
+		25: 'புலம்பல்', 26: 'எசேக்கியேல்', 27: 'தானியேல்', 28: 'ஓசியா', 29: 'யோவேல்',
+		30: 'ஆமோஸ்', 31: 'ஒபதியா', 32: 'யோனா', 33: 'மீகா', 34: 'நாகூம்',
+		35: 'ஆபகூக்', 36: 'செப்பனியா', 37: 'ஆகாய்', 38: 'சகரியா', 39: 'மல்கியா',
+		40: 'மத்தேயு', 41: 'மாற்கு', 42: 'லூக்கா', 43: 'யோவான்', 44: 'அப்போஸ்தலர்',
+		45: 'ரோமர்', 46: '1 கொரிந்தியர்', 47: '2 கொரிந்தியர்', 48: 'கலாத்தியர்', 49: 'எபேசியர்',
+		50: 'பிலிப்பியர்', 51: 'கொலோசெயர்', 52: '1 தெசலோனிக்கேயர்', 53: '2 தெசலோனிக்கேயர்',
+		54: '1 தீமோத்தேயு', 55: '2 தீமோத்தேயு', 56: 'தீத்து', 57: 'பிலேமோன்', 58: 'எபிரெயர்',
+		59: 'யாக்கோபு', 60: '1 பேதுரு', 61: '2 பேதுரு', 62: '1 யோவான்', 63: '2 யோவான்',
+		64: '3 யோவான்', 65: 'யூதா', 66: 'வெளிப்படுத்தல்'
 	}
 };
 
@@ -318,7 +350,9 @@ const UI_LABELS_BY_LANGUAGE_CHIRHO: Record<string, { tocChirho: string; otChirho
 	jav: { tocChirho: 'Daftar Isi', otChirho: 'Prajanjian Lawas', ntChirho: 'Prajanjian Anyar' },
 	urd: { tocChirho: 'فہرست', otChirho: 'پرانا عہد نامہ', ntChirho: 'نیا عہد نامہ' },
 	arb: { tocChirho: 'الفِهْرِسُ', otChirho: 'العَهْدُ القَدِيمُ', ntChirho: 'العَهْدُ الجَدِيدُ' },
-	kor: { tocChirho: '목차', otChirho: '구약성경', ntChirho: '신약성경' }
+	kor: { tocChirho: '목차', otChirho: '구약성경', ntChirho: '신약성경' },
+	mya: { tocChirho: 'မာတိကာ', otChirho: 'ဓမ္မဟောင်းကျမ်း', ntChirho: 'ဓမ္မသစ်ကျမ်း' },
+	tam: { tocChirho: 'பொருளடக்கம்', otChirho: 'பழைய ஏற்பாடு', ntChirho: 'புதிய ஏற்பாடு' }
 };
 
 // Helper function to get localized UI label
@@ -543,7 +577,8 @@ function addCoverPageChirho(
 	docChirho.text('Greek & Hebrew Text with Word-by-Word Translation', { align: 'center' });
 
 	docChirho.moveDown(0.5);
-	docChirho.fontSize(fontSizesChirho.languageChirho).fillColor('#64748b');
+	const langNameFontChirho = getFontForTextChirho(languageNameChirho);
+	docChirho.font(langNameFontChirho).fontSize(fontSizesChirho.languageChirho).fillColor('#64748b');
 	docChirho.text(languageNameChirho, { align: 'center' });
 
 	// Decorative line
@@ -597,7 +632,7 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 
 	docChirho.font(tocFontChirho).fontSize(fontSizesChirho.tocHeaderChirho).fillColor('#1e293b');
 	docChirho.text(tocLabelChirho, { align: 'center' });
-	docChirho.moveDown(2);
+	docChirho.moveDown(1);
 
 	// Old Testament
 	docChirho.font(otFontChirho).fontSize(fontSizesChirho.chapterHeaderChirho).fillColor('#475569');
@@ -627,8 +662,13 @@ function addTableOfContentsChirho(docChirho: PdfDocumentInstanceChirho): void {
 		}
 	}
 
-	if (colChirho !== 0) docChirho.moveDown(2);
-	docChirho.moveDown(1);
+	if (colChirho !== 0) docChirho.moveDown(1);
+	docChirho.moveDown(0.5);
+
+	// Check if we need a new page for NT section (at least 200pt needed)
+	if (docChirho.y > 550) {
+		docChirho.addPage();
+	}
 
 	// New Testament
 	const ntLabelRawChirho = getLocalizedLabelChirho('ntChirho', currentLanguageCodeChirho);

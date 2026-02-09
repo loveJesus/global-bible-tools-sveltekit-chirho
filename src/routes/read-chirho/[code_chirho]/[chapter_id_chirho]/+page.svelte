@@ -155,6 +155,12 @@
 		return `/api-chirho/pdf-chirho/${dataChirho.codeChirho}/${bookNameChirho}?chapter=${dataChirho.chapterChirho}`;
 	}
 
+	// Get lexicon URL for a lemma ID (e.g. H1234a, G5678)
+	function getLexiconUrlChirho(lemmaIdChirho: string | null): string | null {
+		if (!lemmaIdChirho) return null;
+		return `https://lexicon-chirho.bible.systems/lemma-chirho/${lemmaIdChirho}`;
+	}
+
 	// Get BibleHub URL for a Strong's number (lemma ID like H1234 or G5678)
 	function getBibleHubUrlChirho(lemmaIdChirho: string | null): string | null {
 		if (!lemmaIdChirho) return null;
@@ -166,9 +172,9 @@
 		return `https://biblehub.com/${langChirho}/${numberChirho}.htm`;
 	}
 
-	// Handle word click - open BibleHub in new tab
+	// Handle word click - open lexicon in new tab (primary), BibleHub as fallback
 	function onWordClickChirho(lemmaIdChirho: string | null): void {
-		const urlChirho = getBibleHubUrlChirho(lemmaIdChirho);
+		const urlChirho = getLexiconUrlChirho(lemmaIdChirho);
 		if (urlChirho) {
 			window.open(urlChirho, '_blank', 'noopener,noreferrer');
 		}
@@ -404,7 +410,7 @@
 									type="button"
 									class="inline-flex flex-col items-center hover:bg-yellow-50 active:bg-yellow-100 cursor-pointer rounded px-1 py-1 sm:py-0.5 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300 min-w-[2.5rem] sm:min-w-0"
 									dir="ltr"
-									title="{wordChirho.lemmaIdChirho ?? ''} | {wordChirho.grammarChirho ?? ''} — Click for BibleHub"
+									title="{wordChirho.lemmaIdChirho ?? ''} | {wordChirho.grammarChirho ?? ''} — Click for Lexicon"
 									onclick={() => onWordClickChirho(wordChirho.lemmaIdChirho)}
 								>
 									<span class="text-slate-800 text-xs sm:text-sm">{filterPuaChirho(wordChirho.textChirho)}</span>
