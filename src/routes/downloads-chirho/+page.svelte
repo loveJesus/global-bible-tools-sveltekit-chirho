@@ -166,6 +166,14 @@
 			sizeChirho: '163 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'Tamil OV Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Tamil word-by-word translation (தமிழ் இடைவரி விவிலியம்)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-tam-tamov-chirho.pdf',
+			sizeChirho: '135 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
 		}
 	];
 </script>
