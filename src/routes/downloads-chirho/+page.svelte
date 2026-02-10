@@ -174,6 +174,14 @@
 			sizeChirho: '139 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'Chinese Simplified Interlinear Bible',
+			descriptionChirho: 'Hebrew & Greek text with Simplified Chinese word-by-word translation (简体中文逐字对照圣经)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-zho-chirho.pdf',
+			sizeChirho: '131 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Complete Bible'
 		}
 	];
 </script>
