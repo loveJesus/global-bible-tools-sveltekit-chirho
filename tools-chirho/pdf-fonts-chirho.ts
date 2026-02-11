@@ -35,6 +35,7 @@ const FONT_TAMIL_PATH_CHIRHO = joinChirho(process.cwd(), 'static/fonts-chirho/No
 const FONT_URDU_PATH_CHIRHO = joinChirho(process.cwd(), 'static/fonts-chirho/NotoNastaliqUrdu-Regular.ttf');
 const FONT_GURMUKHI_PATH_CHIRHO = joinChirho(process.cwd(), 'static/fonts-chirho/NotoSansGurmukhi-Regular.ttf');
 const FONT_ETHIOPIC_PATH_CHIRHO = joinChirho(process.cwd(), 'static/fonts-chirho/NotoSansEthiopic-Regular.ttf');
+const FONT_ETHIOPIC_MERGED_PATH_CHIRHO = joinChirho(process.cwd(), 'static/fonts-chirho/NotoSansEthiopicMergedChirho.ttf');
 
 let notoFontChirho: Buffer | null = null;
 let notoBoldFontChirho: Buffer | null = null;
@@ -53,6 +54,7 @@ let tamilFontChirho: Buffer | null = null;
 let urduFontChirho: Buffer | null = null;
 let gurmukhiFontChirho: Buffer | null = null;
 let ethiopicFontChirho: Buffer | null = null;
+let ethiopicMergedFontChirho: Buffer | null = null;
 
 function loadFontSafelyChirho(pathChirho: string, nameChirho: string): Buffer | null {
 	try {
@@ -81,6 +83,7 @@ tamilFontChirho = loadFontSafelyChirho(FONT_TAMIL_PATH_CHIRHO, 'Noto Sans Tamil'
 urduFontChirho = loadFontSafelyChirho(FONT_URDU_PATH_CHIRHO, 'Noto Nastaliq Urdu');
 gurmukhiFontChirho = loadFontSafelyChirho(FONT_GURMUKHI_PATH_CHIRHO, 'Noto Sans Gurmukhi');
 ethiopicFontChirho = loadFontSafelyChirho(FONT_ETHIOPIC_PATH_CHIRHO, 'Noto Sans Ethiopic');
+ethiopicMergedFontChirho = loadFontSafelyChirho(FONT_ETHIOPIC_MERGED_PATH_CHIRHO, 'Noto Sans Ethiopic Merged');
 
 // Export types
 export interface WordRowChirho {
@@ -255,7 +258,7 @@ export function getFontForTextChirho(textChirho: string): string {
 		return gurmukhiFontChirho ? 'NotoSansGurmukhi' : getMainFontChirho();
 	}
 	if (isEthiopicTextChirho(textChirho)) {
-		return ethiopicFontChirho ? 'NotoSansEthiopic' : getMainFontChirho();
+		return ethiopicMergedFontChirho ? 'NotoSansEthiopicMergedChirho' : (ethiopicFontChirho ? 'NotoSansEthiopic' : getMainFontChirho());
 	}
 	return getMainFontChirho();
 }
@@ -341,6 +344,7 @@ export function createPdfDocumentChirho(optionsChirho: PdfDocumentOptionsChirho 
 	if (urduFontChirho) docChirho.registerFont('NotoNastaliqUrdu', urduFontChirho);
 	if (gurmukhiFontChirho) docChirho.registerFont('NotoSansGurmukhi', gurmukhiFontChirho);
 	if (ethiopicFontChirho) docChirho.registerFont('NotoSansEthiopic', ethiopicFontChirho);
+	if (ethiopicMergedFontChirho) docChirho.registerFont('NotoSansEthiopicMergedChirho', ethiopicMergedFontChirho);
 
 	return docChirho;
 }
