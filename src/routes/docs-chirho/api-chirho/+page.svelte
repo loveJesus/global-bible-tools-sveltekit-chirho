@@ -3,6 +3,23 @@
      — John 3:16 -->
 
 <script lang="ts">
+	const curlTerseChirho = `curl -H "X-API-Key: your-key" \\
+  "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/spa/john/3"`;
+
+	const curlReadersChirho = `curl -H "X-API-Key: your-key" \\
+  "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/hin/genesis/1?type=readers"`;
+
+	const curlPlainChirho = `curl -H "X-API-Key: your-key" \\
+  "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/hin/genesis/1?type=readers&format=plain"`;
+
+	let copiedIdChirho = $state<string | null>(null);
+
+	async function copyToClipboardChirho(textChirho: string, idChirho: string) {
+		await navigator.clipboard.writeText(textChirho);
+		copiedIdChirho = idChirho;
+		setTimeout(() => { if (copiedIdChirho === idChirho) copiedIdChirho = null; }, 2000);
+	}
+
 	const jsonExampleChirho = `{
   "language_chirho": "hin",
   "book_chirho": "genesis",
@@ -203,28 +220,81 @@
 		<!-- Example 1: Basic terse -->
 		<div class="mb-6">
 			<h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Word-by-word (terse) glosses</h3>
-			<pre class="bg-slate-900 text-slate-100 rounded-lg p-4 text-sm overflow-x-auto"><code>curl -H "X-API-Key: your-key" \
-  "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/spa/john/3"</code></pre>
+			<div class="relative group">
+				<button
+					type="button"
+					onclick={() => copyToClipboardChirho(curlTerseChirho, 'terse')}
+					class="absolute top-3 right-3 p-1.5 rounded-md bg-slate-700/50 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+					aria-label="Copy to clipboard"
+				>
+					{#if copiedIdChirho === 'terse'}
+						<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+					{:else}
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+					{/if}
+				</button>
+				<pre class="bg-slate-950 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-emerald-300 rounded-lg p-4 pr-12 text-sm overflow-x-auto"><code>{curlTerseChirho}</code></pre>
+			</div>
 		</div>
 
 		<!-- Example 2: Readers -->
 		<div class="mb-6">
 			<h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Natural reading (readers) glosses</h3>
-			<pre class="bg-slate-900 text-slate-100 rounded-lg p-4 text-sm overflow-x-auto"><code>curl -H "X-API-Key: your-key" \
-  "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/hin/genesis/1?type=readers"</code></pre>
+			<div class="relative group">
+				<button
+					type="button"
+					onclick={() => copyToClipboardChirho(curlReadersChirho, 'readers')}
+					class="absolute top-3 right-3 p-1.5 rounded-md bg-slate-700/50 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+					aria-label="Copy to clipboard"
+				>
+					{#if copiedIdChirho === 'readers'}
+						<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+					{:else}
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+					{/if}
+				</button>
+				<pre class="bg-slate-950 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-emerald-300 rounded-lg p-4 pr-12 text-sm overflow-x-auto"><code>{curlReadersChirho}</code></pre>
+			</div>
 		</div>
 
 		<!-- Example 3: Plain format -->
 		<div class="mb-6">
 			<h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Plain format (en-dashes stripped)</h3>
-			<pre class="bg-slate-900 text-slate-100 rounded-lg p-4 text-sm overflow-x-auto"><code>curl -H "X-API-Key: your-key" \
-  "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/hin/genesis/1?type=readers&amp;format=plain"</code></pre>
+			<div class="relative group">
+				<button
+					type="button"
+					onclick={() => copyToClipboardChirho(curlPlainChirho, 'plain')}
+					class="absolute top-3 right-3 p-1.5 rounded-md bg-slate-700/50 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+					aria-label="Copy to clipboard"
+				>
+					{#if copiedIdChirho === 'plain'}
+						<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+					{:else}
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+					{/if}
+				</button>
+				<pre class="bg-slate-950 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-emerald-300 rounded-lg p-4 pr-12 text-sm overflow-x-auto"><code>{curlPlainChirho}</code></pre>
+			</div>
 		</div>
 
 		<!-- Example response -->
 		<div class="mb-6">
 			<h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Example Response</h3>
-			<pre class="bg-slate-900 text-slate-100 rounded-lg p-4 text-sm overflow-x-auto"><code>{jsonExampleChirho}</code></pre>
+			<div class="relative group">
+				<button
+					type="button"
+					onclick={() => copyToClipboardChirho(jsonExampleChirho, 'json')}
+					class="absolute top-3 right-3 p-1.5 rounded-md bg-slate-700/50 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+					aria-label="Copy to clipboard"
+				>
+					{#if copiedIdChirho === 'json'}
+						<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+					{:else}
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+					{/if}
+				</button>
+				<pre class="bg-slate-950 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-amber-300 rounded-lg p-4 pr-12 text-sm overflow-x-auto"><code>{jsonExampleChirho}</code></pre>
+			</div>
 		</div>
 	</section>
 
