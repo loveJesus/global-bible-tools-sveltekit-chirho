@@ -99,6 +99,18 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
 				badgeChirho: 'Large Font'
 			});
 		}
+
+		// Check readers edition PDF
+		const readersPdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-readers-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`);
+		if (existsSyncChirho(readersPdfPathChirho)) {
+			interlinearVersionsChirho.push({
+				codeChirho: vChirho.codeChirho + '-readers',
+				nameChirho: vChirho.nameChirho,
+				hasPdfChirho: true,
+				pdfPathChirho: `/bibles-chirho/interlinear-readers-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`,
+				badgeChirho: 'Readers Edition'
+			});
+		}
 	}
 
 	// Check if any interlinear PDF exists for this language

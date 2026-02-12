@@ -33,7 +33,8 @@ export const readingQueryServiceChirho = {
 	async fetchChapterVersesChirho(
 		bookIdChirho: number,
 		chapterIdChirho: number,
-		codeChirho: string
+		codeChirho: string,
+		translationTypeChirho: string | null = null
 	): Promise<VerseChirho[]> {
 		const resultChirho = await queryRawChirho<DbVerseRowChirho>(
 			`
@@ -67,6 +68,7 @@ export const readingQueryServiceChirho = {
               WHERE phw.word_id = w.id
                 AND ph.deleted_at IS NULL
                 AND ph.language_id = (SELECT id FROM language WHERE code = $3)
+                AND ph.translation_type_chirho IS NOT DISTINCT FROM $4
             ) AS ph ON true
             LEFT JOIN word_lexicon AS wl on wl.word_id = w.id
             LEFT JOIN gloss AS g ON g.phrase_id = ph.id AND g.state = 'APPROVED'
@@ -76,7 +78,7 @@ export const readingQueryServiceChirho = {
         ) AS words ON true
         WHERE v.book_id = $1 AND v.chapter = $2
       `,
-			[bookIdChirho, chapterIdChirho, codeChirho]
+			[bookIdChirho, chapterIdChirho, codeChirho, translationTypeChirho]
 		);
 
 		return resultChirho.map((rowChirho) => ({

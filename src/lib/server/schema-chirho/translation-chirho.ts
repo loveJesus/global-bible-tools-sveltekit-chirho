@@ -9,6 +9,7 @@ import { userTableChirho } from './users-chirho';
 import { wordTableChirho } from './bible-chirho';
 
 // Phrase table - Translation units (can span multiple words)
+// translation_type_chirho: NULL = terse (word-by-word), 'readers' = natural reading
 export const phraseTableChirho = pgTable('phrase', {
 	idChirho: serial('id').primaryKey(),
 	languageIdChirho: uuid('language_id')
@@ -17,7 +18,8 @@ export const phraseTableChirho = pgTable('phrase', {
 	createdAtChirho: timestamp('created_at', { precision: 3 }).notNull(),
 	createdByChirho: uuid('created_by').references(() => userTableChirho.idChirho),
 	deletedAtChirho: timestamp('deleted_at', { precision: 3 }),
-	deletedByChirho: uuid('deleted_by').references(() => userTableChirho.idChirho)
+	deletedByChirho: uuid('deleted_by').references(() => userTableChirho.idChirho),
+	translationTypeChirho: text('translation_type_chirho')
 });
 
 // PhraseWord table - Links phrases to words (many-to-many)

@@ -44,6 +44,9 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 	const codeChirho = paramsChirho.code_chirho;
 	const chapterIdChirho = paramsChirho.chapter_id_chirho;
 	const refVersionParamChirho = urlChirho.searchParams.get('ref');
+	const typeParamChirho = urlChirho.searchParams.get('type');
+	// Map URL param to DB value: NULL = terse, 'readers' = readers
+	const translationTypeChirho: string | null = typeParamChirho === 'readers' ? 'readers' : null;
 
 	// Parse chapter ID
 	const { bookIdChirho, chapterChirho } = parseChapterIdChirho(chapterIdChirho);
@@ -112,12 +115,13 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 					WHERE pw.word_id = w.id
 						AND p.language_id = $2
 						AND p.deleted_at IS NULL
+						AND p.translation_type_chirho IS NOT DISTINCT FROM $3
 					LIMIT 1
 				) AS ph ON true
 				WHERE w.verse_id = $1
 				ORDER BY w.id
 				`,
-				[verseChirho.idChirho, languageChirho.idChirho]
+				[verseChirho.idChirho, languageChirho.idChirho, translationTypeChirho]
 			);
 
 			return {
@@ -257,6 +261,16 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		? rtlLanguagesChirho.includes(selectedRefVersionChirho.languageCodeChirho)
 		: false;
 
+	// Check if readers-type phrases exist for this language (to show toggle)
+	const readersCheckChirho = await queryRawChirho<{ existsChirho: boolean }>(
+		`SELECT EXISTS(
+			SELECT 1 FROM phrase
+			WHERE language_id = $1 AND translation_type_chirho = 'readers' AND deleted_at IS NULL
+		) AS "existsChirho"`,
+		[languageChirho.idChirho]
+	);
+	const hasReadersChirho = readersCheckChirho[0]?.existsChirho ?? false;
+
 	return {
 		codeChirho,
 		languageChirho,
@@ -273,6 +287,8 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		selectedRefVersionIdChirho: preferredVersionIdChirho,
 		selectedRefLangCodeChirho: selectedRefVersionChirho?.languageCodeChirho ?? 'eng',
 		isRefRtlChirho,
-		selectedRefVersionNameChirho: selectedRefVersionChirho?.nameChirho ?? 'Reference'
+		selectedRefVersionNameChirho: selectedRefVersionChirho?.nameChirho ?? 'Reference',
+		hasReadersChirho,
+		translationTypeChirho: typeParamChirho === 'readers' ? 'readers' : 'terse'
 	};
 };

@@ -65,6 +65,8 @@ export const GET: RequestHandlerChirho = async ({ params: paramsChirho, url: url
 	const bookNameChirho = paramsChirho.book_chirho.toLowerCase();
 	const chapterParamChirho = urlChirho.searchParams.get('chapter');
 	const refParamChirho = urlChirho.searchParams.get('ref');
+	const typeParamChirho = urlChirho.searchParams.get('type');
+	const translationTypeChirho: string | null = typeParamChirho === 'readers' ? 'readers' : null;
 
 	// Get book ID
 	const bookIdChirho = BOOK_NAME_TO_ID_CHIRHO[bookNameChirho];
@@ -127,11 +129,12 @@ export const GET: RequestHandlerChirho = async ({ params: paramsChirho, url: url
 			WHERE pw.word_id = w.id
 				AND p.language_id = $1
 				AND p.deleted_at IS NULL
+				AND p.translation_type_chirho IS NOT DISTINCT FROM $3
 			LIMIT 1
 		) AS ph ON true
 		WHERE v.book_id = $2 ${chapterFilterChirho}
 		ORDER BY w.id`,
-		[langResultChirho[0].idChirho, bookIdChirho]
+		[langResultChirho[0].idChirho, bookIdChirho, translationTypeChirho]
 	);
 
 	if (wordsChirho.length === 0) {

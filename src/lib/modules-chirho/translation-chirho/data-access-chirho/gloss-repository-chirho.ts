@@ -87,7 +87,8 @@ export const glossRepositoryChirho = {
 
 	async findNextUnapprovedChirho(
 		languageCodeChirho: string,
-		verseIdChirho: string
+		verseIdChirho: string,
+		translationTypeChirho: string | null = null
 	): Promise<string | undefined> {
 		let resultChirho = await queryRawChirho<DbNextUnapprovedRowChirho>(
 			`
@@ -100,13 +101,14 @@ export const glossRepositoryChirho = {
           WHERE phw.word_id = w.id
             AND ph.language_id = (SELECT id FROM language WHERE code = $1)
             AND ph.deleted_at IS NULL
+            AND ph.translation_type_chirho IS NOT DISTINCT FROM $3
         ) AS g ON true
         WHERE w.verse_id > $2
           AND (g.state = 'UNAPPROVED' OR g.state IS NULL)
         ORDER BY w.id
         LIMIT 1
       `,
-			[languageCodeChirho, verseIdChirho]
+			[languageCodeChirho, verseIdChirho, translationTypeChirho]
 		);
 
 		if (resultChirho.length === 0) {
@@ -121,12 +123,13 @@ export const glossRepositoryChirho = {
             WHERE phw.word_id = w.id
               AND ph.language_id = (SELECT id FROM language WHERE code = $1)
               AND ph.deleted_at IS NULL
+              AND ph.translation_type_chirho IS NOT DISTINCT FROM $2
           ) AS g ON true
           WHERE (g.state = 'UNAPPROVED' OR g.state IS NULL)
           ORDER BY w.id
           LIMIT 1
         `,
-				[languageCodeChirho]
+				[languageCodeChirho, translationTypeChirho]
 			);
 		}
 

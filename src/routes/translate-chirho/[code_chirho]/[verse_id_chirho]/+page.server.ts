@@ -3,7 +3,7 @@
 // — John 3:16
 
 import type { PageServerLoad as PageServerLoadChirho, Actions as ActionsChirho } from './$types';
-import { dbChirho, eqChirho, andChirho, sqlChirho, queryRawChirho } from '$lib/server/db-chirho';
+import { dbChirho, eqChirho, andChirho, sqlChirho, queryRawChirho, isNullChirho } from '$lib/server/db-chirho';
 import {
 	languageTableChirho,
 	bookTableChirho,
@@ -83,6 +83,7 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, locals:
 
 	// Get words with glosses - using raw SQL with lateral join to avoid duplicates
 	// when a word has phrases in multiple languages
+	// Translate view always works on terse (NULL) translations
 	const wordsResultChirho = await queryRawChirho<WordWithGlossRowChirho>(
 		`
 		SELECT
@@ -104,6 +105,7 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, locals:
 			WHERE pw.word_id = w.id
 				AND p.language_id = $2
 				AND p.deleted_at IS NULL
+				AND p.translation_type_chirho IS NULL
 			LIMIT 1
 		) AS ph ON true
 		WHERE w.verse_id = $1
@@ -199,7 +201,7 @@ export const actions: ActionsChirho = {
 			return failChirho(404, { errorChirho: 'Language not found' });
 		}
 
-		// Find or create phrase for this word
+		// Find or create phrase for this word (terse type only)
 		const existingPhraseChirho = await dbChirho
 			.select({ phraseIdChirho: phraseWordTableChirho.phraseIdChirho })
 			.from(phraseWordTableChirho)
@@ -207,7 +209,8 @@ export const actions: ActionsChirho = {
 			.where(
 				andChirho(
 					eqChirho(phraseWordTableChirho.wordIdChirho, wordIdChirho),
-					eqChirho(phraseTableChirho.languageIdChirho, languageChirho.idChirho)
+					eqChirho(phraseTableChirho.languageIdChirho, languageChirho.idChirho),
+					isNullChirho(phraseTableChirho.translationTypeChirho)
 				)
 			)
 			.limit(1);

@@ -28,6 +28,22 @@
 	// N-dash toggle - hide n-dashes (–) when true
 	let hideNdashChirho = $state(false);
 
+	// Translation type toggle - only show when readers data exists
+	const translationTypeChirho = $derived(dataChirho.translationTypeChirho ?? 'terse');
+
+	function onTranslationTypeChangeChirho(typeChirho: 'terse' | 'readers'): void {
+		if (browserChirho) {
+			localStorage.setItem('translationTypeChirho', typeChirho);
+		}
+		const urlChirho = new URL(window.location.href);
+		if (typeChirho === 'readers') {
+			urlChirho.searchParams.set('type', 'readers');
+		} else {
+			urlChirho.searchParams.delete('type');
+		}
+		gotoChirho(urlChirho.pathname + urlChirho.search);
+	}
+
 	// Load user preferences from localStorage on mount
 	onMountChirho(() => {
 		if (browserChirho) {
@@ -316,6 +332,29 @@
 					RTL
 				</button>
 			</div>
+
+			{#if dataChirho.hasReadersChirho}
+				<span class="text-slate-300 hidden sm:inline">|</span>
+
+				<!-- Translation Type Toggle -->
+				<span class="text-slate-600 hidden sm:inline">{$tChirho('common.readChirho.glossTypeChirho')}:</span>
+				<div class="flex rounded border border-slate-300 overflow-hidden text-xs sm:text-sm">
+					<button
+						type="button"
+						class="px-1.5 sm:px-2 py-1 {translationTypeChirho === 'terse' ? 'bg-slate-200 text-slate-800' : 'bg-white text-slate-600 hover:bg-slate-50'}"
+						onclick={() => onTranslationTypeChangeChirho('terse')}
+					>
+						{$tChirho('common.readChirho.terseChirho')}
+					</button>
+					<button
+						type="button"
+						class="px-1.5 sm:px-2 py-1 border-l border-slate-300 {translationTypeChirho === 'readers' ? 'bg-slate-200 text-slate-800' : 'bg-white text-slate-600 hover:bg-slate-50'}"
+						onclick={() => onTranslationTypeChangeChirho('readers')}
+					>
+						{$tChirho('common.readChirho.readersChirho')}
+					</button>
+				</div>
+			{/if}
 
 			<span class="text-slate-300 hidden sm:inline">|</span>
 

@@ -4,7 +4,7 @@
 
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { dbChirho, eqChirho, andChirho } from '$lib/server/db-chirho';
+import { dbChirho, eqChirho, andChirho, isNullChirho } from '$lib/server/db-chirho';
 import {
 	glossTableChirho,
 	phraseTableChirho,
@@ -67,7 +67,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 		// If no phrase ID or phrase ID is 0, find or create phrase for this word
 		if (!actualPhraseIdChirho || actualPhraseIdChirho === 0) {
-			// Check if phrase already exists for this word+language
+			// Check if phrase already exists for this word+language (terse type only)
 			const existingPhraseChirho = await dbChirho
 				.select({ phraseIdChirho: phraseWordTableChirho.phraseIdChirho })
 				.from(phraseWordTableChirho)
@@ -78,7 +78,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				.where(
 					andChirho(
 						eqChirho(phraseWordTableChirho.wordIdChirho, wordIdChirho),
-						eqChirho(phraseTableChirho.languageIdChirho, languageChirho.idChirho)
+						eqChirho(phraseTableChirho.languageIdChirho, languageChirho.idChirho),
+						isNullChirho(phraseTableChirho.translationTypeChirho)
 					)
 				)
 				.limit(1);

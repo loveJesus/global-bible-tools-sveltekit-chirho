@@ -507,7 +507,8 @@ interface WordRowChirho {
 async function getChapterWordsChirho(
 	languageIdChirho: number,
 	bookIdChirho: number,
-	chapterChirho: number
+	chapterChirho: number,
+	translationTypeFilterChirho: string | null = null
 ): Promise<WordRowChirho[]> {
 	const resultChirho = await poolChirho.query<{
 		wordIdChirho: string;
@@ -533,11 +534,12 @@ async function getChapterWordsChirho(
 			WHERE pw.word_id = w.id
 				AND p.language_id = $1
 				AND p.deleted_at IS NULL
+				AND p.translation_type_chirho IS NOT DISTINCT FROM $4
 			LIMIT 1
 		) AS ph ON true
 		WHERE v.book_id = $2 AND v.chapter = $3
 		ORDER BY w.id`,
-		[languageIdChirho, bookIdChirho, chapterChirho]
+		[languageIdChirho, bookIdChirho, chapterChirho, translationTypeFilterChirho]
 	);
 
 	return resultChirho.rows;
@@ -974,9 +976,21 @@ function renderReferenceVerseChirho(
 async function mainChirho(): Promise<void> {
 	const rawArgsChirho = process.argv.slice(2);
 
-	// Parse --large-font flag
+	// Parse --large-font and --type flags
 	const largeFontChirho = rawArgsChirho.includes('--large-font');
-	const argsChirho = rawArgsChirho.filter(aChirho => aChirho !== '--large-font');
+	const typeIdxChirho = rawArgsChirho.indexOf('--type');
+	let translationTypeChirho: string | null = null;
+	const filteredArgsChirho: string[] = [];
+	for (let iChirho = 0; iChirho < rawArgsChirho.length; iChirho++) {
+		if (rawArgsChirho[iChirho] === '--large-font') continue;
+		if (rawArgsChirho[iChirho] === '--type' && iChirho + 1 < rawArgsChirho.length) {
+			translationTypeChirho = rawArgsChirho[iChirho + 1] === 'readers' ? 'readers' : null;
+			iChirho++; // skip value
+			continue;
+		}
+		filteredArgsChirho.push(rawArgsChirho[iChirho]);
+	}
+	const argsChirho = filteredArgsChirho;
 
 	// Set font sizes based on flag
 	if (largeFontChirho) {
@@ -984,21 +998,28 @@ async function mainChirho(): Promise<void> {
 		console.log('Using large font mode');
 	}
 
+	if (translationTypeChirho === 'readers') {
+		console.log('Using readers (natural reading) translation type');
+	}
+
 	if (argsChirho.length === 0) {
-		console.log('Usage: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path] [reference_version] [--large-font]');
+		console.log('Usage: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts <language_code> [output_path] [reference_version] [--large-font] [--type terse|readers]');
 		console.log('Example: bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts spa');
 		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Bible.pdf');
 		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts eng ./KJV-Interlinear.pdf kjv');
 		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Large.pdf hinfbi --large-font');
+		console.log('         bun run tools-chirho/generate-interlinear-bible-pdf-chirho.ts hin ./Hindi-Readers.pdf hinfbi --type readers');
 		process.exit(1);
 	}
 
 	const langCodeChirho = argsChirho[0];
 	const refVersionCodeChirho = argsChirho[2] ?? null;
 	// Default: save to static/bibles-chirho/ with -chirho suffix
+	// Readers editions get "readers-" prefix in filename
+	const typeInfixChirho = translationTypeChirho === 'readers' ? 'readers-' : '';
 	const defaultFilenameChirho = refVersionCodeChirho
-		? `interlinear-${refVersionCodeChirho}-chirho.pdf`
-		: `interlinear-${langCodeChirho}-chirho.pdf`;
+		? `interlinear-${typeInfixChirho}${refVersionCodeChirho}-chirho.pdf`
+		: `interlinear-${typeInfixChirho}${langCodeChirho}-chirho.pdf`;
 	const outputPathChirho = argsChirho[1] ?? joinChirho(process.cwd(), `static/bibles-chirho/${defaultFilenameChirho}`);
 
 	console.log(`Generating interlinear Bible PDF for language: ${langCodeChirho}`);
@@ -1072,7 +1093,7 @@ async function mainChirho(): Promise<void> {
 		let bookHasContentChirho = false;
 
 		for (let chapterChirho = 1; chapterChirho <= bookChirho.chaptersChirho; chapterChirho++) {
-			const wordsChirho = await getChapterWordsChirho(languageChirho.idChirho, bookChirho.idChirho, chapterChirho);
+			const wordsChirho = await getChapterWordsChirho(languageChirho.idChirho, bookChirho.idChirho, chapterChirho, translationTypeChirho);
 
 			if (wordsChirho.length === 0) continue;
 

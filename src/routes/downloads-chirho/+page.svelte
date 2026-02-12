@@ -14,6 +14,10 @@
 		badgeChirho?: string;
 	}
 
+	// Readers Edition PDFs can be added below with badgeChirho: 'Readers Edition'
+	// Filename convention: interlinear-readers-<ref>-chirho.pdf
+	// These will be generated with: --type readers flag in generate-interlinear-bible-pdf-chirho.ts
+
 	const downloadsChirho: PdfDownloadChirho[] = [
 		{
 			nameChirho: 'KJV Interlinear Bible',

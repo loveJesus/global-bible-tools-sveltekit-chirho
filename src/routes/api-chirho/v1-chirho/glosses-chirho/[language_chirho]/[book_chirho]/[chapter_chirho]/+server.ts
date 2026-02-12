@@ -109,6 +109,8 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 	const langCodeChirho = eventChirho.params.language_chirho;
 	const bookParamChirho = eventChirho.params.book_chirho;
 	const chapterParamChirho = eventChirho.params.chapter_chirho;
+	const typeParamChirho = eventChirho.url.searchParams.get('type');
+	const translationTypeChirho: string | null = typeParamChirho === 'readers' ? 'readers' : null;
 
 	const chapterNumChirho = parseInt(chapterParamChirho, 10);
 	if (isNaN(chapterNumChirho) || chapterNumChirho < 1) {
@@ -152,13 +154,14 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 			WHERE pw.word_id = w.id
 				AND p.language_id = (SELECT id FROM language WHERE code = $3)
 				AND p.deleted_at IS NULL
+				AND p.translation_type_chirho IS NOT DISTINCT FROM $4
 			LIMIT 1
 		) gl ON true
 		WHERE b.id = $1
 		  AND v.chapter = $2
 		ORDER BY v.number, w.id
 		`,
-		[resolvedBookIdChirho, chapterNumChirho, langCodeChirho]
+		[resolvedBookIdChirho, chapterNumChirho, langCodeChirho, translationTypeChirho]
 	);
 
 	if (glossesChirho.length === 0) {
