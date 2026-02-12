@@ -65,6 +65,22 @@
 			badgeChirho: 'Large Font'
 		},
 		{
+			nameChirho: 'Hindi ERV Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Hindi natural-reading translation and Hindi Easy-to-Read Version text. Glosses read naturally in Hindi.',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-hinerv-chirho.pdf',
+			sizeChirho: '140 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
+		},
+		{
+			nameChirho: 'Hindi FBI Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Hindi natural-reading translation and Free Bible India text. Glosses read naturally in Hindi.',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-hinfbi-chirho.pdf',
+			sizeChirho: '139 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
+		},
+		{
 			nameChirho: 'Bengali 2006EB Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Bengali word-by-word translation and Bengali 2006 Easy Bible text',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-ben-ben2006eb-chirho.pdf',
