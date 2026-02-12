@@ -2,6 +2,34 @@
      that all who believe in Him should not perish but have everlasting life.
      — John 3:16 -->
 
+<script lang="ts">
+	const jsonExampleChirho = `{
+  "language_chirho": "hin",
+  "book_chirho": "genesis",
+  "chapter_chirho": 1,
+  "translation_type_chirho": "terse",
+  "coverage_chirho": {
+    "total_words_chirho": 544,
+    "glossed_words_chirho": 544,
+    "percentage_chirho": 100
+  },
+  "verses_chirho": [
+    {
+      "verse_chirho": 1,
+      "words_chirho": [
+        {
+          "id_chirho": "0100100101",
+          "source_chirho": "\u05D1\u05B0\u05BC\u05E8\u05B5\u05D0\u05E9\u05C1\u05B4\u05BC\u0596\u05D9\u05EA",
+          "lemma_id_chirho": "H7225",
+          "gloss_chirho": "\u092E\u0947\u0902\u2013\u0906\u0926\u093F",
+          "state_chirho": "UNAPPROVED"
+        }
+      ]
+    }
+  ]
+}`;
+</script>
+
 <svelte:head>
 	<title>API Documentation - Global Bible Tools</title>
 	<meta name="description" content="REST API documentation for the Global Bible Tools interlinear Bible translation platform" />
@@ -196,31 +224,7 @@
 		<!-- Example response -->
 		<div class="mb-6">
 			<h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Example Response</h3>
-			<pre class="bg-slate-900 text-slate-100 rounded-lg p-4 text-sm overflow-x-auto"><code>&#123;
-  "language_chirho": "hin",
-  "book_chirho": "genesis",
-  "chapter_chirho": 1,
-  "translation_type_chirho": "terse",
-  "coverage_chirho": &#123;
-    "total_words_chirho": 544,
-    "glossed_words_chirho": 544,
-    "percentage_chirho": 100
-  &#125;,
-  "verses_chirho": [
-    &#123;
-      "verse_chirho": 1,
-      "words_chirho": [
-        &#123;
-          "id_chirho": "0100100101",
-          "source_chirho": "\u05D1\u05B0\u05BC\u05E8\u05B5\u05D0\u05E9\u05C1\u05B4\u05BC\u0596\u05D9\u05EA",
-          "lemma_id_chirho": "H7225",
-          "gloss_chirho": "\u092E\u0947\u0902\u2013\u0906\u0926\u093F",
-          "state_chirho": "UNAPPROVED"
-        &#125;
-      ]
-    &#125;
-  ]
-&#125;</code></pre>
+			<pre class="bg-slate-900 text-slate-100 rounded-lg p-4 text-sm overflow-x-auto"><code>{jsonExampleChirho}</code></pre>
 		</div>
 	</section>
 
