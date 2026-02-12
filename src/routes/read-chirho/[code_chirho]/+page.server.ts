@@ -4,10 +4,9 @@
 
 import type { PageServerLoad as PageServerLoadChirho } from './$types';
 import { dbChirho, eqChirho, queryRawChirho } from '$lib/server/db-chirho';
-import { languageTableChirho, bookTableChirho, referenceVersionTableChirho } from '$lib/server/schema-chirho';
+import { languageTableChirho } from '$lib/server/schema-chirho';
 import { error as errorChirho } from '@sveltejs/kit';
-import { existsSync as existsSyncChirho } from 'fs';
-import { join as joinChirho } from 'path';
+import { INTERLINEAR_PDFS_CHIRHO } from '$lib/server/interlinear-pdfs-chirho';
 
 export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
 	const codeChirho = paramsChirho.code_chirho;
@@ -65,55 +64,8 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho }) => {
 		ORDER BY rv.name_chirho
 	`, [codeChirho]);
 
-	// Check which reference version interlinear PDFs exist
-	// Format: interlinear-{lang}-{version}-chirho.pdf (e.g., interlinear-hin-erv-chirho.pdf)
-	// Also check for large font versions: interlinear-{lang}-large-{version}-chirho.pdf
-	const interlinearVersionsChirho: {
-		codeChirho: string;
-		nameChirho: string;
-		hasPdfChirho: boolean;
-		pdfPathChirho: string;
-		badgeChirho?: string;
-	}[] = [];
-
-	for (const vChirho of referenceVersionsChirho) {
-		// Check normal PDF
-		const normalPdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${codeChirho}-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`);
-		if (existsSyncChirho(normalPdfPathChirho)) {
-			interlinearVersionsChirho.push({
-				codeChirho: vChirho.codeChirho,
-				nameChirho: vChirho.nameChirho,
-				hasPdfChirho: true,
-				pdfPathChirho: `/bibles-chirho/interlinear-${codeChirho}-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`
-			});
-		}
-
-		// Check large font PDF
-		const largePdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-${codeChirho}-large-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`);
-		if (existsSyncChirho(largePdfPathChirho)) {
-			interlinearVersionsChirho.push({
-				codeChirho: vChirho.codeChirho + '-large',
-				nameChirho: vChirho.nameChirho,
-				hasPdfChirho: true,
-				pdfPathChirho: `/bibles-chirho/interlinear-${codeChirho}-large-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`,
-				badgeChirho: 'Large Font'
-			});
-		}
-
-		// Check readers edition PDF
-		const readersPdfPathChirho = joinChirho(process.cwd(), `static/bibles-chirho/interlinear-readers-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`);
-		if (existsSyncChirho(readersPdfPathChirho)) {
-			interlinearVersionsChirho.push({
-				codeChirho: vChirho.codeChirho + '-readers',
-				nameChirho: vChirho.nameChirho,
-				hasPdfChirho: true,
-				pdfPathChirho: `/bibles-chirho/interlinear-readers-${vChirho.codeChirho.toLowerCase()}-chirho.pdf`,
-				badgeChirho: 'Readers Edition'
-			});
-		}
-	}
-
-	// Check if any interlinear PDF exists for this language
+	// Look up known R2-hosted interlinear PDFs for this language
+	const interlinearVersionsChirho = INTERLINEAR_PDFS_CHIRHO[codeChirho] ?? [];
 	const hasInterlinearPdfChirho = interlinearVersionsChirho.length > 0;
 
 	return {
