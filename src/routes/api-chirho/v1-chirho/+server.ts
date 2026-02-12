@@ -45,12 +45,25 @@ export const GET: RequestHandlerChirho = async () => {
 					language_chirho: 'Language code (e.g., "spa", "hin", "ben")',
 					book_chirho: 'Book name or book ID',
 					chapter_chirho: 'Chapter number'
+				},
+				query_params_chirho: {
+					type_chirho: {
+						values_chirho: ['terse', 'readers'],
+						default_chirho: 'terse',
+						description_chirho: 'Translation style. "terse" = word-by-word interlinear, "readers" = natural reading glosses'
+					},
+					format_chirho: {
+						values_chirho: ['plain'],
+						default_chirho: 'none (raw glosses with en-dashes)',
+						description_chirho: 'Set to "plain" to strip en-dashes (–) from glosses. Hebrew/Arabic: parts are joined (e.g., "the–heavens" → "theheavens"). Other languages: en-dash replaced with space (e.g., "the–heavens" → "the heavens").'
+					}
 				}
 			}
 		],
 		example_chirho: {
-			request_chirho: 'curl -H "X-API-Key: your-key" https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/spa/john/3',
-			response_preview_chirho: '{ "language_chirho": "spa", "book_chirho": "john", "chapter_chirho": 3, ... }'
+			terse_request_chirho: 'curl -H "X-API-Key: your-key" https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/spa/john/3',
+			readers_request_chirho: 'curl -H "X-API-Key: your-key" "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/hin/genesis/1?type=readers&format=plain"',
+			response_preview_chirho: '{ "language_chirho": "hin", "book_chirho": "genesis", "chapter_chirho": 1, "translation_type_chirho": "terse", ... }'
 		}
 	});
 };

@@ -94,6 +94,22 @@ function resolveBookIdChirho(bookParamChirho: string): number | null {
 	return BOOK_NAME_MAP_CHIRHO[normalizedChirho] ?? null;
 }
 
+// Languages where en-dash parts should be joined (no separator) rather than spaced
+const JOIN_ENDASH_LANGUAGES_CHIRHO = new Set(['heb', 'arb']);
+
+/**
+ * Format a gloss by handling en-dashes based on language and format preference.
+ * - format=undefined (default): return as-is (backward compatible)
+ * - format=plain: replace en-dashes with space (most languages) or join (Hebrew, Arabic)
+ */
+function formatGlossChirho(glossChirho: string | null, formatChirho: string | null, langCodeChirho: string): string | null {
+	if (!glossChirho || formatChirho !== 'plain') return glossChirho;
+	if (JOIN_ENDASH_LANGUAGES_CHIRHO.has(langCodeChirho)) {
+		return glossChirho.replace(/\u2013/g, '');
+	}
+	return glossChirho.replace(/\u2013/g, ' ');
+}
+
 /**
  * GET /api-chirho/v1-chirho/glosses-chirho/:language/:book/:chapter
  * Returns words with their glosses (translations) for a specific language
@@ -102,6 +118,10 @@ function resolveBookIdChirho(bookParamChirho: string): number | null {
  *   - language_chirho: Language code (e.g., "spa", "hin", "ben")
  *   - book_chirho: Book name (e.g., "Genesis", "John", "Jhn", "43") or book ID
  *   - chapter_chirho: Chapter number
+ *
+ * Query params:
+ *   - type: "terse" (default) or "readers" — translation style
+ *   - format: "plain" — strip en-dashes (joined for Hebrew/Arabic, spaced for others)
  */
 export const GET: RequestHandlerChirho = async (eventChirho) => {
 	validateApiKeyChirho(eventChirho);
@@ -111,6 +131,7 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 	const chapterParamChirho = eventChirho.params.chapter_chirho;
 	const typeParamChirho = eventChirho.url.searchParams.get('type');
 	const translationTypeChirho: string | null = typeParamChirho === 'readers' ? 'readers' : null;
+	const formatParamChirho = eventChirho.url.searchParams.get('format');
 
 	const chapterNumChirho = parseInt(chapterParamChirho, 10);
 	if (isNaN(chapterNumChirho) || chapterNumChirho < 1) {
@@ -190,6 +211,7 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 		language_chirho: langCodeChirho,
 		book_chirho: bookParamChirho,
 		chapter_chirho: chapterNumChirho,
+		translation_type_chirho: translationTypeChirho ?? 'terse',
 		coverage_chirho: {
 			total_words_chirho: totalWordsChirho,
 			glossed_words_chirho: glossedWordsChirho,
@@ -201,7 +223,7 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 				id_chirho: rChirho.word_id_chirho,
 				source_chirho: rChirho.source_text_chirho,
 				lemma_id_chirho: rChirho.lemma_id_chirho,
-				gloss_chirho: rChirho.gloss_chirho,
+				gloss_chirho: formatGlossChirho(rChirho.gloss_chirho, formatParamChirho, langCodeChirho),
 				state_chirho: rChirho.state_chirho
 			}))
 		}))
