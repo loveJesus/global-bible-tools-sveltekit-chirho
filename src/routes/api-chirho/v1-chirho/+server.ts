@@ -58,6 +58,39 @@ export const GET: RequestHandlerChirho = async () => {
 						description_chirho: 'Set to "plain" to strip en-dashes (–) from glosses. Hebrew/Arabic: parts are joined (e.g., "the–heavens" → "theheavens"). Other languages: en-dash replaced with space (e.g., "the–heavens" → "the heavens").'
 					}
 				}
+			},
+			{
+				path_chirho: '/api-chirho/v1-chirho/verses-upstream-chirho/:book/:chapter',
+				method_chirho: 'GET',
+				description_chirho: 'Source text words with upstream-compatible word IDs. Remaps 86 verses where multi-word proper names were combined in upstream.',
+				params_chirho: {
+					book_chirho: 'Book name (e.g., "2Samuel", "Jeremiah") or book ID (1-66)',
+					chapter_chirho: 'Chapter number'
+				},
+				notes_chirho: 'Response includes upstream_remap_chirho: true/false indicating if any verse in the chapter was remapped. Affected books: 1Sa, 2Sa, 1Ki, 2Ki, 1Ch, 2Ch, Ezr, Neh, Job, SoS, Isa, Jer, Ezk, Dan, Zec.'
+			},
+			{
+				path_chirho: '/api-chirho/v1-chirho/glosses-upstream-chirho/:language/:book/:chapter',
+				method_chirho: 'GET',
+				description_chirho: 'Glosses with upstream-compatible word IDs. Same remapping as verses-upstream, with merged glosses concatenated.',
+				params_chirho: {
+					language_chirho: 'Language code (e.g., "spa", "hin", "ben")',
+					book_chirho: 'Book name or book ID',
+					chapter_chirho: 'Chapter number'
+				},
+				query_params_chirho: {
+					type_chirho: {
+						values_chirho: ['terse', 'readers'],
+						default_chirho: 'terse',
+						description_chirho: 'Translation style'
+					},
+					format_chirho: {
+						values_chirho: ['plain'],
+						default_chirho: 'none (raw glosses with en-dashes)',
+						description_chirho: 'Set to "plain" to strip en-dashes'
+					}
+				},
+				notes_chirho: 'When words are merged, their glosses are concatenated with a space. Response includes upstream_remap_chirho: true/false.'
 			}
 		],
 		example_chirho: {

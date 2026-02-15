@@ -2,9 +2,16 @@
 // that all who believe in Him should not perish but have everlasting life.
 // — John 3:16
 
+/**
+ * Upstream-compatible verses endpoint.
+ * Same as verses-chirho but applies word remapping for 86 affected verses
+ * where upstream combined multi-word proper names into single entries.
+ */
+
 import type { RequestHandler as RequestHandlerChirho } from './$types';
 import { validateApiKeyChirho, jsonResponseChirho, errorResponseChirho } from '$lib/server/api-auth-chirho';
 import { queryRawChirho } from '$lib/server/db-chirho';
+import { remapVerseWordsChirho, chapterHasRemapsChirho } from '$lib/server/word-remap-upstream-chirho';
 
 interface WordRowChirho {
 	verse_number_chirho: number;
@@ -14,7 +21,6 @@ interface WordRowChirho {
 	grammar_chirho: string;
 }
 
-// Map common book names to IDs (supports full names, abbreviations, etc.)
 const BOOK_NAME_MAP_CHIRHO: Record<string, number> = {
 	genesis: 1, gen: 1, gn: 1,
 	exodus: 2, exo: 2, ex: 2,
@@ -96,12 +102,11 @@ function resolveBookIdChirho(bookParamChirho: string): number | null {
 }
 
 /**
- * GET /api-chirho/v1-chirho/verses-chirho/:book/:chapter
- * Returns all words for a chapter with lemma and grammar info
+ * GET /api-chirho/v1-chirho/verses-upstream-chirho/:book/:chapter
  *
- * Query params:
- *   - book_chirho: Book name (e.g., "Genesis", "John", "Jhn", "43") or book ID
- *   - chapter_chirho: Chapter number
+ * Same as verses-chirho but with word remapping for upstream compatibility.
+ * 86 verses where upstream combined multi-word proper names are remapped
+ * at query time — our DB keeps the original separate words.
  */
 export const GET: RequestHandlerChirho = async (eventChirho) => {
 	validateApiKeyChirho(eventChirho);
@@ -114,7 +119,6 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 		return errorResponseChirho('Invalid chapter number', 400);
 	}
 
-	// Resolve book to ID
 	const resolvedBookIdChirho = resolveBookIdChirho(bookParamChirho);
 	if (resolvedBookIdChirho === null) {
 		return errorResponseChirho(`Book '${bookParamChirho}' not found`, 404);
@@ -153,17 +157,51 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 		versesChirho[vNumChirho].push(wordChirho);
 	}
 
-	return jsonResponseChirho({
-		book_chirho: bookParamChirho,
-		chapter_chirho: chapterNumChirho,
-		verses_chirho: Object.entries(versesChirho).map(([verseNumChirho, wordsArrChirho]) => ({
-			verse_chirho: parseInt(verseNumChirho, 10),
-			words_chirho: wordsArrChirho.map((wChirho) => ({
+	// Apply upstream word remapping if this chapter has affected verses
+	const needsRemapChirho = chapterHasRemapsChirho(resolvedBookIdChirho, chapterNumChirho);
+
+	const outputVersesChirho = Object.entries(versesChirho).map(([verseNumChirho, wordsArrChirho]) => {
+		let wordsOutputChirho: Array<{
+			id_chirho: string;
+			text_chirho: string;
+			lemma_id_chirho: string;
+			grammar_chirho: string;
+		}>;
+
+		if (needsRemapChirho) {
+			// Transform to remap-compatible format
+			const remapInputChirho = wordsArrChirho.map(wChirho => ({
 				id_chirho: wChirho.word_id_chirho,
 				text_chirho: wChirho.text_chirho,
 				lemma_id_chirho: wChirho.lemma_id_chirho,
 				grammar_chirho: wChirho.grammar_chirho
-			}))
-		}))
+			}));
+			const remappedChirho = remapVerseWordsChirho(remapInputChirho);
+			wordsOutputChirho = remappedChirho.map(wChirho => ({
+				id_chirho: wChirho.id_chirho,
+				text_chirho: wChirho.text_chirho,
+				lemma_id_chirho: wChirho.lemma_id_chirho ?? '',
+				grammar_chirho: wChirho.grammar_chirho ?? ''
+			}));
+		} else {
+			wordsOutputChirho = wordsArrChirho.map(wChirho => ({
+				id_chirho: wChirho.word_id_chirho,
+				text_chirho: wChirho.text_chirho,
+				lemma_id_chirho: wChirho.lemma_id_chirho,
+				grammar_chirho: wChirho.grammar_chirho
+			}));
+		}
+
+		return {
+			verse_chirho: parseInt(verseNumChirho, 10),
+			words_chirho: wordsOutputChirho
+		};
+	});
+
+	return jsonResponseChirho({
+		book_chirho: bookParamChirho,
+		chapter_chirho: chapterNumChirho,
+		upstream_remap_chirho: needsRemapChirho,
+		verses_chirho: outputVersesChirho
 	});
 };

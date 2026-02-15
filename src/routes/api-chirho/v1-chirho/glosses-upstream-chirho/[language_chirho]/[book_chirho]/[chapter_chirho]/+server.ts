@@ -2,9 +2,16 @@
 // that all who believe in Him should not perish but have everlasting life.
 // — John 3:16
 
+/**
+ * Upstream-compatible glosses endpoint.
+ * Same as glosses-chirho but applies word remapping for 86 affected verses
+ * where upstream combined multi-word proper names into single entries.
+ */
+
 import type { RequestHandler as RequestHandlerChirho } from './$types';
 import { validateApiKeyChirho, jsonResponseChirho, errorResponseChirho } from '$lib/server/api-auth-chirho';
 import { queryRawChirho } from '$lib/server/db-chirho';
+import { remapVerseWordsChirho, chapterHasRemapsChirho } from '$lib/server/word-remap-upstream-chirho';
 
 interface GlossRowChirho {
 	verse_number_chirho: number;
@@ -15,7 +22,6 @@ interface GlossRowChirho {
 	state_chirho: string | null;
 }
 
-// Map common book names to IDs
 const BOOK_NAME_MAP_CHIRHO: Record<string, number> = {
 	genesis: 1, gen: 1, gn: 1,
 	exodus: 2, exo: 2, ex: 2,
@@ -96,14 +102,8 @@ function resolveBookIdChirho(bookParamChirho: string): number | null {
 	return BOOK_NAME_MAP_CHIRHO[normalizedChirho] ?? null;
 }
 
-// Languages where en-dash parts should be joined (no separator) rather than spaced
 const JOIN_ENDASH_LANGUAGES_CHIRHO = new Set(['heb', 'arb']);
 
-/**
- * Format a gloss by handling en-dashes based on language and format preference.
- * - format=undefined (default): return as-is (backward compatible)
- * - format=plain: replace en-dashes with space (most languages) or join (Hebrew, Arabic)
- */
 function formatGlossChirho(glossChirho: string | null, formatChirho: string | null, langCodeChirho: string): string | null {
 	if (!glossChirho || formatChirho !== 'plain') return glossChirho;
 	if (JOIN_ENDASH_LANGUAGES_CHIRHO.has(langCodeChirho)) {
@@ -113,17 +113,11 @@ function formatGlossChirho(glossChirho: string | null, formatChirho: string | nu
 }
 
 /**
- * GET /api-chirho/v1-chirho/glosses-chirho/:language/:book/:chapter
- * Returns words with their glosses (translations) for a specific language
+ * GET /api-chirho/v1-chirho/glosses-upstream-chirho/:language/:book/:chapter
  *
- * Params:
- *   - language_chirho: Language code (e.g., "spa", "hin", "ben")
- *   - book_chirho: Book name (e.g., "Genesis", "John", "Jhn", "43") or book ID
- *   - chapter_chirho: Chapter number
- *
- * Query params:
- *   - type: "terse" (default) or "readers" — translation style
- *   - format: "plain" — strip en-dashes (joined for Hebrew/Arabic, spaced for others)
+ * Same as glosses-chirho but with word remapping for upstream compatibility.
+ * 86 verses where upstream combined multi-word proper names are remapped
+ * at query time — our DB keeps the original separate words.
  */
 export const GET: RequestHandlerChirho = async (eventChirho) => {
 	validateApiKeyChirho(eventChirho);
@@ -140,7 +134,6 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 		return errorResponseChirho('Invalid chapter number', 400);
 	}
 
-	// Validate language exists
 	const langCheckChirho = await queryRawChirho<{ id_chirho: string }>(
 		`SELECT id as id_chirho FROM language WHERE code = $1`,
 		[langCodeChirho]
@@ -150,7 +143,6 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 		return errorResponseChirho(`Language '${langCodeChirho}' not found`, 404);
 	}
 
-	// Resolve book to ID
 	const resolvedBookIdChirho = resolveBookIdChirho(bookParamChirho);
 	if (resolvedBookIdChirho === null) {
 		return errorResponseChirho(`Book '${bookParamChirho}' not found`, 404);
@@ -201,33 +193,70 @@ export const GET: RequestHandlerChirho = async (eventChirho) => {
 		versesChirho[vNumChirho].push(rowChirho);
 	}
 
-	// Calculate coverage stats
+	// Apply upstream word remapping if this chapter has affected verses
+	const needsRemapChirho = chapterHasRemapsChirho(resolvedBookIdChirho, chapterNumChirho);
+
 	let totalWordsChirho = 0;
 	let glossedWordsChirho = 0;
-	for (const rowChirho of glossesChirho) {
-		totalWordsChirho++;
-		if (rowChirho.gloss_chirho) glossedWordsChirho++;
-	}
+
+	const outputVersesChirho = Object.entries(versesChirho).map(([verseNumChirho, rowsChirho]) => {
+		let wordsOutputChirho: Array<{
+			id_chirho: string;
+			source_chirho: string;
+			lemma_id_chirho: string;
+			gloss_chirho: string | null;
+			state_chirho: string | null;
+		}>;
+
+		if (needsRemapChirho) {
+			// Transform to remap-compatible format
+			const remapInputChirho = rowsChirho.map(rChirho => ({
+				id_chirho: rChirho.word_id_chirho,
+				text_chirho: rChirho.source_text_chirho,
+				lemma_id_chirho: rChirho.lemma_id_chirho,
+				gloss_chirho: rChirho.gloss_chirho,
+				state_chirho: rChirho.state_chirho
+			}));
+			const remappedChirho = remapVerseWordsChirho(remapInputChirho);
+			wordsOutputChirho = remappedChirho.map(wChirho => ({
+				id_chirho: wChirho.id_chirho,
+				source_chirho: wChirho.text_chirho,
+				lemma_id_chirho: wChirho.lemma_id_chirho ?? '',
+				gloss_chirho: formatGlossChirho(wChirho.gloss_chirho ?? null, formatParamChirho, langCodeChirho),
+				state_chirho: wChirho.state_chirho ?? null
+			}));
+		} else {
+			wordsOutputChirho = rowsChirho.map(rChirho => ({
+				id_chirho: rChirho.word_id_chirho,
+				source_chirho: rChirho.source_text_chirho,
+				lemma_id_chirho: rChirho.lemma_id_chirho,
+				gloss_chirho: formatGlossChirho(rChirho.gloss_chirho, formatParamChirho, langCodeChirho),
+				state_chirho: rChirho.state_chirho
+			}));
+		}
+
+		for (const wChirho of wordsOutputChirho) {
+			totalWordsChirho++;
+			if (wChirho.gloss_chirho) glossedWordsChirho++;
+		}
+
+		return {
+			verse_chirho: parseInt(verseNumChirho, 10),
+			words_chirho: wordsOutputChirho
+		};
+	});
 
 	return jsonResponseChirho({
 		language_chirho: langCodeChirho,
 		book_chirho: bookParamChirho,
 		chapter_chirho: chapterNumChirho,
 		translation_type_chirho: translationTypeChirho ?? 'terse',
+		upstream_remap_chirho: needsRemapChirho,
 		coverage_chirho: {
 			total_words_chirho: totalWordsChirho,
 			glossed_words_chirho: glossedWordsChirho,
 			percentage_chirho: totalWordsChirho > 0 ? Math.round((glossedWordsChirho / totalWordsChirho) * 100) : 0
 		},
-		verses_chirho: Object.entries(versesChirho).map(([verseNumChirho, rowsChirho]) => ({
-			verse_chirho: parseInt(verseNumChirho, 10),
-			words_chirho: rowsChirho.map((rChirho) => ({
-				id_chirho: rChirho.word_id_chirho,
-				source_chirho: rChirho.source_text_chirho,
-				lemma_id_chirho: rChirho.lemma_id_chirho,
-				gloss_chirho: formatGlossChirho(rChirho.gloss_chirho, formatParamChirho, langCodeChirho),
-				state_chirho: rChirho.state_chirho
-			}))
-		}))
+		verses_chirho: outputVersesChirho
 	});
 };
