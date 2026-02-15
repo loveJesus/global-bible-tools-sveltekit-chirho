@@ -12,6 +12,9 @@
 	const curlPlainChirho = `curl -H "X-API-Key: your-key" \\
   "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-chirho/hin/genesis/1?type=readers&format=plain"`;
 
+	const curlUpstreamChirho = `curl -H "X-API-Key: your-key" \\
+  "https://global-tools.bible.systems/api-chirho/v1-chirho/glosses-upstream-chirho/spa/2samuel/2"`;
+
 	let copiedIdChirho = $state<string | null>(null);
 
 	async function copyToClipboardChirho(textChirho: string, idChirho: string) {
@@ -120,6 +123,85 @@
 						</tr>
 					</tbody>
 				</table>
+			</div>
+		</div>
+
+		<!-- Verses Upstream -->
+		<div class="border border-amber-200 dark:border-amber-800 rounded-lg mb-6 overflow-hidden">
+			<div class="bg-amber-50 dark:bg-amber-900/30 px-4 py-3 flex items-center gap-3">
+				<span class="bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-bold px-2 py-1 rounded">GET</span>
+				<code class="text-sm font-mono text-slate-800 dark:text-slate-200">/verses-upstream-chirho/<span class="text-blue-600 dark:text-blue-400">:book</span>/<span class="text-blue-600 dark:text-blue-400">:chapter</span></code>
+				<span class="ml-auto text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded">Upstream Compat</span>
+			</div>
+			<div class="px-4 py-3">
+				<p class="text-slate-600 dark:text-slate-400 mb-3">Source text words with upstream-compatible word IDs. Remaps 86 OT verses where multi-word proper names (e.g., Ish-Bosheth, Nergal-sharezer, Pahath-moab) were combined into single entries in the upstream platform.</p>
+				<h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Path Parameters</h4>
+				<table class="w-full text-sm mb-3">
+					<tbody>
+						<tr class="border-t border-slate-100 dark:border-slate-700">
+							<td class="py-2 pr-4 font-mono text-blue-600 dark:text-blue-400 whitespace-nowrap">book</td>
+							<td class="py-2 text-slate-600 dark:text-slate-400">Book name (e.g., "2Samuel", "Jeremiah") or book ID (1-66)</td>
+						</tr>
+						<tr class="border-t border-slate-100 dark:border-slate-700">
+							<td class="py-2 pr-4 font-mono text-blue-600 dark:text-blue-400 whitespace-nowrap">chapter</td>
+							<td class="py-2 text-slate-600 dark:text-slate-400">Chapter number</td>
+						</tr>
+					</tbody>
+				</table>
+				<h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Response Notes</h4>
+				<ul class="list-disc list-inside text-sm text-slate-600 dark:text-slate-400 space-y-1">
+					<li>Includes <code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">upstream_remap_chirho: true/false</code> indicating if any verse in the chapter was remapped</li>
+					<li>Affected books: 1Sa, 2Sa, 1Ki, 2Ki, 1Ch, 2Ch, Ezr, Neh, Job, SoS, Isa, Jer, Ezk, Dan, Zec</li>
+					<li>When words are merged, IDs are renumbered sequentially to match upstream</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Glosses Upstream -->
+		<div class="border border-amber-200 dark:border-amber-800 rounded-lg mb-6 overflow-hidden">
+			<div class="bg-amber-50 dark:bg-amber-900/30 px-4 py-3 flex items-center gap-3">
+				<span class="bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-bold px-2 py-1 rounded">GET</span>
+				<code class="text-sm font-mono text-slate-800 dark:text-slate-200">/glosses-upstream-chirho/<span class="text-blue-600 dark:text-blue-400">:language</span>/<span class="text-blue-600 dark:text-blue-400">:book</span>/<span class="text-blue-600 dark:text-blue-400">:chapter</span></code>
+				<span class="ml-auto text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded">Upstream Compat</span>
+			</div>
+			<div class="px-4 py-3">
+				<p class="text-slate-600 dark:text-slate-400 mb-3">Glosses with upstream-compatible word IDs. Same remapping as verses-upstream, with glosses from merged words concatenated with a space.</p>
+				<h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Path Parameters</h4>
+				<table class="w-full text-sm mb-3">
+					<tbody>
+						<tr class="border-t border-slate-100 dark:border-slate-700">
+							<td class="py-2 pr-4 font-mono text-blue-600 dark:text-blue-400 whitespace-nowrap">language</td>
+							<td class="py-2 text-slate-600 dark:text-slate-400">ISO 639-3 language code (e.g., "spa", "hin")</td>
+						</tr>
+						<tr class="border-t border-slate-100 dark:border-slate-700">
+							<td class="py-2 pr-4 font-mono text-blue-600 dark:text-blue-400 whitespace-nowrap">book</td>
+							<td class="py-2 text-slate-600 dark:text-slate-400">Book name or ID</td>
+						</tr>
+						<tr class="border-t border-slate-100 dark:border-slate-700">
+							<td class="py-2 pr-4 font-mono text-blue-600 dark:text-blue-400 whitespace-nowrap">chapter</td>
+							<td class="py-2 text-slate-600 dark:text-slate-400">Chapter number</td>
+						</tr>
+					</tbody>
+				</table>
+				<h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Query Parameters</h4>
+				<table class="w-full text-sm mb-3">
+					<tbody>
+						<tr class="border-t border-slate-100 dark:border-slate-700">
+							<td class="py-2 pr-4 font-mono text-blue-600 dark:text-blue-400 whitespace-nowrap">type</td>
+							<td class="py-2 text-slate-600 dark:text-slate-400"><code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">terse</code> (default) or <code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">readers</code></td>
+						</tr>
+						<tr class="border-t border-slate-100 dark:border-slate-700">
+							<td class="py-2 pr-4 font-mono text-blue-600 dark:text-blue-400 whitespace-nowrap">format</td>
+							<td class="py-2 text-slate-600 dark:text-slate-400"><code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">plain</code> to strip en-dashes</td>
+						</tr>
+					</tbody>
+				</table>
+				<h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Response Notes</h4>
+				<ul class="list-disc list-inside text-sm text-slate-600 dark:text-slate-400 space-y-1">
+					<li>Includes <code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">upstream_remap_chirho: true/false</code></li>
+					<li>Merged words have their glosses concatenated (e.g., "Ish" + "Boshet" &rarr; "Ish Boshet")</li>
+					<li>Supports both <code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">?type=terse</code> and <code class="bg-slate-100 dark:bg-slate-700 px-1 rounded">?type=readers</code></li>
+				</ul>
 			</div>
 		</div>
 
@@ -274,6 +356,26 @@
 					{/if}
 				</button>
 				<pre class="bg-slate-950 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-emerald-300 rounded-lg p-4 pr-12 text-sm overflow-x-auto"><code>{curlPlainChirho}</code></pre>
+			</div>
+		</div>
+
+		<!-- Example 4: Upstream -->
+		<div class="mb-6">
+			<h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Upstream-compatible glosses (remapped word IDs)</h3>
+			<div class="relative group">
+				<button
+					type="button"
+					onclick={() => copyToClipboardChirho(curlUpstreamChirho, 'upstream')}
+					class="absolute top-3 right-3 p-1.5 rounded-md bg-slate-700/50 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+					aria-label="Copy to clipboard"
+				>
+					{#if copiedIdChirho === 'upstream'}
+						<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+					{:else}
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+					{/if}
+				</button>
+				<pre class="bg-slate-950 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-emerald-300 rounded-lg p-4 pr-12 text-sm overflow-x-auto"><code>{curlUpstreamChirho}</code></pre>
 			</div>
 		</div>
 
