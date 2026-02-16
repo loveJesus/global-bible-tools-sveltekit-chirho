@@ -65,12 +65,26 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		throw errorChirho(404, `Language '${codeChirho}' not found`);
 	}
 
-	// Check which translation types exist for this language
+	// Check which translation types exist for this language+chapter
 	const typeCheckChirho = await queryRawChirho<{ hasTerseChirho: boolean; hasReadersChirho: boolean }>(
 		`SELECT
-			EXISTS(SELECT 1 FROM phrase WHERE language_id = $1 AND translation_type_chirho IS NULL AND deleted_at IS NULL) AS "hasTerseChirho",
-			EXISTS(SELECT 1 FROM phrase WHERE language_id = $1 AND translation_type_chirho = 'readers' AND deleted_at IS NULL) AS "hasReadersChirho"`,
-		[languageChirho.idChirho]
+			EXISTS(
+				SELECT 1 FROM phrase p
+				JOIN phrase_word pw ON pw.phrase_id = p.id
+				JOIN word w ON w.id = pw.word_id
+				JOIN verse v ON v.id = w.verse_id
+				WHERE p.language_id = $1 AND p.translation_type_chirho IS NULL AND p.deleted_at IS NULL
+				  AND v.book_id = $2 AND v.chapter = $3
+			) AS "hasTerseChirho",
+			EXISTS(
+				SELECT 1 FROM phrase p
+				JOIN phrase_word pw ON pw.phrase_id = p.id
+				JOIN word w ON w.id = pw.word_id
+				JOIN verse v ON v.id = w.verse_id
+				WHERE p.language_id = $1 AND p.translation_type_chirho = 'readers' AND p.deleted_at IS NULL
+				  AND v.book_id = $2 AND v.chapter = $3
+			) AS "hasReadersChirho"`,
+		[languageChirho.idChirho, bookIdChirho, chapterChirho]
 	);
 	const hasTerseChirho = typeCheckChirho[0]?.hasTerseChirho ?? false;
 	const hasReadersChirho = typeCheckChirho[0]?.hasReadersChirho ?? false;
