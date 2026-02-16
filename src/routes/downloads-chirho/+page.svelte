@@ -88,6 +88,14 @@
 			versesChirho: '31,102'
 		},
 		{
+			nameChirho: 'Bengali 2006EB Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Bengali natural-reading translation and Bengali 2006 Easy Bible text. Glosses read naturally in Bengali.',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-ben-ben2006eb-chirho.pdf',
+			sizeChirho: '140 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
+		},
+		{
 			nameChirho: 'Urdu Geo Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Urdu word-by-word translation and Urdu Geo reference text. Larger fonts for easier reading.',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-urd-urdugeo-chirho.pdf',
@@ -210,6 +218,22 @@
 			sizeChirho: '120 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
+		},
+		{
+			nameChirho: 'Vietnamese LJMT Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Vietnamese natural-reading translation (Kinh Thánh đối chiếu liên dòng Việt Nam)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-vie-vieljmt-chirho.pdf',
+			sizeChirho: '133 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
+		},
+		{
+			nameChirho: 'Nepali ERV Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Nepali natural-reading translation and Nepali ERV reference text (नेपाली अन्तरपंक्तिय बाइबल)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-nep-nep-erv-chirho.pdf',
+			sizeChirho: '113 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
 		}
 	];
 </script>
