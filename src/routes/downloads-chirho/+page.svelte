@@ -223,7 +223,7 @@
 			nameChirho: 'Vietnamese 1934 Interlinear Bible (Natural Reading)',
 			descriptionChirho: 'Hebrew & Greek text with Vietnamese natural-reading translation and Vietnamese 1934 (Cadman) reference text (Kinh Thánh đối chiếu liên dòng Việt Nam)',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-vie-vie1934-chirho.pdf',
-			sizeChirho: '133 MB',
+			sizeChirho: '138 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
 		},
