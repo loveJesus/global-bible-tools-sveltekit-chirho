@@ -46,8 +46,6 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 	const chapterIdChirho = paramsChirho.chapter_id_chirho;
 	const refVersionParamChirho = urlChirho.searchParams.get('ref');
 	const typeParamChirho = urlChirho.searchParams.get('type');
-	// Map URL param to DB value: NULL = terse, 'readers' = readers
-	const translationTypeChirho: string | null = typeParamChirho === 'readers' ? 'readers' : null;
 
 	// IPA pronunciation system: 'off' | 'erasmian' | 'koine' | 'modern' | 'tiberian'
 	const ipaParamChirho = urlChirho.searchParams.get('ipa') ?? 'off';
@@ -66,6 +64,30 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 	if (!languageChirho) {
 		throw errorChirho(404, `Language '${codeChirho}' not found`);
 	}
+
+	// Check which translation types exist for this language
+	const typeCheckChirho = await queryRawChirho<{ hasTerseChirho: boolean; hasReadersChirho: boolean }>(
+		`SELECT
+			EXISTS(SELECT 1 FROM phrase WHERE language_id = $1 AND translation_type_chirho IS NULL AND deleted_at IS NULL) AS "hasTerseChirho",
+			EXISTS(SELECT 1 FROM phrase WHERE language_id = $1 AND translation_type_chirho = 'readers' AND deleted_at IS NULL) AS "hasReadersChirho"`,
+		[languageChirho.idChirho]
+	);
+	const hasTerseChirho = typeCheckChirho[0]?.hasTerseChirho ?? false;
+	const hasReadersChirho = typeCheckChirho[0]?.hasReadersChirho ?? false;
+
+	// Determine effective type: respect URL param if that type exists, else auto-detect
+	let effectiveTypeChirho: 'terse' | 'readers';
+	if (typeParamChirho === 'readers' && hasReadersChirho) {
+		effectiveTypeChirho = 'readers';
+	} else if (typeParamChirho === 'terse' && hasTerseChirho) {
+		effectiveTypeChirho = 'terse';
+	} else {
+		// No explicit param or requested type doesn't exist — pick what's available
+		effectiveTypeChirho = hasTerseChirho ? 'terse' : (hasReadersChirho ? 'readers' : 'terse');
+	}
+
+	// Map to DB value: NULL = terse, 'readers' = readers
+	const translationTypeChirho: string | null = effectiveTypeChirho === 'readers' ? 'readers' : null;
 
 	// Get book
 	const bookResultChirho = await dbChirho
@@ -274,16 +296,6 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		? rtlLanguagesChirho.includes(selectedRefVersionChirho.languageCodeChirho)
 		: false;
 
-	// Check if readers-type phrases exist for this language (to show toggle)
-	const readersCheckChirho = await queryRawChirho<{ existsChirho: boolean }>(
-		`SELECT EXISTS(
-			SELECT 1 FROM phrase
-			WHERE language_id = $1 AND translation_type_chirho = 'readers' AND deleted_at IS NULL
-		) AS "existsChirho"`,
-		[languageChirho.idChirho]
-	);
-	const hasReadersChirho = readersCheckChirho[0]?.existsChirho ?? false;
-
 	return {
 		codeChirho,
 		languageChirho,
@@ -301,8 +313,9 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		selectedRefLangCodeChirho: selectedRefVersionChirho?.languageCodeChirho ?? 'eng',
 		isRefRtlChirho,
 		selectedRefVersionNameChirho: selectedRefVersionChirho?.nameChirho ?? 'Reference',
+		hasTerseChirho,
 		hasReadersChirho,
-		translationTypeChirho: typeParamChirho === 'readers' ? 'readers' : 'terse',
+		translationTypeChirho: effectiveTypeChirho,
 		ipaModeChirho: ipaParamChirho
 	};
 };

@@ -354,7 +354,7 @@
 				</button>
 			</div>
 
-			{#if dataChirho.hasReadersChirho}
+			{#if dataChirho.hasTerseChirho && dataChirho.hasReadersChirho}
 				<span class="text-slate-300 hidden sm:inline">|</span>
 
 				<!-- Translation Type Toggle -->

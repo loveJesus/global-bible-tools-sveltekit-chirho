@@ -215,5 +215,23 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 			hasPdfChirho: true,
 			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-amh-amh2003eb-chirho.pdf`
 		}
+	],
+	vie: [
+		{
+			codeChirho: 'vie1934-readers',
+			nameChirho: 'Vietnamese (1934)',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-vie-vie1934-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
+		}
+	],
+	nep: [
+		{
+			codeChirho: 'nep-erv-readers',
+			nameChirho: 'Nepali ERV',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-nep-nep-erv-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
+		}
 	]
 };
