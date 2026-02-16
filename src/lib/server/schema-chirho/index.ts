@@ -23,5 +23,8 @@ export * from './reference-chirho';
 // Feedback tables
 export * from './feedback-chirho';
 
+// IPA transliterations
+export * from './ipa-chirho';
+
 // Relations (for Drizzle relational queries)
 export * from './relations-chirho';

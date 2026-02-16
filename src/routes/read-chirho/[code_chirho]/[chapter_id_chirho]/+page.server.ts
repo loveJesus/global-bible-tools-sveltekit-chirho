@@ -38,6 +38,7 @@ interface WordWithGlossRowChirho {
 	gloss: string | null;
 	state: string | null;
 	source: string | null;
+	ipaChirho: string | null;
 }
 
 export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: urlChirho }) => {
@@ -47,6 +48,9 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 	const typeParamChirho = urlChirho.searchParams.get('type');
 	// Map URL param to DB value: NULL = terse, 'readers' = readers
 	const translationTypeChirho: string | null = typeParamChirho === 'readers' ? 'readers' : null;
+
+	// IPA pronunciation system: 'off' | 'erasmian' | 'koine' | 'modern' | 'tiberian'
+	const ipaParamChirho = urlChirho.searchParams.get('ipa') ?? 'off';
 
 	// Parse chapter ID
 	const { bookIdChirho, chapterChirho } = parseChapterIdChirho(chapterIdChirho);
@@ -104,9 +108,17 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 					lf.grammar,
 					ph.gloss,
 					ph.state,
-					ph.source
+					ph.source,
+					CASE $4
+						WHEN 'erasmian' THEN ipa.greek_erasmian_chirho
+						WHEN 'koine' THEN ipa.greek_koine_chirho
+						WHEN 'modern' THEN ipa.greek_modern_chirho
+						WHEN 'tiberian' THEN ipa.hebrew_tiberian_chirho
+						ELSE COALESCE(ipa.hebrew_tiberian_chirho, ipa.greek_erasmian_chirho)
+					END AS "ipaChirho"
 				FROM word AS w
 				LEFT JOIN lemma_form AS lf ON lf.id = w.form_id
+				LEFT JOIN word_ipa_chirho AS ipa ON ipa.word_text_chirho = w.text
 				LEFT JOIN LATERAL (
 					SELECT g.gloss, g.state, g.source
 					FROM phrase_word AS pw
@@ -121,7 +133,7 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 				WHERE w.verse_id = $1
 				ORDER BY w.id
 				`,
-				[verseChirho.idChirho, languageChirho.idChirho, translationTypeChirho]
+				[verseChirho.idChirho, languageChirho.idChirho, translationTypeChirho, ipaParamChirho]
 			);
 
 			return {
@@ -134,7 +146,8 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 					grammarChirho: rowChirho.grammar,
 					glossChirho: rowChirho.gloss,
 					glossStateChirho: rowChirho.state,
-					glossSourceChirho: rowChirho.source
+					glossSourceChirho: rowChirho.source,
+					ipaChirho: rowChirho.ipaChirho
 				}))
 			};
 		})
@@ -289,6 +302,7 @@ export const load: PageServerLoadChirho = async ({ params: paramsChirho, url: ur
 		isRefRtlChirho,
 		selectedRefVersionNameChirho: selectedRefVersionChirho?.nameChirho ?? 'Reference',
 		hasReadersChirho,
-		translationTypeChirho: typeParamChirho === 'readers' ? 'readers' : 'terse'
+		translationTypeChirho: typeParamChirho === 'readers' ? 'readers' : 'terse',
+		ipaModeChirho: ipaParamChirho
 	};
 };

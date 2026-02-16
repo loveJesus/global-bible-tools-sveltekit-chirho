@@ -31,6 +31,9 @@
 	// Translation type toggle - only show when readers data exists
 	const translationTypeChirho = $derived(dataChirho.translationTypeChirho ?? 'terse');
 
+	// IPA pronunciation system
+	const ipaModeChirho = $derived(dataChirho.ipaModeChirho ?? 'off');
+
 	function onTranslationTypeChangeChirho(typeChirho: 'terse' | 'readers'): void {
 		if (browserChirho) {
 			localStorage.setItem('translationTypeChirho', typeChirho);
@@ -40,6 +43,19 @@
 			urlChirho.searchParams.set('type', 'readers');
 		} else {
 			urlChirho.searchParams.delete('type');
+		}
+		gotoChirho(urlChirho.pathname + urlChirho.search);
+	}
+
+	function onIpaModeChangeChirho(modeChirho: string): void {
+		if (browserChirho) {
+			localStorage.setItem('ipaModeChirho', modeChirho);
+		}
+		const urlChirho = new URL(window.location.href);
+		if (modeChirho !== 'off') {
+			urlChirho.searchParams.set('ipa', modeChirho);
+		} else {
+			urlChirho.searchParams.delete('ipa');
 		}
 		gotoChirho(urlChirho.pathname + urlChirho.search);
 	}
@@ -56,6 +72,11 @@
 			const savedHideNdashChirho = localStorage.getItem('hideNdashChirho');
 			if (savedHideNdashChirho !== null) {
 				hideNdashChirho = savedHideNdashChirho === 'true';
+			}
+			// IPA preference: auto-navigate if localStorage has IPA set but URL doesn't
+			const savedIpaChirho = localStorage.getItem('ipaModeChirho');
+			if (savedIpaChirho && savedIpaChirho !== 'off' && !new URL(window.location.href).searchParams.has('ipa')) {
+				onIpaModeChangeChirho(savedIpaChirho);
 			}
 		}
 	});
@@ -403,6 +424,25 @@
 					{/each}
 				</select>
 			{/if}
+
+			<span class="text-slate-300 hidden sm:inline">|</span>
+
+			<!-- IPA Pronunciation Toggle -->
+			<span class="text-slate-600 hidden sm:inline">IPA:</span>
+			<select
+				class="border border-slate-300 rounded px-2 py-1 bg-white text-xs sm:text-sm"
+				onchange={(eChirho) => onIpaModeChangeChirho((eChirho.target as HTMLSelectElement).value)}
+			>
+				<option value="off" selected={ipaModeChirho === 'off'}>Off</option>
+				{#if isHebrewBookChirho}
+					<option value="tiberian" selected={ipaModeChirho === 'tiberian'}>Hebrew (Tiberian)</option>
+				{:else}
+					<option value="erasmian" selected={ipaModeChirho === 'erasmian'}>Greek (Erasmian)</option>
+					<option value="koine" selected={ipaModeChirho === 'koine'}>Greek (Koine)</option>
+					<option value="modern" selected={ipaModeChirho === 'modern'}>Greek (Modern)</option>
+				{/if}
+			</select>
+
 			<a
 				href={getPdfUrlChirho()}
 				class="ml-auto px-2 sm:px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs sm:text-sm flex items-center gap-1"
@@ -453,6 +493,11 @@
 									onclick={() => onWordClickChirho(wordChirho.lemmaIdChirho)}
 								>
 									<span class="text-slate-800 text-xs sm:text-sm">{filterPuaChirho(wordChirho.textChirho)}</span>
+									{#if ipaModeChirho !== 'off' && wordChirho.ipaChirho}
+										<span class="text-[9px] sm:text-[10px] leading-tight text-blue-500 font-mono">
+											/{wordChirho.ipaChirho}/
+										</span>
+									{/if}
 									<span
 										class="text-[10px] sm:text-xs leading-tight {getGlossClassChirho(wordChirho.glossStateChirho, wordChirho.glossSourceChirho)}"
 										style="font-family: {dataChirho.languageChirho?.fontChirho ?? 'Noto Sans'}"
