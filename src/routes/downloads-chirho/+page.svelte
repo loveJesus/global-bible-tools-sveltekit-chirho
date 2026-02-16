@@ -220,9 +220,9 @@
 			badgeChirho: 'Complete Bible'
 		},
 		{
-			nameChirho: 'Vietnamese LJMT Interlinear Bible (Natural Reading)',
-			descriptionChirho: 'Hebrew & Greek text with Vietnamese natural-reading translation (Kinh Thánh đối chiếu liên dòng Việt Nam)',
-			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-vie-vieljmt-chirho.pdf',
+			nameChirho: 'Vietnamese 1934 Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Vietnamese natural-reading translation and Vietnamese 1934 (Cadman) reference text (Kinh Thánh đối chiếu liên dòng Việt Nam)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-vie-vie1934-chirho.pdf',
 			sizeChirho: '133 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
@@ -231,7 +231,7 @@
 			nameChirho: 'Nepali ERV Interlinear Bible (Natural Reading)',
 			descriptionChirho: 'Hebrew & Greek text with Nepali natural-reading translation and Nepali ERV reference text (नेपाली अन्तरपंक्तिय बाइबल)',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-nep-nep-erv-chirho.pdf',
-			sizeChirho: '113 MB',
+			sizeChirho: '140 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
 		}
