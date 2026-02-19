@@ -28,15 +28,32 @@ const poolChirho = new PoolChirho({
 });
 
 // USFM file number → our book ID mapping
-// OT: USFM 01-39 → Book ID 1-39 (direct)
-// NT: USFM 41-67 → Book ID 40-66 (offset by 1)
-const USFM_TO_BOOK_ID_CHIRHO: Record<number, number> = {};
-for (let iChirho = 1; iChirho <= 39; iChirho++) {
-	USFM_TO_BOOK_ID_CHIRHO[iChirho] = iChirho;
+// Detects numbering scheme at runtime based on files present.
+// Sequential (01-66): book ID = file number directly
+// Standard USFM (01-39, 41-67): OT direct, NT offset by -1
+function buildBookIdMapChirho(fileNumsChirho: number[]): Record<number, number> {
+	const mapChirho: Record<number, number> = {};
+	const hasFile40Chirho = fileNumsChirho.includes(40);
+	const hasFile67Chirho = fileNumsChirho.includes(67);
+
+	if (hasFile40Chirho && !hasFile67Chirho) {
+		// Sequential scheme: 1-66 → 1-66
+		for (let iChirho = 1; iChirho <= 66; iChirho++) {
+			mapChirho[iChirho] = iChirho;
+		}
+	} else {
+		// Standard USFM scheme: OT 1-39 direct, NT 41-67 → 40-66
+		for (let iChirho = 1; iChirho <= 39; iChirho++) {
+			mapChirho[iChirho] = iChirho;
+		}
+		for (let iChirho = 41; iChirho <= 67; iChirho++) {
+			mapChirho[iChirho] = iChirho - 1;
+		}
+	}
+	return mapChirho;
 }
-for (let iChirho = 41; iChirho <= 67; iChirho++) {
-	USFM_TO_BOOK_ID_CHIRHO[iChirho] = iChirho - 1; // 41→40 (Matthew), 67→66 (Revelation)
-}
+// Placeholder — populated in main after reading file list
+let USFM_TO_BOOK_ID_CHIRHO: Record<number, number> = {};
 
 /**
  * Strip USFM formatting markers from verse text, keeping only clean text
@@ -219,6 +236,15 @@ async function mainChirho(): Promise<void> {
 		.filter((fChirho: string) => fChirho.endsWith('.usfm'))
 		.sort();
 
+	// Detect numbering scheme from file numbers present
+	const fileNumsChirho = filesChirho
+		.map((fChirho: string) => {
+			const mChirho = fChirho.match(/^(\d+)[_-]/);
+			return mChirho ? parseInt(mChirho[1], 10) : 0;
+		})
+		.filter((nChirho: number) => nChirho > 0);
+	USFM_TO_BOOK_ID_CHIRHO = buildBookIdMapChirho(fileNumsChirho);
+
 	console.log(`Found ${filesChirho.length} USFM files`);
 	console.log('');
 
@@ -226,8 +252,8 @@ async function mainChirho(): Promise<void> {
 	let totalBooksChirho = 0;
 
 	for (const fileNameChirho of filesChirho) {
-		// Extract USFM book number from filename (e.g., "01_GENHIN.usfm" → 1)
-		const numMatchChirho = fileNameChirho.match(/^(\d+)_/);
+		// Extract USFM book number from filename (e.g., "01_GENHIN.usfm" or "01-GENamh.usfm" → 1)
+		const numMatchChirho = fileNameChirho.match(/^(\d+)[_-]/);
 		if (!numMatchChirho) {
 			console.warn(`Skipping unrecognized file: ${fileNameChirho}`);
 			continue;
@@ -241,7 +267,14 @@ async function mainChirho(): Promise<void> {
 		}
 
 		const filePathChirho = joinChirho(usfmDirChirho, fileNameChirho);
-		const versesChirho = parseUsfmFileChirho(filePathChirho, bookIdChirho);
+		const rawVersesChirho = parseUsfmFileChirho(filePathChirho, bookIdChirho);
+
+		// Deduplicate verses by verse_id (keep last occurrence)
+		const verseMapChirho = new Map<string, VerseEntryChirho>();
+		for (const vChirho of rawVersesChirho) {
+			verseMapChirho.set(vChirho.verseIdChirho, vChirho);
+		}
+		const versesChirho = [...verseMapChirho.values()];
 
 		if (versesChirho.length === 0) {
 			console.warn(`No verses found in: ${fileNameChirho}`);

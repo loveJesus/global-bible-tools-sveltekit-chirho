@@ -210,10 +210,10 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 	],
 	amh: [
 		{
-			codeChirho: 'amh2003eb',
-			nameChirho: 'Amharic (2003 EB)',
+			codeChirho: 'amhselassie',
+			nameChirho: 'Amharic Selassie Bible',
 			hasPdfChirho: true,
-			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-amh-amh2003eb-chirho.pdf`
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-amh-amhselassie-chirho.pdf`
 		}
 	],
 	vie: [
