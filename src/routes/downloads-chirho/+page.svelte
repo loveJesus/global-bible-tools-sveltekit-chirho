@@ -214,8 +214,8 @@
 		{
 			nameChirho: 'Amharic Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with Amharic word-by-word translation and Amharic Selassie Bible reference text (የአማርኛ ቃል–በ–ቃል መጽሐፍ ቅዱስ)',
-			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-amh-amhselassie-chirho.pdf?v=20260219b',
-			sizeChirho: '134 MB',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-amh-amhselassie-chirho.pdf?v=20260219c',
+			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Complete Bible'
 		},
