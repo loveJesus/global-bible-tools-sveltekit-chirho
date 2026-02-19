@@ -234,6 +234,14 @@
 			sizeChirho: '140 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
+		},
+		{
+			nameChirho: 'Ukrainian Ogienko Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Ukrainian natural-reading translation and Ogienko (1962) reference text (Українська міжрядкова Біблія)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-ukr-ukrogienko-chirho.pdf',
+			sizeChirho: '138 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
 		}
 	];
 </script>
