@@ -189,7 +189,8 @@
 	// Get PDF download URL for current chapter
 	function getPdfUrlChirho(): string {
 		const bookNameChirho = dataChirho.bookChirho?.nameChirho?.toLowerCase() ?? 'unknown';
-		return `/api-chirho/pdf-chirho/${dataChirho.codeChirho}/${bookNameChirho}?chapter=${dataChirho.chapterChirho}`;
+		const typeParamChirho = translationTypeChirho === 'readers' ? '&type=readers' : '';
+		return `/api-chirho/pdf-chirho/${dataChirho.codeChirho}/${bookNameChirho}?chapter=${dataChirho.chapterChirho}${typeParamChirho}`;
 	}
 
 	// Get lexicon URL for a lemma ID (e.g. H1234a, G5678)

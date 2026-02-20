@@ -233,5 +233,14 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-nep-nep-erv-chirho.pdf`,
 			badgeChirho: 'Readers Edition'
 		}
+	],
+	ukr: [
+		{
+			codeChirho: 'ukrogienko-readers',
+			nameChirho: 'Ogienko (1962)',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-ukr-ukrogienko-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
+		}
 	]
 };
