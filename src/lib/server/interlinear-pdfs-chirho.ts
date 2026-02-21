@@ -85,6 +85,13 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 			nameChirho: 'Bengali 2006EB',
 			hasPdfChirho: true,
 			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-ben-ben2006eb-chirho.pdf`
+		},
+		{
+			codeChirho: 'ben2006eb-readers',
+			nameChirho: 'Bengali 2006EB',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-ben-ben2006eb-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
 		}
 	],
 	urd: [
@@ -249,6 +256,15 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 			nameChirho: 'Kougo-yaku (1955)',
 			hasPdfChirho: true,
 			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-jpn-japkougo-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
+		}
+	],
+	srp: [
+		{
+			codeChirho: 'srpdk-readers',
+			nameChirho: 'Daničić-Karadžić (1868)',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-srp-srpdk-chirho.pdf`,
 			badgeChirho: 'Readers Edition'
 		}
 	]
