@@ -255,7 +255,7 @@
 			nameChirho: 'Serbian DK Interlinear Bible (Natural Reading)',
 			descriptionChirho: 'Hebrew & Greek text with Serbian natural-reading translation and Daničić-Karadžić (1868) reference text (Српска међуредна Библија)',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-srp-srpdk-chirho.pdf',
-			sizeChirho: '119 MB',
+			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
 		}
