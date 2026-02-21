@@ -28,6 +28,14 @@
 			badgeChirho: 'Complete Bible'
 		},
 		{
+			nameChirho: 'KJV Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with English natural-reading translation and King James Version text. Glosses read naturally in English.',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-eng-kjv-chirho.pdf',
+			sizeChirho: '138 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
+		},
+		{
 			nameChirho: 'WEB Interlinear Bible',
 			descriptionChirho: 'Hebrew & Greek text with English word-by-word translation and World English Bible text',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-eng-web-chirho.pdf',

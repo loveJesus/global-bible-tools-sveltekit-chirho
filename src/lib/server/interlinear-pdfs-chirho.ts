@@ -32,6 +32,13 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 			nameChirho: 'World English Bible',
 			hasPdfChirho: true,
 			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-eng-web-chirho.pdf`
+		},
+		{
+			codeChirho: 'kjv-readers',
+			nameChirho: 'King James Version',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-eng-kjv-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
 		}
 	],
 	spa: [
