@@ -242,6 +242,14 @@
 			sizeChirho: '138 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
+		},
+		{
+			nameChirho: 'Japanese Kougo-yaku Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Japanese natural-reading translation and Kougo-yaku (口語訳 1955) reference text (日本語逐語対照聖書)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-jpn-japkougo-chirho.pdf',
+			sizeChirho: '140 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
 		}
 	];
 </script>

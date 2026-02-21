@@ -242,5 +242,14 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-ukr-ukrogienko-chirho.pdf`,
 			badgeChirho: 'Readers Edition'
 		}
+	],
+	jpn: [
+		{
+			codeChirho: 'japkougo-readers',
+			nameChirho: 'Kougo-yaku (1955)',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-jpn-japkougo-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
+		}
 	]
 };
