@@ -266,6 +266,14 @@
 			sizeChirho: '137 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
+		},
+		{
+			nameChirho: 'Gujarati IRV Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Gujarati natural-reading translation and Indian Revised Version (2019) reference text (ગુજરાતી અંતરરેખિય બાઇબલ)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-guj-gujirv-chirho.pdf',
+			sizeChirho: '140 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
 		}
 	];
 </script>

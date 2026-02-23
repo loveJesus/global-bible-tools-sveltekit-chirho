@@ -274,5 +274,14 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-srp-srpdk-chirho.pdf`,
 			badgeChirho: 'Readers Edition'
 		}
+	],
+	guj: [
+		{
+			codeChirho: 'gujirv-readers',
+			nameChirho: 'Gujarati IRV (2019)',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-guj-gujirv-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
+		}
 	]
 };
