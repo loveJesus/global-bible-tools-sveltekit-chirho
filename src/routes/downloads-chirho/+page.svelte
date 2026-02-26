@@ -277,9 +277,9 @@
 		},
 		{
 			nameChirho: 'Thai Interlinear Bible (Natural Reading)',
-			descriptionChirho: 'Hebrew & Greek text with Thai natural-reading translation (ภาษาไทย พระคัมภีร์ระหว่างบรรทัด)',
+			descriptionChirho: 'Hebrew & Greek text with Thai natural-reading translation and Thai KJV reference text (ภาษาไทย พระคัมภีร์ระหว่างบรรทัด)',
 			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-tha-chirho.pdf',
-			sizeChirho: '141 MB',
+			sizeChirho: '153 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
 		}
