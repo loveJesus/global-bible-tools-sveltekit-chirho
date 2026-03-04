@@ -32,11 +32,8 @@ services:
       R2_ACCESS_KEY_CHIRHO: minioadmin
       R2_SECRET_KEY_CHIRHO: minioadmin
       R2_BUCKET_CHIRHO: bible-tools-chirho
-      # Email configuration
-      MAILU_API_URL_CHIRHO: ${MAILU_API_URL_CHIRHO:-https://mailer-aleluya.xjes.us}
-      MAILU_API_TOKEN_CHIRHO: ${MAILU_API_TOKEN_CHIRHO}
+      # Email configuration (2SMTP — from address is configured in the 2SMTP key)
       TWOSMTP_API_KEY_CHIRHO: ${TWOSMTP_API_KEY_CHIRHO}
-      TWOSMTP_FROM_EMAIL_CHIRHO: noreply@global.noreply.fe
       # Session
       SESSION_SECRET_CHIRHO: ${SESSION_SECRET_CHIRHO:-change-this-in-production-chirho}
       NODE_ENV: development

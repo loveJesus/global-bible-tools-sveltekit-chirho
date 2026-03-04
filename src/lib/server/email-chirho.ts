@@ -23,11 +23,9 @@ interface TwoSmtpResponseChirho {
  */
 export async function sendEmailChirho(optionsChirho: EmailOptionsChirho): Promise<TwoSmtpResponseChirho> {
 	const apiKeyChirho = envChirho.TWOSMTP_API_KEY_CHIRHO;
-	const fromEmailChirho = envChirho.TWOSMTP_FROM_EMAIL_CHIRHO || 'noreply@global.bible.systems';
 
 	if (!apiKeyChirho) {
 		console.warn('[email-chirho] 2SMTP API key not configured, skipping email send');
-		// In development, log the email instead
 		console.log('[email-chirho] Would send email:', {
 			toChirho: optionsChirho.toChirho,
 			subjectChirho: optionsChirho.subjectChirho,
@@ -37,18 +35,17 @@ export async function sendEmailChirho(optionsChirho: EmailOptionsChirho): Promis
 	}
 
 	try {
-		const responseChirho = await fetch('https://api.2smtp.com/v1/email/send', {
+		const responseChirho = await fetch('https://2smtp.com/api_fe/send_email_fe', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${apiKeyChirho}`
+				'X-API-Key': apiKeyChirho
 			},
 			body: JSON.stringify({
-				from: fromEmailChirho,
-				to: optionsChirho.toChirho,
-				subject: optionsChirho.subjectChirho,
-				html: optionsChirho.htmlChirho,
-				text: optionsChirho.textChirho || stripHtmlChirho(optionsChirho.htmlChirho)
+				to_chirho: [optionsChirho.toChirho],
+				subject_chirho: optionsChirho.subjectChirho,
+				body_html_chirho: optionsChirho.htmlChirho,
+				body_text_chirho: optionsChirho.textChirho || stripHtmlChirho(optionsChirho.htmlChirho)
 			})
 		});
 
@@ -58,8 +55,8 @@ export async function sendEmailChirho(optionsChirho: EmailOptionsChirho): Promis
 			return { successChirho: false, errorChirho: `API error: ${responseChirho.status}` };
 		}
 
-		const dataChirho = await responseChirho.json() as { message_id?: string };
-		return { successChirho: true, messageIdChirho: dataChirho.message_id };
+		const dataChirho = await responseChirho.json() as { success_chirho?: boolean };
+		return { successChirho: true, messageIdChirho: dataChirho.success_chirho ? 'sent' : undefined };
 	} catch (errorChirho) {
 		console.error('[email-chirho] Failed to send email:', errorChirho);
 		return { successChirho: false, errorChirho: String(errorChirho) };
