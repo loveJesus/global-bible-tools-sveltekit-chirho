@@ -282,6 +282,14 @@
 			sizeChirho: '153 MB',
 			versesChirho: '31,102',
 			badgeChirho: 'Readers Edition'
+		},
+		{
+			nameChirho: 'Telugu Interlinear Bible (Natural Reading)',
+			descriptionChirho: 'Hebrew & Greek text with Telugu natural-reading translation and Telugu IRV (2019) reference text (తెలుగు అంతర్రేఖ బైబిల్)',
+			pathChirho: 'https://media-global-tools.bible.systems/bibles-chirho/interlinear-readers-tel-telirv-chirho.pdf',
+			sizeChirho: '140 MB',
+			versesChirho: '31,102',
+			badgeChirho: 'Readers Edition'
 		}
 	];
 </script>

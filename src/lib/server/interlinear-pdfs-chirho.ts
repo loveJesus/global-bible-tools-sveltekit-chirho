@@ -292,5 +292,14 @@ export const INTERLINEAR_PDFS_CHIRHO: Record<string, InterlinearPdfChirho[]> = {
 			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-tha-chirho.pdf`,
 			badgeChirho: 'Readers Edition'
 		}
+	],
+	tel: [
+		{
+			codeChirho: 'telirv-readers',
+			nameChirho: 'Telugu IRV (2019)',
+			hasPdfChirho: true,
+			pdfPathChirho: `${R2_BASE_CHIRHO}/interlinear-readers-tel-telirv-chirho.pdf`,
+			badgeChirho: 'Readers Edition'
+		}
 	]
 };
